@@ -4,7 +4,6 @@ import { request } from '@/utils/request.js'
  * 交易所管理 API接口
  */
 export default {
-
   /**
    * 数据列表
    * @returns
@@ -64,4 +63,15 @@ export default {
     })
   },
 
+  /**
+   * 更改数据状态
+   * @returns
+   */
+  changeActive(data = {}) {
+    return request({
+      url: '/app/botadmin/Exchanges/changeActive',
+      method: 'post',
+      data
+    })
+  }
 }

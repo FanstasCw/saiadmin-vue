@@ -31,6 +31,10 @@
       </template>
 
       <!-- Table 自定义渲染 -->
+      <!-- 启用列 -->
+      <template #is_active="{ record }">
+        <sa-switch v-model="record.is_active" @change="changeActive($event, record.id)"></sa-switch>
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
@@ -57,6 +61,15 @@ const searchForm = ref({
   create_time: [],
   update_time: [],
 })
+
+// 修改状态
+const changeActive = async (is_active, id) => {
+  const response = await api.changeActive({ id, is_active })
+  if (response.code === 200) {
+    Message.success(response.message)
+    crudRef.value.refresh()
+  }
+}
 
 // SaTable 基础配置
 const options = reactive({
