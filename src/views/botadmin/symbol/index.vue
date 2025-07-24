@@ -2,15 +2,17 @@
   <div class="ma-content-block">
     <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
       <!-- 搜索区 tableSearch -->
-      <template #tableSearch>
-      </template>
+      <template #tableSearch> </template>
 
       <!-- Table 自定义渲染 -->
+      <!-- 交易所列 -->
+      <template #exchange_id="{ record }">
+        {{ postData.find((option) => option.value == record.exchange_id)?.label || record.exchange_id }}
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
     <edit-form ref="editRef" @success="refresh" />
-
   </div>
 </template>
 
@@ -19,15 +21,16 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/symbol'
+import commonApi from '@/api/common'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
+const postData = ref([])
 
 // 搜索表单
-const searchForm = ref({
-})
+const searchForm = ref({})
 
 // SaTable 基础配置
 const options = reactive({
@@ -71,7 +74,10 @@ const columns = reactive([
 ])
 
 // 页面数据初始化
-const initPage = async () => {}
+const initPage = async () => {
+  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  postData.value = postResp.data
+}
 
 // SaTable 数据请求
 const refresh = async () => {
