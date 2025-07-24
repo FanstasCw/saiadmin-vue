@@ -10,12 +10,16 @@
         </a-col>
         <a-col :sm="8" :xs="24">
           <a-form-item label="交易所" field="exchange_id">
-            <a-select v-model="searchForm.exchange_id" :options="[]" placeholder="请选择交易所" allow-clear />
+            <a-select v-model="searchForm.exchange_id" :options="postData" placeholder="请选择交易所" allow-clear />
           </a-form-item>
         </a-col>
       </template>
 
       <!-- Table 自定义渲染 -->
+      <!-- 交易所列 -->
+      <template #exchange_id="{ record }">
+        {{ postData.find((option) => option.value == record.exchange_id)?.label || record.exchange_id }}
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
@@ -29,11 +33,13 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/exchangeaccounts'
+import commonApi from '@/api/common'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
+const postData = ref([])
 
 // 搜索表单
 const searchForm = ref({
@@ -86,7 +92,10 @@ const columns = reactive([
 ])
 
 // 页面数据初始化
-const initPage = async () => {}
+const initPage = async () => {
+  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  postData.value = postResp.data
+}
 
 // SaTable 数据请求
 const refresh = async () => {

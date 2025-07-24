@@ -11,10 +11,15 @@
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
       <a-form-item label="账户名称" field="name">
-        <a-input v-model="formData.name" placeholder="请输入账户名称" />
+        <a-input v-model="formData.name" placeholder="请输入账户名称" :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="交易所" field="exchange_id">
-        <a-select v-model="formData.exchange_id" :options="[]" placeholder="请选择交易所" allow-clear />
+        <a-select
+          v-model="formData.exchange_id"
+          :options="postData"
+          placeholder="请选择交易所"
+          allow-clear
+          :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="公钥" field="api_key">
         <a-input v-model="formData.api_key" placeholder="请输入公钥" />
@@ -35,6 +40,7 @@ import { ref, reactive, computed } from 'vue'
 import tool from '@/utils/tool'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '../api/exchangeaccounts'
+import commonApi from '@/api/common'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -42,6 +48,7 @@ const visible = ref(false)
 const loading = ref(false)
 const formRef = ref()
 const mode = ref('')
+const postData = ref([])
 
 let title = computed(() => {
   return '交易所账户管理' + (mode.value == 'add' ? '-新增' : '-编辑')
@@ -68,6 +75,11 @@ const rules = {
   secret_key: [{ required: true, message: '密钥必需填写' }],
 }
 
+// 判断是否为编辑模式且需要禁用部分输入框
+const isEditDisabled = computed(() => {
+  return mode.value === 'edit'
+})
+
 // 打开弹框
 const open = async (type = 'add') => {
   mode.value = type
@@ -79,7 +91,10 @@ const open = async (type = 'add') => {
 }
 
 // 初始化页面数据
-const initPage = async () => {}
+const initPage = async () => {
+  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  postData.value = postResp.data
+}
 
 // 设置数据
 const setFormData = async (data) => {
