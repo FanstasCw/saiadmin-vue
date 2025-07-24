@@ -27,7 +27,11 @@
       <a-form-item label="密钥" field="secret_key">
         <a-input v-model="formData.secret_key" placeholder="请输入密钥" />
       </a-form-item>
-      <a-form-item label="是否启用:1=正常,2=失效" field="is_active">
+      <!-- 添加条件渲染的密码短语输入框 -->
+      <a-form-item v-if="isOkxExchange" label="密码短语" field="pass_phrase">
+        <a-input v-model="formData.pass_phrase" placeholder="请输入密码短语" />
+      </a-form-item>
+      <a-form-item label="是否启用" field="is_active">
         <sa-switch v-model="formData.is_active" />
       </a-form-item>
     </a-form>
@@ -61,6 +65,7 @@ const initialFormData = {
   exchange_id: null,
   api_key: '',
   secret_key: '',
+  pass_phrase: '',
   is_active: 1,
 }
 
@@ -78,6 +83,17 @@ const rules = {
 // 判断是否为编辑模式且需要禁用部分输入框
 const isEditDisabled = computed(() => {
   return mode.value === 'edit'
+})
+
+// 判断是否为欧易交易所
+const isOkxExchange = computed(() => {
+  // 假设欧易交易所的ID为某个特定值，比如 "okx" 或者名称包含 "欧易"
+  // 这里需要根据实际的exchange数据结构调整判断条件
+  return (
+    formData.exchange_id &&
+    (formData.exchange_id === '2' ||
+      postData.value.find((item) => item.value === formData.exchange_id)?.label?.includes('欧易交易所'))
+  )
 })
 
 // 打开弹框
