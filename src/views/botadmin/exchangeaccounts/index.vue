@@ -20,11 +20,14 @@
       <template #exchange_id="{ record }">
         {{ postData.find((option) => option.value == record.exchange_id)?.label || record.exchange_id }}
       </template>
+      <!-- 启用列 -->
+      <template #is_active="{ record }">
+        <sa-switch v-model="record.is_active" @change="changeActive($event, record.id)"></sa-switch>
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
     <edit-form ref="editRef" @success="refresh" />
-
   </div>
 </template>
 
@@ -85,8 +88,8 @@ const columns = reactive([
   { title: '交易所', dataIndex: 'exchange_id', width: 180 },
   { title: '公钥', dataIndex: 'api_key', width: 180 },
   { title: '密钥', dataIndex: 'secret_key', width: 180 },
-  { title: '是否启用:1=正常,2=失效', dataIndex: 'is_active', width: 180 },
-  { title: '状态:1=正常,2=失效', dataIndex: 'status', width: 180 },
+  { title: '是否启用', dataIndex: 'is_active', width: 180 },
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'exchange_account_status', width: 80 },
   { title: '创建时间', dataIndex: 'create_time', width: 180 },
   { title: '更新时间', dataIndex: 'update_time', width: 180 },
 ])
