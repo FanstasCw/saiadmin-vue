@@ -4,7 +4,6 @@ import { request } from '@/utils/request.js'
  * 现货网格机器人 API接口
  */
 export default {
-
   /**
    * 数据列表
    * @returns
@@ -83,6 +82,28 @@ export default {
   getActive(data = {}) {
     return request({
       url: '/app/botadmin/SpotGridBot/getActive',
+      method: 'post',
+      data
+    })
+  },
+  /**
+   * 设置关闭状态
+   * @returns
+   */
+  setClosed(data = {}) {
+    return request({
+      url: '/app/botadmin/SpotGridBot/setClosed',
+      method: 'post',
+      data
+    })
+  },
+  /**
+   * 获取关闭状态
+   * @returns
+   */
+  getClosed(data = {}) {
+    return request({
+      url: '/app/botadmin/SpotGridBot/getClosed',
       method: 'post',
       data
     })
