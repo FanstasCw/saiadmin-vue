@@ -23,6 +23,27 @@
       <template #active="{ record }">
         <sa-switch v-model="record.active" @change="changeActive($event, record.id)"></sa-switch>
       </template>
+      <!-- 操作 -->
+      <template #operationCell="{ record }">
+        <!-- 默认编辑按钮 -->
+        <a-link v-if="options.edit.show" v-auth="options.edit.auth || []" type="primary" @click="handleEdit(record)">
+          <icon-edit /> {{ options.edit.text || '编辑' }}
+        </a-link>
+        <!-- 自定义关闭按钮 -->
+        <a-popconfirm content="确定要关闭机器人吗?" position="bottom" @ok="closeRobot(record)">
+          <a-link type="primary"> <icon-close /> 关闭 </a-link>
+        </a-popconfirm>
+        <!-- 默认删除按钮 -->
+        <a-popconfirm
+          v-if="options.delete.show"
+          content="确定要删除该数据吗?"
+          position="bottom"
+          @ok="handleDelete(record)">
+          <a-link type="primary" v-auth="options.delete.auth || []">
+            <icon-delete /> {{ options.delete.text || '删除' }}
+          </a-link>
+        </a-popconfirm>
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
@@ -48,6 +69,40 @@ const searchForm = ref({
   symbol: '',
 })
 
+// 修改状态
+const changeActive = async (active, id) => {
+  const response = await api.changeActive({ id, active })
+  if (response.code === 200) {
+    Message.success(response.message)
+    crudRef.value.refresh()
+  }
+}
+
+const handleEdit = (record) => {
+  options.edit.func?.(record) // 直接调用你传进来的回调
+}
+
+const closeRobot = async (record) => {
+  const params = { ids: record.id }
+  const activeResp = await api.getActive(params)
+  if (activeResp.code === 200) {
+    if (activeResp.data == 1) {
+      Message.error('请先暂停机器人才能关闭！')
+      return
+    }
+  }
+  const closeResp = await api.setClosed(params)
+  if (closeResp.code === 200) {
+    Message.success(`机器人关闭成功！`)
+    crudRef.value?.refresh()
+  }
+}
+
+const handleDelete = (record) => {
+  const params = { ids: record.id }
+  options.delete.func?.(params)
+}
+
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
@@ -71,6 +126,13 @@ const options = reactive({
     show: true,
     auth: ['/app/botadmin/SpotGridBot/destroy'],
     func: async (params) => {
+      const closeResp = await api.getClosed(params)
+      if (closeResp.code === 200) {
+        if (closeResp.data == 0) {
+          Message.error('请先关闭机器人才能删除！')
+          return
+        }
+      }
       const resp = await api.destroy(params)
       if (resp.code === 200) {
         Message.success(`删除成功！`)
