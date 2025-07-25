@@ -64,4 +64,27 @@ export default {
     })
   },
 
+  /**
+   * 更改数据状态
+   * @returns
+   */
+  changeActive(data = {}) {
+    return request({
+      url: '/app/botadmin/SpotGridBot/changeActive',
+      method: 'post',
+      data
+    })
+  },
+
+  /**
+   * 获取启用状态
+   * @returns
+   */
+  getActive(data = {}) {
+    return request({
+      url: '/app/botadmin/SpotGridBot/getActive',
+      method: 'post',
+      data
+    })
+  }
 }
