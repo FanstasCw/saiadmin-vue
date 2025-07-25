@@ -103,12 +103,12 @@
               <a-tooltip content="刷新表格" @click="refresh">
                 <a-button shape="circle"><icon-refresh /></a-button>
               </a-tooltip>
-              <a-tooltip content="显隐搜索">
+              <!-- <a-tooltip content="显隐搜索">
                 <a-button shape="circle" @click="searchChange"><icon-search /> </a-button>
               </a-tooltip>
               <a-tooltip content="打印表格"
                 ><a-button shape="circle" @click="printTable"><icon-printer /></a-button
-              ></a-tooltip>
+              ></a-tooltip> -->
               <a-tooltip content="字段排序" v-if="options.showSort">
                 <a-popover trigger="click" position="br">
                   <a-button shape="circle"><icon-sort /></a-button>
