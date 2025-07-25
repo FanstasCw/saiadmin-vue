@@ -50,6 +50,15 @@ const searchForm = ref({
   exchange_id: '',
 })
 
+// 修改状态
+const changeActive = async (is_active, id) => {
+  const response = await api.changeActive({ id, is_active })
+  if (response.code === 200) {
+    Message.success(response.message)
+    crudRef.value.refresh()
+  }
+}
+
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
