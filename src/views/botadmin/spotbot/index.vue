@@ -16,11 +16,17 @@
       </template>
 
       <!-- Table 自定义渲染 -->
+      <!-- 交易所列 -->
+      <template #exchange_account_id="{ record }">
+        {{ record.exchangeaccount.name }}
+      </template>
+      <template #active="{ record }">
+        <sa-switch v-model="record.active" @change="changeActive($event, record.id)"></sa-switch>
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
     <edit-form ref="editRef" @success="refresh" />
-
   </div>
 </template>
 
@@ -29,6 +35,7 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/spotbot'
+import { role } from '@/utils/common.js'
 
 // 引用定义
 const crudRef = ref()
@@ -75,18 +82,22 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人名称', dataIndex: 'name', width: 180 },
-  { title: '交易所账号', dataIndex: 'exchange_account_id', width: 180 },
-  { title: '交易对', dataIndex: 'symbol', width: 180 },
-  { title: '状态', dataIndex: 'status', width: 180 },
-  { title: '启用/暂停', dataIndex: 'active', width: 180 },
-  { title: '本金', dataIndex: 'principal', width: 180 },
-  { title: '现金余额', dataIndex: 'cash_balance', width: 180 },
-  { title: '持仓数量', dataIndex: 'position_amount', width: 180 },
-  { title: '持仓价值', dataIndex: 'position_value', width: 180 },
-  { title: '账户净值', dataIndex: 'account_net_value', width: 180 },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pl', width: 180 },
+  { title: '机器人名称', dataIndex: 'name' },
+  { title: '交易对', dataIndex: 'symbol' },
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
+  { title: '启用/暂停', dataIndex: 'active' },
+  { title: '本金', dataIndex: 'principal' },
+  { title: '现金余额', dataIndex: 'cash_balance' },
+  { title: '持仓数量', dataIndex: 'position_amount' },
+  { title: '持仓价值', dataIndex: 'position_value' },
+  { title: '账户净值', dataIndex: 'account_net_value' },
+  { title: '浮动盈亏', dataIndex: 'unrealized_pl' },
 ])
+if (role('superAdmin')) {
+  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 120 }
+  const index = columns.findIndex((col) => col.dataIndex === 'name')
+  columns.splice(index + 1, 0, newColumn)
+}
 
 // 页面数据初始化
 const initPage = async () => {}
