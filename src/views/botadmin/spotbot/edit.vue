@@ -30,20 +30,44 @@
           allow-search
           :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="启用/暂停" field="active">
-        <a-input v-model="formData.active" placeholder="请输入启用/暂停" />
-      </a-form-item>
-      <a-form-item label="本金" field="principal">
-        <a-input v-model="formData.principal" placeholder="请输入本金" />
+      <a-form-item label="本金" field="principal" tooltip="投资本金">
+        <a-input v-model="formData.principal" placeholder="请输入本金" :disabled="isEditDisabled" append="U" />
       </a-form-item>
       <a-form-item label="买入跌幅" field="buy_threshold">
-        <a-input v-model="formData.buy_threshold" placeholder="请输入买入跌幅" />
+        <a-select v-model="formData.buy_threshold" placeholder="请选择买入跌幅" :disabled="isEditDisabled">
+          <a-option :value="0.01">1%</a-option>
+          <a-option :value="0.02">2%</a-option>
+          <a-option :value="0.03">3%</a-option>
+          <a-option :value="0.04">4%</a-option>
+          <a-option :value="0.05">5%</a-option>
+          <a-option :value="0.06">6%</a-option>
+          <a-option :value="0.07">7%</a-option>
+          <a-option :value="0.08">8%</a-option>
+          <a-option :value="0.09">9%</a-option>
+          <a-option :value="0.1">10%</a-option>
+        </a-select>
       </a-form-item>
       <a-form-item label="卖出涨幅" field="sell_threshold">
-        <a-input v-model="formData.sell_threshold" placeholder="请输入卖出涨幅" />
+        <a-select v-model="formData.sell_threshold" placeholder="请选择卖出涨幅" :disabled="isEditDisabled">
+          <a-option :value="0.01">1%</a-option>
+          <a-option :value="0.02">2%</a-option>
+          <a-option :value="0.03">3%</a-option>
+          <a-option :value="0.04">4%</a-option>
+          <a-option :value="0.05">5%</a-option>
+          <a-option :value="0.06">6%</a-option>
+          <a-option :value="0.07">7%</a-option>
+          <a-option :value="0.08">8%</a-option>
+          <a-option :value="0.09">9%</a-option>
+          <a-option :value="0.1">10%</a-option>
+        </a-select>
       </a-form-item>
-      <a-form-item label="投资比例" field="invest_ratio">
-        <a-input v-model="formData.invest_ratio" placeholder="请输入投资比例" />
+      <a-form-item label="投资比例" field="invest_ratio" tooltip="现货购买比例">
+        <a-select v-model="formData.invest_ratio" disabled>
+          <a-option :value="0.5">50%</a-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item label="启用/暂停" field="active">
+        <sa-switch v-model="formData.active" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
@@ -80,7 +104,7 @@ const initialFormData = {
   principal: '',
   buy_threshold: '',
   sell_threshold: '',
-  invest_ratio: '',
+  invest_ratio: 0.5,
 }
 
 // 表单信息
@@ -90,6 +114,9 @@ const formData = reactive({ ...initialFormData })
 const rules = {
   name: [{ required: true, message: '机器人名称必需填写' }],
   symbol: [{ required: true, message: '交易对必需填写' }],
+  principal: [{ required: true, message: '本金必需填写' }],
+  buy_threshold: [{ required: true, message: '买入阈值必需选择' }],
+  sell_threshold: [{ required: true, message: '卖出阈值必需选择' }],
 }
 
 // 判断是否为编辑模式且需要禁用部分输入框
@@ -119,7 +146,12 @@ const initPage = async () => {
 const setFormData = async (data) => {
   for (const key in formData) {
     if (data[key] != null && data[key] != undefined) {
-      formData[key] = data[key]
+      // 针特定字段进行类型转换
+      if (key === 'sell_threshold' || key === 'invest_ratio' || key === 'buy_threshold') {
+        formData[key] = Number(data[key])
+      } else {
+        formData[key] = data[key]
+      }
     }
   }
 }
