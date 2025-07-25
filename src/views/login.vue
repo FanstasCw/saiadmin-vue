@@ -56,7 +56,7 @@ const handleSubmit = async ({ values, errors }) => {
 <template>
   <div class="login-container" :style="{ background: appStore.mode === 'dark' ? '#2e2e30e3' : '' }">
     <h3 class="login-logo">
-      <img src="/logo.png" alt="logo" />
+      <img src="../assets/logo.png" alt="logo" />
       <span>{{ $title }}</span>
     </h3>
 
