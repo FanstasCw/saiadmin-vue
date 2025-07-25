@@ -1,74 +1,72 @@
 <template>
   <div class="ma-content-block lg:flex justify-between">
-    <div class="lg:w-2/12 pt-4 pl-2 pr-2">
+    <!-- <div class="lg:w-2/12 pt-4 pl-2 pr-2">
       <sa-tree-slider :data="depts" search-placeholder="搜索部门" @click="switchDept" v-model="defaultKey" />
-    </div>
+    </div> -->
 
-    <div class="lg:w-10/12 w-full">
-      <!-- CRUD 组件 -->
-      <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm" @resetSearch="handleReset">
-        <!-- 搜索区 tableSearch -->
-        <template #tableSearch>
-          <a-col :sm="8" :xs="24">
-            <a-form-item field="username" label="账号名称">
-              <a-input v-model="searchForm.username" placeholder="请输入账号名称" allow-clear />
-            </a-form-item>
-          </a-col>
-          <a-col :sm="8" :xs="24">
-            <a-form-item field="phone" label="手机">
-              <a-input v-model="searchForm.phone" placeholder="请输入手机" allow-clear />
-            </a-form-item>
-          </a-col>
-          <a-col :sm="8" :xs="24">
-            <a-form-item field="email" label="邮箱">
-              <a-input v-model="searchForm.email" placeholder="请输入邮箱" allow-clear />
-            </a-form-item>
-          </a-col>
-          <a-col :sm="16" :xs="24">
-            <a-form-item field="create_time" label="注册时间">
-              <a-range-picker v-model="searchForm.create_time" show-time style="width: 100%" />
-            </a-form-item>
-          </a-col>
-          <a-col :sm="8" :xs="24">
-            <a-form-item field="status" label="状态">
-              <sa-select v-model="searchForm.status" dict="data_status" placeholder="请选择状态" alow-clear />
-            </a-form-item>
-          </a-col>
-        </template>
+    <!-- CRUD 组件 -->
+    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm" @resetSearch="handleReset">
+      <!-- 搜索区 tableSearch -->
+      <template #tableSearch>
+        <a-col :sm="8" :xs="24">
+          <a-form-item field="username" label="账号名称">
+            <a-input v-model="searchForm.username" placeholder="请输入账号名称" allow-clear />
+          </a-form-item>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <a-form-item field="phone" label="手机">
+            <a-input v-model="searchForm.phone" placeholder="请输入手机" allow-clear />
+          </a-form-item>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <a-form-item field="email" label="邮箱">
+            <a-input v-model="searchForm.email" placeholder="请输入邮箱" allow-clear />
+          </a-form-item>
+        </a-col>
+        <a-col :sm="16" :xs="24">
+          <a-form-item field="create_time" label="注册时间">
+            <a-range-picker v-model="searchForm.create_time" show-time style="width: 100%" />
+          </a-form-item>
+        </a-col>
+        <a-col :sm="8" :xs="24">
+          <a-form-item field="status" label="状态">
+            <sa-select v-model="searchForm.status" dict="data_status" placeholder="请选择状态" alow-clear />
+          </a-form-item>
+        </a-col>
+      </template>
 
-        <!-- Table 自定义渲染 -->
-        <!-- 状态列 -->
-        <template #status="{ record }">
-          <sa-switch
-            v-model="record.status"
-            :disabled="record.id == 1"
-            @change="changeStatus($event, record.id)"></sa-switch>
-        </template>
-        <!-- 头像列 -->
-        <template #avatar="{ record }">
-          <a-avatar>
-            <img :src="record.avatar ? $tool.showFile(record.avatar) : $url + 'avatar.jpg'" style="object-fit: cover" />
-          </a-avatar>
-        </template>
-        <!-- 操作列 -->
-        <template #operationCell="{ record }">
-          <div v-if="record.id == 1">
-            <a-link @click="updateCache(record.id)"><icon-refresh /> 更新缓存</a-link>
-          </div>
-        </template>
-        <!-- 操作后置扩展 -->
-        <template #operationAfterExtend="{ record }">
-          <a-dropdown trigger="hover" v-if="record.id != 1" @select="selectOperation($event, record.id)">
-            <a-link><icon-double-right /> 更多</a-link>
-            <template #content>
-              <a-doption value="updateCache" v-auth="['/core/user/clearCache']">更新缓存</a-doption>
-              <a-doption value="setHomePage" v-auth="['/core/user/setHomePage']">设置首页</a-doption>
-              <a-doption value="resetPassword" v-auth="['/core/user/initUserPassword']">重置密码</a-doption>
-            </template>
-          </a-dropdown>
-        </template>
-      </sa-table>
-    </div>
+      <!-- Table 自定义渲染 -->
+      <!-- 状态列 -->
+      <template #status="{ record }">
+        <sa-switch
+          v-model="record.status"
+          :disabled="record.id == 1"
+          @change="changeStatus($event, record.id)"></sa-switch>
+      </template>
+      <!-- 头像列 -->
+      <template #avatar="{ record }">
+        <a-avatar>
+          <img :src="record.avatar ? $tool.showFile(record.avatar) : $url + 'avatar.jpg'" style="object-fit: cover" />
+        </a-avatar>
+      </template>
+      <!-- 操作列 -->
+      <template #operationCell="{ record }">
+        <div v-if="record.id == 1">
+          <a-link @click="updateCache(record.id)"><icon-refresh /> 更新缓存</a-link>
+        </div>
+      </template>
+      <!-- 操作后置扩展 -->
+      <template #operationAfterExtend="{ record }">
+        <a-dropdown trigger="hover" v-if="record.id != 1" @select="selectOperation($event, record.id)">
+          <a-link><icon-double-right /> 更多</a-link>
+          <template #content>
+            <a-doption value="updateCache" v-auth="['/core/user/clearCache']">更新缓存</a-doption>
+            <a-doption value="setHomePage" v-auth="['/core/user/setHomePage']">设置首页</a-doption>
+            <a-doption value="resetPassword" v-auth="['/core/user/initUserPassword']">重置密码</a-doption>
+          </template>
+        </a-dropdown>
+      </template>
+    </sa-table>
 
     <!-- 编辑表单 -->
     <edit-form ref="editRef" @success="refresh" />
@@ -105,8 +103,8 @@ const searchForm = ref({
   phone: '',
   email: '',
   status: '',
-  create_time: [],
-  dept_id: '',
+  // create_time: [],
+  // dept_id: '',
 })
 
 // SaTable 重置搜索
@@ -212,7 +210,7 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '头像', dataIndex: 'avatar', width: 75 },
+  // { title: '头像', dataIndex: 'avatar', width: 75 },
   { title: '账户', dataIndex: 'username', width: 130 },
   { title: '昵称', dataIndex: 'nickname', width: 120 },
   { title: '手机', dataIndex: 'phone', width: 150 },
