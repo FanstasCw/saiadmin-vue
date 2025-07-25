@@ -13,11 +13,22 @@
       <a-form-item label="机器人名称" field="name">
         <a-input v-model="formData.name" placeholder="请输入机器人名称" />
       </a-form-item>
-      <a-form-item label="交易所账号" field="exchange_account_id">
-        <a-select v-model="formData.exchange_account_id" :options="[]" placeholder="请选择交易所账号" allow-clear />
+      <a-form-item label="交易所账号" field="exchange_account_id" v-role="['superAdmin']">
+        <a-select
+          v-model="formData.exchange_account_id"
+          :options="postData"
+          placeholder="请选择交易所账号"
+          allow-clear
+          :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="交易对" field="symbol">
-        <a-select v-model="formData.symbol" :options="[]" placeholder="请选择交易对" allow-clear />
+        <a-select
+          v-model="formData.symbol"
+          :options="symbolData"
+          placeholder="请选择交易对"
+          allow-clear
+          allow-search
+          :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="启用/暂停" field="active">
         <a-input v-model="formData.active" placeholder="请输入启用/暂停" />
@@ -44,6 +55,7 @@ import { ref, reactive, computed } from 'vue'
 import tool from '@/utils/tool'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '../api/spotbot'
+import commonApi from '@/api/common'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -51,6 +63,8 @@ const visible = ref(false)
 const loading = ref(false)
 const formRef = ref()
 const mode = ref('')
+const postData = ref([])
+const symbolData = ref([])
 
 let title = computed(() => {
   return '现货网格机器人' + (mode.value == 'add' ? '-新增' : '-编辑')
@@ -78,6 +92,11 @@ const rules = {
   symbol: [{ required: true, message: '交易对必需填写' }],
 }
 
+// 判断是否为编辑模式且需要禁用部分输入框
+const isEditDisabled = computed(() => {
+  return mode.value === 'edit'
+})
+
 // 打开弹框
 const open = async (type = 'add') => {
   mode.value = type
@@ -89,7 +108,12 @@ const open = async (type = 'add') => {
 }
 
 // 初始化页面数据
-const initPage = async () => {}
+const initPage = async () => {
+  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  postData.value = postResp.data
+  const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=1')
+  symbolData.value = symbolResp.data
+}
 
 // 设置数据
 const setFormData = async (data) => {
