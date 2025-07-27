@@ -153,7 +153,7 @@ const columns = reactive([
   { title: '持仓数量', dataIndex: 'position_amount' },
   { title: '持仓价值', dataIndex: 'position_value' },
   { title: '账户净值', dataIndex: 'account_net_value' },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pl' },
+  { title: '浮动盈亏', dataIndex: 'unrealized_pnl' },
 ])
 if (role('superAdmin')) {
   const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 120 }
