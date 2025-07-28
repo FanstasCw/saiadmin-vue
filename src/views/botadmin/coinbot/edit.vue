@@ -31,19 +31,37 @@
           :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="本金" field="principal">
-        <a-input v-model="formData.principal" placeholder="请输入本金" />
+        <a-input v-model="formData.principal" placeholder="请输入本金" :disabled="isEditDisabled" append="U" />
       </a-form-item>
       <a-form-item label="最近最高价格" field="recent_high_price">
-        <a-input v-model="formData.recent_high_price" placeholder="请输入最近最高价格" />
+        <a-input v-model="formData.recent_high_price" placeholder="请输入最近最高价格" :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="回调比例" field="drawdown_ratio">
-        <a-select v-model="formData.drawdown_ratio" :options="[]" placeholder="请选择回调比例" allow-clear />
+        <a-select v-model="formData.drawdown_ratio" placeholder="请选择回调比例" :disabled="isEditDisabled">
+          <a-option :value="0.05">5%</a-option>
+          <a-option :value="0.1">10%</a-option>
+          <a-option :value="0.15">15%</a-option>
+          <a-option :value="0.2">20%</a-option>
+          <a-option :value="0.25">25%</a-option>
+          <a-option :value="0.3">30%</a-option>
+        </a-select>
       </a-form-item>
       <a-form-item label="平空价格间隔" field="close_short_interval">
-        <a-input v-model="formData.close_short_interval" placeholder="请输入平空价格间隔" />
+        <a-input v-model="formData.close_short_interval" placeholder="请输入平空价格间隔" :disabled="isEditDisabled" />
       </a-form-item>
       <a-form-item label="平仓比例" field="close_short_ratio">
-        <a-select v-model="formData.close_short_ratio" :options="[]" placeholder="请选择平仓比例" allow-clear />
+        <a-select v-model="formData.close_short_ratio" placeholder="请选择平仓比例" :disabled="isEditDisabled">
+          <a-option :value="0.1">10%</a-option>
+          <a-option :value="0.2">20%</a-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item label="启用/暂停" field="active">
+        <sa-switch
+          v-model="formData.active"
+          checked-value="2"
+          unchecked-value="3"
+          checked-text="启用"
+          unchecked-text="暂停" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
@@ -125,7 +143,12 @@ const initPage = async () => {
 const setFormData = async (data) => {
   for (const key in formData) {
     if (data[key] != null && data[key] != undefined) {
-      formData[key] = data[key]
+      // 针特定字段进行类型转换
+      if (key === 'close_short_ratio' || key === 'drawdown_ratio') {
+        formData[key] = Number(data[key])
+      } else {
+        formData[key] = data[key]
+      }
     }
   }
 }
