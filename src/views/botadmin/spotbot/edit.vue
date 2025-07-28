@@ -16,7 +16,7 @@
       <a-form-item label="交易所账号" field="exchange_account_id" v-role="['superAdmin']">
         <a-select
           v-model="formData.exchange_account_id"
-          :options="postData"
+          :options="accountData"
           placeholder="请选择交易所账号"
           allow-clear
           :disabled="isEditDisabled" />
@@ -87,7 +87,7 @@ const visible = ref(false)
 const loading = ref(false)
 const formRef = ref()
 const mode = ref('')
-const postData = ref([])
+const accountData = ref([])
 const symbolData = ref([])
 
 let title = computed(() => {
@@ -136,8 +136,8 @@ const open = async (type = 'add') => {
 
 // 初始化页面数据
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
-  postData.value = postResp.data
+  const accountResp = await commonApi.commonGet('/app/botadmin/ExchangeAccounts/accessAccount')
+  accountData.value = accountResp.data
   const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=1')
   symbolData.value = symbolResp.data
 }
