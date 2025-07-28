@@ -10,7 +10,12 @@
         </a-col>
         <a-col :sm="8" :xs="24">
           <a-form-item label="交易对" field="symbol">
-            <a-input v-model="searchForm.symbol" placeholder="请输入交易对" allow-clear />
+            <a-select
+              v-model="searchForm.symbol"
+              :options="symbolData"
+              placeholder="请选择交易对"
+              allow-clear
+              allow-search />
           </a-form-item>
         </a-col>
       </template>
@@ -28,11 +33,13 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/coinbot'
+import commonApi from '@/api/common'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
+const symbolData = ref([])
 
 // 搜索表单
 const searchForm = ref({
@@ -88,7 +95,10 @@ const columns = reactive([
 ])
 
 // 页面数据初始化
-const initPage = async () => {}
+const initPage = async () => {
+  const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=2')
+  symbolData.value = symbolResp.data
+}
 
 // SaTable 数据请求
 const refresh = async () => {
