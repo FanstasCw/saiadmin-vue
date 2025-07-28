@@ -163,7 +163,7 @@ const options = reactive({
 const columns = reactive([
   { title: '机器人名称', dataIndex: 'name' },
   { title: '交易对', dataIndex: 'symbol' },
-  { title: '机器人状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
   { title: '启用/暂停', dataIndex: 'active' },
   { title: '开仓合约张数', dataIndex: 'open_position_cont' },
   { title: '持仓合约张数', dataIndex: 'position_cont' },
