@@ -26,7 +26,14 @@
         {{ record.exchangeaccount.name }}
       </template>
       <template #active="{ record }">
-        <sa-switch v-model="record.active" @change="changeActive($event, record.id)"></sa-switch>
+        <sa-switch
+          v-model="record.active"
+          @change="setActive($event, record.id)"
+          checked-value="2"
+          unchecked-value="3"
+          checked-text="启用"
+          unchecked-text="暂停">
+        </sa-switch>
       </template>
       <!-- 操作 -->
       <template #operationCell="{ record }">
@@ -69,7 +76,7 @@ const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
 const symbolData = ref([])
-
+const accountData = ref([])
 // 搜索表单
 const searchForm = ref({
   name: '',
@@ -77,8 +84,8 @@ const searchForm = ref({
 })
 
 // 修改状态
-const changeActive = async (active, id) => {
-  const response = await api.changeActive({ id, active })
+const setActive = async (active, id) => {
+  const response = await api.setActive({ ids: id, active })
   if (response.code === 200) {
     Message.success(response.message)
     crudRef.value.refresh()
@@ -90,15 +97,19 @@ const handleEdit = (record) => {
 }
 
 const closeRobot = async (record) => {
-  const params = { ids: record.id }
+  const params = { ids: record.id, active: 5 }
   const activeResp = await api.getActive(params)
+  console.log(activeResp)
   if (activeResp.code === 200) {
-    if (activeResp.data == 1) {
+    if (activeResp.data == 2 || activeResp.data == 1) {
       Message.error('请先暂停机器人才能关闭！')
+      return
+    } else if (activeResp.data == 5) {
+      Message.warning('机器人已关闭！')
       return
     }
   }
-  const closeResp = await api.setClosed(params)
+  const closeResp = await api.setActive(params)
   if (closeResp.code === 200) {
     Message.success(`机器人关闭成功！`)
     crudRef.value?.refresh()
@@ -116,14 +127,14 @@ const options = reactive({
   rowSelection: { showCheckedAll: true },
   add: {
     show: true,
-    auth: ['/app/botadmin/SpotBot/save'],
+    auth: ['/app/botadmin/SpotGridBot/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/app/botadmin/SpotBot/update'],
+    auth: ['/app/botadmin/SpotGridBot/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -131,11 +142,11 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/app/botadmin/SpotBot/destroy'],
+    auth: ['/app/botadmin/SpotGridBot/destroy'],
     func: async (params) => {
-      const closeResp = await api.getClosed(params)
+      const closeResp = await api.getActive(params)
       if (closeResp.code === 200) {
-        if (closeResp.data == 0) {
+        if (closeResp.data != 5) {
           Message.error('请先关闭机器人才能删除！')
           return
         }
