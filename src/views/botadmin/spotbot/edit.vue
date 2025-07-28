@@ -67,7 +67,12 @@
         </a-select>
       </a-form-item>
       <a-form-item label="启用/暂停" field="active">
-        <sa-switch v-model="formData.active" />
+        <sa-switch
+          v-model="formData.active"
+          checked-value="2"
+          unchecked-value="3"
+          checked-text="启用"
+          unchecked-text="暂停" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
