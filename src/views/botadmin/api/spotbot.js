@@ -64,46 +64,24 @@ export default {
   },
 
   /**
-   * 更改数据状态
+   * 设置状态
    * @returns
    */
-  changeActive(data = {}) {
+  setActive(data = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/changeActive',
+      url: '/app/botadmin/SpotBot/setActive',
       method: 'post',
       data
     })
   },
 
   /**
-   * 获取启用状态
+   * 获取状态
    * @returns
    */
   getActive(data = {}) {
     return request({
       url: '/app/botadmin/SpotBot/getActive',
-      method: 'post',
-      data
-    })
-  },
-  /**
-   * 设置关闭状态
-   * @returns
-   */
-  setClosed(data = {}) {
-    return request({
-      url: '/app/botadmin/SpotBot/setClosed',
-      method: 'post',
-      data
-    })
-  },
-  /**
-   * 获取关闭状态
-   * @returns
-   */
-  getClosed(data = {}) {
-    return request({
-      url: '/app/botadmin/SpotBot/getClosed',
       method: 'post',
       data
     })
