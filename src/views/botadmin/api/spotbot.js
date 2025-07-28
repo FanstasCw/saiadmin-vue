@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/index',
+      url: '/app/botadmin/SpotBot/index',
       method: 'get',
       params
     })
@@ -22,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/save',
+      url: '/app/botadmin/SpotBot/save',
       method: 'post',
       data: params
     })
@@ -34,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/update?id=' + id,
+      url: '/app/botadmin/SpotBot/update?id=' + id,
       method: 'put',
       data
     })
@@ -46,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/SpotGridBot/read?id=' + id,
+      url: '/app/botadmin/SpotBot/read?id=' + id,
       method: 'get'
     })
   },
@@ -57,7 +57,7 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/SpotGridBot/destroy',
+      url: '/app/botadmin/SpotBot/destroy',
       method: 'delete',
       data
     })
@@ -69,7 +69,7 @@ export default {
    */
   changeActive(data = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/changeActive',
+      url: '/app/botadmin/SpotBot/changeActive',
       method: 'post',
       data
     })
@@ -81,7 +81,7 @@ export default {
    */
   getActive(data = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/getActive',
+      url: '/app/botadmin/SpotBot/getActive',
       method: 'post',
       data
     })
@@ -92,7 +92,7 @@ export default {
    */
   setClosed(data = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/setClosed',
+      url: '/app/botadmin/SpotBot/setClosed',
       method: 'post',
       data
     })
@@ -103,7 +103,7 @@ export default {
    */
   getClosed(data = {}) {
     return request({
-      url: '/app/botadmin/SpotGridBot/getClosed',
+      url: '/app/botadmin/SpotBot/getClosed',
       method: 'post',
       data
     })

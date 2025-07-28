@@ -116,14 +116,14 @@ const options = reactive({
   rowSelection: { showCheckedAll: true },
   add: {
     show: true,
-    auth: ['/app/botadmin/SpotGridBot/save'],
+    auth: ['/app/botadmin/SpotBot/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/app/botadmin/SpotGridBot/update'],
+    auth: ['/app/botadmin/SpotBot/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -131,7 +131,7 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/app/botadmin/SpotGridBot/destroy'],
+    auth: ['/app/botadmin/SpotBot/destroy'],
     func: async (params) => {
       const closeResp = await api.getClosed(params)
       if (closeResp.code === 200) {
