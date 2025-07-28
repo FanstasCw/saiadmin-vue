@@ -64,7 +64,7 @@ export default {
   },
 
   /**
-   * 更改数据状态
+   * 设置状态
    * @returns
    */
   setActive(data = {}) {
@@ -76,7 +76,7 @@ export default {
   },
 
   /**
-   * 获取启用状态
+   * 获取状态
    * @returns
    */
   getActive(data = {}) {
