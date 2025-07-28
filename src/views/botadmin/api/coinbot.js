@@ -4,7 +4,6 @@ import { request } from '@/utils/request.js'
  * 币本位套利机器人 API接口
  */
 export default {
-
   /**
    * 数据列表
    * @returns
@@ -64,4 +63,27 @@ export default {
     })
   },
 
+  /**
+   * 更改数据状态
+   * @returns
+   */
+  setActive(data = {}) {
+    return request({
+      url: '/app/botadmin/CoinBot/setActive',
+      method: 'post',
+      data
+    })
+  },
+
+  /**
+   * 获取启用状态
+   * @returns
+   */
+  getActive(data = {}) {
+    return request({
+      url: '/app/botadmin/CoinBot/getActive',
+      method: 'post',
+      data
+    })
+  }
 }
