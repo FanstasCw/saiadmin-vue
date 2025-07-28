@@ -10,7 +10,12 @@
         </a-col>
         <a-col :sm="8" :xs="24">
           <a-form-item label="交易对" field="symbol">
-            <a-select v-model="searchForm.symbol" :options="[]" placeholder="请选择交易对" allow-clear />
+            <a-select
+              v-model="searchForm.symbol"
+              :options="symbolData"
+              placeholder="请选择交易对"
+              allow-clear
+              allow-search />
           </a-form-item>
         </a-col>
       </template>
@@ -57,11 +62,13 @@ import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/spotbot'
 import { role } from '@/utils/common.js'
+import commonApi from '@/api/common'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
+const symbolData = ref([])
 
 // 搜索表单
 const searchForm = ref({
@@ -156,13 +163,16 @@ const columns = reactive([
   { title: '浮动盈亏', dataIndex: 'unrealized_pnl' },
 ])
 if (role('superAdmin')) {
-  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 120 }
+  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id' }
   const index = columns.findIndex((col) => col.dataIndex === 'name')
   columns.splice(index + 1, 0, newColumn)
 }
 
 // 页面数据初始化
-const initPage = async () => {}
+const initPage = async () => {
+  const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=1')
+  symbolData.value = symbolResp.data
+}
 
 // SaTable 数据请求
 const refresh = async () => {
