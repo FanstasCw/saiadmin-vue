@@ -85,7 +85,7 @@ const searchForm = ref({
 
 // 修改状态
 const setActive = async (active, id) => {
-  const response = await api.setActive({ id, active })
+  const response = await api.setActive({ ids: id, active })
   if (response.code === 200) {
     Message.success(response.message)
     crudRef.value.refresh()
@@ -97,11 +97,14 @@ const handleEdit = (record) => {
 }
 
 const closeRobot = async (record) => {
-  const params = { id: record.id, active: 5 }
+  const params = { ids: record.id, active: 5 }
   const activeResp = await api.getActive(params)
   if (activeResp.code === 200) {
     if (activeResp.data == 2 || activeResp.data == 1) {
       Message.error('请先暂停机器人才能关闭！')
+      return
+    } else if (activeResp.data == 5) {
+      Message.warning('机器人已关闭！')
       return
     }
   }
@@ -142,7 +145,7 @@ const options = reactive({
     func: async (params) => {
       const activeResp = await api.getActive(params)
       if (activeResp.code === 200) {
-        if (activeResp.data == 5) {
+        if (activeResp.data != 5) {
           Message.error('请先关闭机器人才能删除！')
           return
         }
