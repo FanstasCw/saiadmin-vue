@@ -21,6 +21,41 @@
       </template>
 
       <!-- Table 自定义渲染 -->
+      <!-- 交易所列 -->
+      <template #exchange_account_id="{ record }">
+        {{ record.exchangeaccount.name }}
+      </template>
+      <template #active="{ record }">
+        <sa-switch
+          v-model="record.active"
+          @change="setActive($event, record.id)"
+          checked-value="2"
+          unchecked-value="3"
+          checked-text="启用"
+          unchecked-text="暂停">
+        </sa-switch>
+      </template>
+      <!-- 操作 -->
+      <template #operationCell="{ record }">
+        <!-- 默认编辑按钮 -->
+        <a-link v-if="options.edit.show" v-auth="options.edit.auth || []" type="primary" @click="handleEdit(record)">
+          <icon-edit /> {{ options.edit.text || '编辑' }}
+        </a-link>
+        <!-- 自定义关闭按钮 -->
+        <a-popconfirm content="确定要关闭机器人吗?" position="bottom" @ok="closeRobot(record)">
+          <a-link type="primary"> <icon-close /> 关闭 </a-link>
+        </a-popconfirm>
+        <!-- 默认删除按钮 -->
+        <a-popconfirm
+          v-if="options.delete.show"
+          content="确定要删除该数据吗?"
+          position="bottom"
+          @ok="handleDelete(record)">
+          <a-link type="primary" v-auth="options.delete.auth || []">
+            <icon-delete /> {{ options.delete.text || '删除' }}
+          </a-link>
+        </a-popconfirm>
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
@@ -33,6 +68,7 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/coinbot'
+import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
 
 // 引用定义
@@ -46,6 +82,40 @@ const searchForm = ref({
   name: '',
   symbol: '',
 })
+
+// 修改状态
+const setActive = async (active, id) => {
+  const response = await api.setActive({ id, active })
+  if (response.code === 200) {
+    Message.success(response.message)
+    crudRef.value.refresh()
+  }
+}
+
+const handleEdit = (record) => {
+  options.edit.func?.(record) // 直接调用你传进来的回调
+}
+
+const closeRobot = async (record) => {
+  const params = { id: record.id, active: 5 }
+  const activeResp = await api.getActive(params)
+  if (activeResp.code === 200) {
+    if (activeResp.data == 2 || activeResp.data == 1) {
+      Message.error('请先暂停机器人才能关闭！')
+      return
+    }
+  }
+  const closeResp = await api.setActive(params)
+  if (closeResp.code === 200) {
+    Message.success(`机器人关闭成功！`)
+    crudRef.value?.refresh()
+  }
+}
+
+const handleDelete = (record) => {
+  const params = { ids: record.id }
+  options.delete.func?.(params)
+}
 
 // SaTable 基础配置
 const options = reactive({
@@ -70,6 +140,13 @@ const options = reactive({
     show: true,
     auth: ['/app/botadmin/CoinBot/destroy'],
     func: async (params) => {
+      const activeResp = await api.getActive(params)
+      if (activeResp.code === 200) {
+        if (activeResp.data == 5) {
+          Message.error('请先关闭机器人才能删除！')
+          return
+        }
+      }
       const resp = await api.destroy(params)
       if (resp.code === 200) {
         Message.success(`删除成功！`)
@@ -81,18 +158,21 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人名称', dataIndex: 'name', width: 180, sortable: { sortDirections: ['ascend', 'descend'] } },
-  { title: '交易所账户', dataIndex: 'exchange_account_id', width: 180 },
-  { title: '交易对', dataIndex: 'symbol', width: 180, sortable: { sortDirections: ['ascend', 'descend'] } },
-  { title: '机器人状态', dataIndex: 'status', type: 'dict', dict: 'bot_status', width: 120 },
-  { title: '启用/暂停', dataIndex: 'active', width: 180 },
-  { title: '开仓合约张数', dataIndex: 'open_position_cont', width: 180 },
-  { title: '持仓合约张数', dataIndex: 'position_cont', width: 180 },
-  { title: '可用合约张数', dataIndex: 'available_cont', width: 180 },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl', width: 180 },
-  { title: '创建时间', dataIndex: 'create_time', width: 180 },
-  { title: '更新时间', dataIndex: 'update_time', width: 180 },
+  { title: '机器人名称', dataIndex: 'name' },
+  { title: '交易对', dataIndex: 'symbol' },
+  { title: '机器人状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
+  { title: '启用/暂停', dataIndex: 'active' },
+  { title: '开仓合约张数', dataIndex: 'open_position_cont' },
+  { title: '持仓合约张数', dataIndex: 'position_cont' },
+  { title: '可用合约张数', dataIndex: 'available_cont' },
+  { title: '浮动盈亏', dataIndex: 'unrealized_pnl' },
+  { title: '创建时间', dataIndex: 'create_time' },
 ])
+if (role('superAdmin')) {
+  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id' }
+  const index = columns.findIndex((col) => col.dataIndex === 'name')
+  columns.splice(index + 1, 0, newColumn)
+}
 
 // 页面数据初始化
 const initPage = async () => {
