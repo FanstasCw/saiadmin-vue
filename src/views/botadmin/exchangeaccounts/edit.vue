@@ -32,7 +32,12 @@
         <a-input v-model="formData.pass_phrase" placeholder="请输入密码短语" />
       </a-form-item>
       <a-form-item label="是否启用" field="is_active">
-        <sa-switch v-model="formData.is_active" />
+        <sa-switch
+          v-model="formData.is_active"
+          checked-value="2"
+          unchecked-value="3"
+          checked-text="启用"
+          unchecked-text="停用" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
