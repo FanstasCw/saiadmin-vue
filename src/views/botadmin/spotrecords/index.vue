@@ -1,6 +1,6 @@
 <template>
   <div class="ma-content-block">
-    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
+    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm" :scroll="{ x: '100%', y: '100%' }">
       <!-- 搜索区 tableSearch -->
       <template #tableSearch>
         <a-col :sm="8" :xs="24">
@@ -72,16 +72,16 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人', dataIndex: 'spot_bot_id', sortable: { sortDirections: ['ascend', 'descend'] } },
-  { title: '订单ID', dataIndex: 'exchange_order_id' },
-  { title: '交易对', dataIndex: 'symbol', sortable: { sortDirections: ['ascend', 'descend'] } },
-  { title: '买卖方向', dataIndex: 'side', type: 'dict', dict: 'spot_side' },
-  { title: '订单类型', dataIndex: 'type', type: 'dict', dict: 'order_type' },
-  { title: '订单数量', dataIndex: 'amount' },
-  { title: '订单价格', dataIndex: 'price' },
-  { title: '成交金额', dataIndex: 'cost' },
-  { title: '手续费', dataIndex: 'fee' },
-  { title: '成交时间', dataIndex: 'create_time', sortable: { sortDirections: ['ascend', 'descend'] } },
+  { title: '机器人', dataIndex: 'spot_bot_id', sortable: { sortDirections: ['ascend', 'descend'] } , width: 100},
+  { title: '订单ID', dataIndex: 'exchange_order_id' , width: 180},
+  { title: '交易对', dataIndex: 'symbol', sortable: { sortDirections: ['ascend', 'descend'] } , width: 180},
+  { title: '买卖方向', dataIndex: 'side', type: 'dict', dict: 'spot_side' , width: 120},
+  { title: '订单类型', dataIndex: 'type', type: 'dict', dict: 'order_type', width: 120 },
+  { title: '订单数量', dataIndex: 'amount' , width: 180},
+  { title: '订单价格', dataIndex: 'price' , width: 180},
+  { title: '成交金额', dataIndex: 'cost' , width: 180},
+  //{ title: '手续费', dataIndex: 'fee' },
+  { title: '成交时间', dataIndex: 'create_time', sortable: { sortDirections: ['ascend', 'descend'] }, width: 180 },
 ])
 
 // 页面数据初始化

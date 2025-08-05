@@ -75,9 +75,9 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人ID', dataIndex: 'bot_id', width: 180 },
-  { title: '日志级别', dataIndex: 'log_level', width: 180 },
-  { title: '日志内容', dataIndex: 'log_content', width: 180 },
+  { title: '机器人ID', dataIndex: 'bot_id', width: 100 },
+  { title: '日志级别', dataIndex: 'log_level', width: 100 },
+  { title: '日志内容', dataIndex: 'log_content', width: 200 },
   { title: '创建时间', dataIndex: 'create_time', width: 180 },
 ])
 

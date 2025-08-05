@@ -162,17 +162,17 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人名称', dataIndex: 'name' },
-  { title: '交易对', dataIndex: 'symbol' },
-  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
-  { title: '启用/暂停', dataIndex: 'active' },
-  { title: '本金', dataIndex: 'principal' },
-  { title: '现金余额', dataIndex: 'cash_balance' },
-  { title: '持仓数量', dataIndex: 'position_amount' },
-  { title: '持仓价值', dataIndex: 'position_value' },
-  { title: '账户净值', dataIndex: 'account_net_value' },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl' },
-  { title: '创建时间', dataIndex: 'create_time' },
+  { title: '机器人名称', dataIndex: 'name', width: 160 },
+  { title: '交易对', dataIndex: 'symbol' , width: 120},
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' , width: 120},
+  { title: '启用/暂停', dataIndex: 'active' , width: 120},
+  { title: '本金', dataIndex: 'principal' , width: 140},
+  { title: '现金余额', dataIndex: 'cash_balance' , width: 140},
+  { title: '持仓数量', dataIndex: 'position_amount' , width: 140},
+  { title: '持仓价值', dataIndex: 'position_value' , width: 140},
+  { title: '账户净值', dataIndex: 'account_net_value' , width: 140},
+  { title: '浮动盈亏', dataIndex: 'unrealized_pnl' , width: 140},
+  { title: '创建时间', dataIndex: 'create_time' , width: 160},
 ])
 if (role('superAdmin')) {
   const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id' }
