@@ -5,7 +5,7 @@
       <template #tableSearch>
         <a-col :sm="8" :xs="24">
           <a-form-item label="机器人" field="coin_bot_id">
-            <a-select v-model="searchForm.coin_bot_id" :options="[]" placeholder="请选择机器人" allow-clear />
+            <a-select v-model="searchForm.coin_bot_id" :options="botName" placeholder="请选择机器人" allow-clear />
           </a-form-item>
         </a-col>
         <a-col :sm="8" :xs="24">
@@ -36,6 +36,9 @@
       </template>
 
       <!-- Table 自定义渲染 -->
+      <template #coin_bot_id="{ record }">
+        {{ botName.find((option) => option.value == record.coin_bot_id)?.label || record.coin_bot_id }}
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
@@ -46,11 +49,13 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import api from '../api/coinrecords'
+import commonApi from '@/api/common'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
+const botName = ref([])
 
 // 搜索表单
 const searchForm = ref({
@@ -60,13 +65,16 @@ const searchForm = ref({
   side: '',
   type: '',
   create_time: [],
+  orderBy: 'create_time',
+  orderType: 'desc',
 })
 
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: { showCheckedAll: false },
-  showTools: false,
+  rowSelection: false,
+  showTools: true,
+  showSort: false,
   operationColumn: false,
 })
 
@@ -84,7 +92,10 @@ const columns = reactive([
 ])
 
 // 页面数据初始化
-const initPage = async () => {}
+const initPage = async () => {
+  const postResp = await commonApi.commonGet('/app/botadmin/CoinBot/getBotName')
+  botName.value = postResp.data
+}
 
 // SaTable 数据请求
 const refresh = async () => {
