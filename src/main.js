@@ -41,6 +41,3 @@ app.config.globalProperties.$title = import.meta.env.VITE_APP_TITLE
 app.config.globalProperties.$url = import.meta.env.VITE_APP_BASE
 
 app.mount('#app')
-
-tool.capsule('SaiAdmin', `v${packageJson.version} release`)
-console.log('SaiAdmin 官网  https://saithink.top')
