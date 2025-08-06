@@ -63,7 +63,7 @@ const handleSubmit = async ({ values, errors }) => {
     <div class="login-width md:w-10/12 w-11/12 mx-auto flex justify-between h-full items-center">
       <div class="w-6/12 mx-auto left-panel rounded-l pl-5 pr-5 hidden md:block">
         <div class="logo">
-          <span>{{ $title }} v{{ packageJson.version }}</span>
+          <span>{{ $title }}</span>
         </div>
         <div class="slogan flex justify-end">
           <span>---- {{ $t('sys.login.slogan') }}</span>
@@ -73,13 +73,24 @@ const handleSubmit = async ({ values, errors }) => {
       <div class="md:w-6/12 w-11/12 md:rounded-r mx-auto pl-5 pr-5 pb-10">
         <h2 class="mt-10 text-3xl pb-0 mb-10 login-title">{{ $t('sys.login.title') }}</h2>
         <a-form :model="form" @submit="handleSubmit">
-          <a-form-item field="username" :hide-label="true" :rules="[{ required: true, message: $t('sys.login.usernameNotice') }]">
-            <a-input v-model="form.username" class="w-full" size="large" :placeholder="$t('sys.login.username')" allow-clear>
+          <a-form-item
+            field="username"
+            :hide-label="true"
+            :rules="[{ required: true, message: $t('sys.login.usernameNotice') }]">
+            <a-input
+              v-model="form.username"
+              class="w-full"
+              size="large"
+              :placeholder="$t('sys.login.username')"
+              allow-clear>
               <template #prefix><icon-user /></template>
             </a-input>
           </a-form-item>
 
-          <a-form-item field="password" :hide-label="true" :rules="[{ required: true, message: $t('sys.login.passwordNotice') }]">
+          <a-form-item
+            field="password"
+            :hide-label="true"
+            :rules="[{ required: true, message: $t('sys.login.passwordNotice') }]">
             <a-input-password v-model="form.password" :placeholder="$t('sys.login.password')" size="large" allow-clear>
               <template #prefix><icon-lock /></template>
             </a-input-password>
@@ -108,14 +119,6 @@ const handleSubmit = async ({ values, errors }) => {
               {{ $t('sys.login.loginBtn') }}
             </a-button>
           </a-form-item>
-
-          <a-divider orientation="center">{{ $t('sys.login.otherLoginType') }}</a-divider>
-          <div class="flex w-3/4 pt-2 mx-auto items-stretch justify-around">
-            <a-avatar class="other-login wechat"><icon-wechat /></a-avatar>
-            <a-avatar class="other-login alipay"><icon-alipay-circle /></a-avatar>
-            <a-avatar class="other-login qq"><icon-qq /></a-avatar>
-            <a-avatar class="other-login weibo"><icon-weibo /></a-avatar>
-          </div>
         </a-form>
       </div>
     </div>
