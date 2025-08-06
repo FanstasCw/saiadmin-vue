@@ -49,7 +49,7 @@
       <a-form-item label="平空价格间隔" field="close_short_interval">
         <a-input v-model="formData.close_short_interval" placeholder="请输入平空价格间隔" :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="平仓比例" field="close_short_ratio">
+      <a-form-item label="平空比例" field="close_short_ratio">
         <a-select v-model="formData.close_short_ratio" placeholder="请选择平仓比例" :disabled="isEditDisabled">
           <a-option :value="0.1">10%</a-option>
           <a-option :value="0.2">20%</a-option>
