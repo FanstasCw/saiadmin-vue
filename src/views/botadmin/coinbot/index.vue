@@ -123,7 +123,8 @@ const handleDelete = (record) => {
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: { showCheckedAll: true },
+  rowSelection: false,
+  showSort: false,
   add: {
     show: true,
     auth: ['/app/botadmin/CoinBot/save'],
@@ -161,18 +162,18 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人名称', dataIndex: 'name' },
-  { title: '交易对', dataIndex: 'symbol' },
-  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status' },
-  { title: '启用/暂停', dataIndex: 'active' },
-  { title: '开仓合约张数', dataIndex: 'open_position_cont' },
-  { title: '持仓合约张数', dataIndex: 'position_cont' },
-  { title: '可用合约张数', dataIndex: 'available_cont' },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl' },
-  { title: '创建时间', dataIndex: 'create_time' },
+  { title: '机器人名称', dataIndex: 'name', width: 160 },
+  { title: '交易对', dataIndex: 'symbol', width: 120 },
+  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status', width: 120 },
+  { title: '启用/暂停', dataIndex: 'active', width: 120 },
+  { title: '开仓合约张数', dataIndex: 'open_position_cont', width: 140 },
+  { title: '持仓合约张数', dataIndex: 'position_cont', width: 140 },
+  { title: '可用合约张数', dataIndex: 'available_cont', width: 140 },
+  { title: '浮动盈亏', dataIndex: 'unrealized_pnl', width: 140 },
+  { title: '创建时间', dataIndex: 'create_time', width: 160 },
 ])
 if (role('superAdmin')) {
-  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id' }
+  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 140 }
   const index = columns.findIndex((col) => col.dataIndex === 'name')
   columns.splice(index + 1, 0, newColumn)
 }
