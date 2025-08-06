@@ -1,21 +1,21 @@
 <template>
   <div class="mr-2 flex justify-end lg:justify-between w-full lg:w-auto">
     <a-space class="mr-0 lg:mr-5" size="medium">
-      <a-tooltip :content="$t('sys.store')" v-if="isDev">
+      <!-- <a-tooltip :content="$t('sys.store')" v-if="isDev">
         <a-button :shape="'circle'" class="hidden lg:inline" @click="handleAppStore">
           <template #icon>
             <icon-apps :size="16" :rotate="45" />
           </template>
         </a-button>
-      </a-tooltip>
+      </a-tooltip> -->
 
-      <a-tooltip :content="$t('sys.search')">
+      <!-- <a-tooltip :content="$t('sys.search')">
         <a-button :shape="'circle'" @click="() => (appStore.searchOpen = true)" class="hidden lg:inline">
           <template #icon>
             <icon-search />
           </template>
         </a-button>
-      </a-tooltip>
+      </a-tooltip> -->
 
       <!--      <a-tooltip content="锁屏">-->
       <!--        <a-button :shape="'circle'" class="hidden lg:inline">-->
@@ -37,7 +37,11 @@
       <a-trigger trigger="click">
         <a-button :shape="'circle'">
           <template #icon>
-            <a-badge :count="5" dot :dotStyle="{ width: '5px', height: '5px' }" v-if="messageStore.messageList.length > 0">
+            <a-badge
+              :count="5"
+              dot
+              :dotStyle="{ width: '5px', height: '5px' }"
+              v-if="messageStore.messageList.length > 0">
               <icon-notification />
             </a-badge>
             <icon-notification v-else />
@@ -49,17 +53,20 @@
         </template>
       </a-trigger>
 
-      <a-tooltip :content="$t('sys.pageSetting')">
+      <!-- <a-tooltip :content="$t('sys.pageSetting')">
         <a-button :shape="'circle'" @click="() => (appStore.settingOpen = true)" class="hidden lg:inline">
           <template #icon>
             <icon-settings />
           </template>
         </a-button>
-      </a-tooltip>
+      </a-tooltip> -->
     </a-space>
     <a-dropdown @select="handleSelect" trigger="hover">
       <a-avatar class="bg-blue-500 text-3xl avatar" style="top: -1px">
-        <img :src="userStore.user && userStore.user.avatar ? $tool.showFile(userStore.user.avatar) : $url + 'avatar.jpg'" />
+        <img
+          :src="
+            userStore.user && userStore.user.avatar ? $tool.showFile(userStore.user.avatar) : $url + 'avatar.jpg'
+          " />
       </a-avatar>
 
       <template #content>
@@ -113,9 +120,9 @@ const handleSelect = async (name) => {
   }
 }
 
-const handleAppStore = async () => {
-  window.open('https://saas.saithink.top/#/appStore')
-}
+// const handleAppStore = async () => {
+//   window.open('https://saas.saithink.top/#/appStore')
+// }
 
 const handleLogout = async () => {
   await userStore.logout()
