@@ -15,7 +15,8 @@ dayjs.locale(zhCn)
 dayjs.extend(relativeTime)
 
 // 官方样式
-import '@arco-design/web-vue/dist/arco.css'
+// import '@arco-design/web-vue/dist/arco.css'
+import '@arco-themes/vue-gi-demo/index.less'
 import './style/skin.less'
 import './style/index.css'
 import './style/global.less'
@@ -26,14 +27,7 @@ import packageJson from '../package.json'
 
 const app = createApp(App)
 
-app
-  .use(ArcoVue, {})
-  .use(ArcoVueIcon)
-  .use(router)
-  .use(store)
-  .use(i18n)
-  .use(directives)
-  .use(globalComponents)
+app.use(ArcoVue, {}).use(ArcoVueIcon).use(router).use(store).use(i18n).use(directives).use(globalComponents)
 
 app.config.globalProperties.$tool = tool
 app.config.globalProperties.$common = common
