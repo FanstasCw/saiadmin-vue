@@ -11,15 +11,10 @@
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
       <a-form-item label="账户名称" field="name">
-        <a-input v-model="formData.name" placeholder="请输入账户名称" :disabled="isEditDisabled" />
+        <a-input v-model="formData.name" placeholder="请输入账户名称" />
       </a-form-item>
       <a-form-item label="交易所" field="exchange_id">
-        <a-select
-          v-model="formData.exchange_id"
-          :options="postData"
-          placeholder="请选择交易所"
-          allow-clear
-          :disabled="isEditDisabled" />
+        <a-select v-model="formData.exchange_id" :options="postData" placeholder="请选择交易所" allow-clear />
       </a-form-item>
       <a-form-item label="公钥" field="api_key">
         <a-input v-model="formData.api_key" placeholder="请输入公钥" />
@@ -84,11 +79,6 @@ const rules = {
   api_key: [{ required: true, message: '公钥必需填写' }],
   secret_key: [{ required: true, message: '密钥必需填写' }],
 }
-
-// 判断是否为编辑模式且需要禁用部分输入框
-const isEditDisabled = computed(() => {
-  return mode.value === 'edit'
-})
 
 // 判断是否为欧易交易所
 const isOkxExchange = computed(() => {

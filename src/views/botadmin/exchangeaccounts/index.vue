@@ -3,16 +3,16 @@
     <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
       <!-- 搜索区 tableSearch -->
       <template #tableSearch>
-        <a-col :sm="8" :xs="24">
+        <!-- <a-col :sm="8" :xs="24">
           <a-form-item label="账户名称" field="name">
             <a-input v-model="searchForm.name" placeholder="请输入账户名称" allow-clear />
           </a-form-item>
-        </a-col>
-        <a-col :sm="8" :xs="24">
+        </a-col> -->
+        <!-- <a-col :sm="8" :xs="24">
           <a-form-item label="交易所" field="exchange_id">
             <a-select v-model="searchForm.exchange_id" :options="postData" placeholder="请选择交易所" allow-clear />
           </a-form-item>
-        </a-col>
+        </a-col> -->
       </template>
 
       <!-- Table 自定义渲染 -->
@@ -43,6 +43,7 @@ import { onMounted, ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import api from '../api/exchangeaccounts'
+import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
 
 // 引用定义
@@ -69,7 +70,8 @@ const changeActive = async (is_active, id) => {
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: { showCheckedAll: true },
+  rowSelection: false,
+  showSearch: false,
   add: {
     show: true,
     auth: ['/app/botadmin/ExchangeAccounts/save'],
