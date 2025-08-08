@@ -105,7 +105,7 @@ const initialFormData = {
   name: '',
   exchange_account_id: 1,
   symbol: '',
-  active: 1,
+  active: 2,
   principal: '',
   buy_threshold: '',
   sell_threshold: '',
@@ -167,10 +167,12 @@ const submit = async (done) => {
   if (!validate) {
     loading.value = true
     let data = { ...formData }
+    // console.log(data)
     let result = {}
     if (mode.value === 'add') {
       // 添加数据
       data.id = undefined
+      data.cash_balance = data.principal
       result = await api.save(data)
     } else {
       // 修改数据

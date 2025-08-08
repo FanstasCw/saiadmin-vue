@@ -106,6 +106,7 @@ const closeRobot = async (record) => {
       return
     } else if (activeResp.data == 5) {
       Message.warning('机器人已关闭！')
+      crudRef.value?.refresh()
       return
     }
   }
