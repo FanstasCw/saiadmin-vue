@@ -94,7 +94,7 @@ const initialFormData = {
   name: '',
   exchange_account_id: null,
   symbol: '',
-  active: 1,
+  active: 2,
   principal: '',
   recent_high_price: '',
   drawdown_ratio: '',
