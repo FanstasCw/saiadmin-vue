@@ -35,6 +35,9 @@
           unchecked-text="暂停">
         </sa-switch>
       </template>
+      <template #unrealized_pnl="{ record }">
+        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ record.unrealized_pnl }}</span>
+      </template>
       <!-- 操作 -->
       <template #operationCell="{ record }">
         <!-- 默认编辑按钮 -->
@@ -70,13 +73,14 @@ import EditForm from './edit.vue'
 import api from '../api/spotbot'
 import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
+import { useDictStore } from '@/store'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
 const symbolData = ref([])
-const accountData = ref([])
+const colorData = useDictStore().data.price_change_color
 // 搜索表单
 const searchForm = ref({
   name: '',
@@ -89,6 +93,16 @@ const setActive = async (active, id) => {
   if (response.code === 200) {
     Message.success(response.message)
     crudRef.value.refresh()
+  }
+}
+
+const getTextColors = (value) => {
+  if (value > 0) {
+    return colorData.find((item) => item.label === 'up').value
+  } else if (value < 0) {
+    return colorData.find((item) => item.label === 'down').value
+  } else {
+    return 'black'
   }
 }
 
