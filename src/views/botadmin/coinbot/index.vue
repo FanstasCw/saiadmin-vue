@@ -128,7 +128,7 @@ const handleDelete = (record) => {
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: false,
+  rowSelection: undefined,
   showSort: false,
   add: {
     show: true,

@@ -50,7 +50,7 @@ const searchForm = ref({
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: false,
+  rowSelection: undefined,
   view: {
     show: true,
     auth: ['/app/botadmin/SpotbotLogs/read'],

@@ -77,7 +77,7 @@ const searchForm = ref({
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: false,
+  rowSelection: undefined,
   showTools: true,
   showSort: false,
   operationColumn: false,

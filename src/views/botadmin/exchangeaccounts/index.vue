@@ -70,7 +70,7 @@ const changeActive = async (is_active, id) => {
 // SaTable 基础配置
 const options = reactive({
   api: api.getPageList,
-  rowSelection: false,
+  rowSelection: undefined,
   showSearch: false,
   add: {
     show: true,
