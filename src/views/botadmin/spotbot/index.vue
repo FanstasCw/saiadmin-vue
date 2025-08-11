@@ -108,6 +108,10 @@ const closeRobot = async (record) => {
       Message.warning('机器人已关闭！')
       crudRef.value?.refresh()
       return
+    } else if (activeResp.data == 6) {
+      Message.warning('机器人已平仓！')
+      crudRef.value?.refresh()
+      return
     }
   }
   const closeResp = await api.setActive(params)
@@ -148,8 +152,8 @@ const options = reactive({
     func: async (params) => {
       const closeResp = await api.getActive(params)
       if (closeResp.code === 200) {
-        if (closeResp.data != 5) {
-          Message.error('请先关闭机器人才能删除！')
+        if (closeResp.data != 6) {
+          Message.error('请先关闭机器人,机器人平仓后，才能删除！')
           return
         }
       }
