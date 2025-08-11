@@ -92,7 +92,7 @@ let title = computed(() => {
 const initialFormData = {
   id: null,
   name: '',
-  exchange_account_id: null,
+  exchange_account_id: 1,
   symbol: '',
   active: 2,
   principal: '',
