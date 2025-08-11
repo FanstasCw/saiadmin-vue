@@ -107,8 +107,8 @@ const initialFormData = {
   symbol: '',
   active: 2,
   principal: '',
-  buy_threshold: '',
-  sell_threshold: '',
+  buy_threshold: 0.02,
+  sell_threshold: 0.02,
   invest_ratio: 0.5,
 }
 
