@@ -114,14 +114,14 @@ const closeRobot = async (record) => {
   const params = { ids: record.id, active: 5 }
   const activeResp = await api.getActive(params)
   if (activeResp.code === 200) {
-    if (activeResp.data == 2 || activeResp.data == 1) {
+    if (activeResp.data.active == 2 || activeResp.data.active == 1) {
       Message.error('请先暂停机器人才能关闭！')
       return
-    } else if (activeResp.data == 5) {
+    } else if (activeResp.data.active == 5) {
       Message.warning('机器人已关闭！')
       crudRef.value?.refresh()
       return
-    } else if (activeResp.data == 6) {
+    } else if (activeResp.data.active == 6) {
       Message.warning('机器人已平仓！')
       crudRef.value?.refresh()
       return
@@ -163,10 +163,14 @@ const options = reactive({
     show: true,
     auth: ['/app/botadmin/CoinBot/destroy'],
     func: async (params) => {
-      const activeResp = await api.getActive(params)
-      if (activeResp.code === 200) {
-        if (activeResp.data != 6) {
-          Message.error('请先关闭机器人,机器人平仓后，才能删除！')
+      const closeResp = await api.getActive(params)
+      if (closeResp.code === 200) {
+        if (closeResp.data.status != 5) {
+          Message.error('请先关闭机器人,才能删除！')
+          return
+        }
+        if (closeResp.data.active != 6) {
+          Message.error('机器人关闭中，请稍后删除！')
           return
         }
       }
