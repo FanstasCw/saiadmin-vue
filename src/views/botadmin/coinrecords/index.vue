@@ -20,7 +20,7 @@
         </a-col>
         <a-col :sm="8" :xs="24">
           <a-form-item label="买卖方向" field="side">
-            <sa-select v-model="searchForm.side" dict="coin_bot" placeholder="请选择买卖方向" allow-clear />
+            <sa-select v-model="searchForm.side" dict="coin_side" placeholder="请选择买卖方向" allow-clear />
           </a-form-item>
         </a-col>
         <a-col :sm="8" :xs="24">
@@ -83,7 +83,7 @@ const columns = reactive([
   { title: '机器人', dataIndex: 'coin_bot_id', sortable: { sortDirections: ['ascend', 'descend'] } },
   { title: '订单ID', dataIndex: 'exchange_order_id' },
   { title: '交易对', dataIndex: 'symbol', sortable: { sortDirections: ['ascend', 'descend'] } },
-  { title: '买卖方向', dataIndex: 'side', type: 'dict', dict: 'coin_bot' },
+  { title: '买卖方向', dataIndex: 'side', type: 'dict', dict: 'coin_side' },
   { title: '订单类型', dataIndex: 'type', type: 'dict', dict: 'order_type' },
   { title: '订单数量(张)', dataIndex: 'amount' },
   { title: '订单价格', dataIndex: 'price' },
