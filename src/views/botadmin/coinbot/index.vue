@@ -35,8 +35,17 @@
           unchecked-text="暂停">
         </sa-switch>
       </template>
+      <template #open_position_cont="{ record }">
+        {{ parseFloat(record.open_position_cont) }}
+      </template>
+      <template #position_cont="{ record }">
+        {{ parseFloat(record.position_cont) }}
+      </template>
+      <template #available_cont="{ record }">
+        {{ parseFloat(record.available_cont) }}
+      </template>
       <template #unrealized_pnl="{ record }">
-        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ record.unrealized_pnl }}</span>
+        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ parseFloat(record.unrealized_pnl) }}</span>
       </template>
       <!-- 操作 -->
       <template #operationCell="{ record }">

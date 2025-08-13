@@ -35,8 +35,23 @@
           unchecked-text="暂停">
         </sa-switch>
       </template>
+      <template #principal="{ record }">
+        {{ parseFloat(record.principal) }}
+      </template>
+      <template #position_amount="{ record }">
+        {{ parseFloat(record.position_amount) }}
+      </template>
+      <template #cash_balance="{ record }">
+        {{ parseFloat(record.cash_balance) }}
+      </template>
+      <template #position_value="{ record }">
+        {{ parseFloat(record.position_value) }}
+      </template>
+      <template #account_net_value="{ record }">
+        {{ parseFloat(record.account_net_value) }}
+      </template>
       <template #unrealized_pnl="{ record }">
-        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ record.unrealized_pnl }}</span>
+        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ parseFloat(record.unrealized_pnl) }}</span>
       </template>
       <!-- 操作 -->
       <template #operationCell="{ record }">

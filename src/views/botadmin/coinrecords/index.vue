@@ -39,6 +39,15 @@
       <template #coin_bot_id="{ record }">
         {{ botName.find((option) => option.value == record.coin_bot_id)?.label || record.coin_bot_id }}
       </template>
+      <template #amount="{ record }">
+        {{ parseFloat(record.amount) }}
+      </template>
+      <template #price="{ record }">
+        {{ parseFloat(record.price) }}
+      </template>
+      <template #fee="{ record }">
+        {{ parseFloat(record.fee) }}
+      </template>
     </sa-table>
 
     <!-- 编辑表单 -->
