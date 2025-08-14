@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/index',
+      url: '/bot/spotBot/index',
       method: 'get',
       params
     })
@@ -22,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/save',
+      url: '/bot/spotBot/save',
       method: 'post',
       data: params
     })
@@ -34,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/update?id=' + id,
+      url: '/bot/spotBot/update?id=' + id,
       method: 'put',
       data
     })
@@ -46,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/SpotBot/read?id=' + id,
+      url: '/bot/spotBot/read?id=' + id,
       method: 'get'
     })
   },
@@ -57,7 +57,7 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/SpotBot/destroy',
+      url: '/bot/spotBot/destroy',
       method: 'delete',
       data
     })
@@ -69,7 +69,7 @@ export default {
    */
   setActive(data = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/setActive',
+      url: '/bot/spotBot/setActive',
       method: 'post',
       data
     })
@@ -81,7 +81,7 @@ export default {
    */
   getActive(data = {}) {
     return request({
-      url: '/app/botadmin/SpotBot/getActive',
+      url: '/bot/spotBot/getActive',
       method: 'post',
       data
     })

@@ -77,14 +77,14 @@ const options = reactive({
   rowSelection: { showCheckedAll: true },
   add: {
     show: true,
-    auth: ['/app/botadmin/Exchanges/save'],
+    auth: ['/bot/exchange/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/app/botadmin/Exchanges/update'],
+    auth: ['/bot/exchange/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -92,7 +92,7 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/app/botadmin/Exchanges/destroy'],
+    auth: ['/bot/exchange/destroy'],
     func: async (params) => {
       const resp = await api.destroy(params)
       if (resp.code === 200) {

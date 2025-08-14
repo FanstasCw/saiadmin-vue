@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/SpotRecords/index',
+      url: '/bot/spotBotTrade/index',
       method: 'get',
       params
     })

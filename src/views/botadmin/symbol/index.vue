@@ -38,14 +38,14 @@ const options = reactive({
   rowSelection: { showCheckedAll: true },
   add: {
     show: true,
-    auth: ['/app/botadmin/ExchangeSymbol/save'],
+    auth: ['/bot/symbol/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/app/botadmin/ExchangeSymbol/update'],
+    auth: ['/bot/symbol/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -53,7 +53,7 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/app/botadmin/ExchangeSymbol/destroy'],
+    auth: ['/bot/symbol/destroy'],
     func: async (params) => {
       const resp = await api.destroy(params)
       if (resp.code === 200) {
@@ -75,7 +75,7 @@ const columns = reactive([
 
 // 页面数据初始化
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  const postResp = await commonApi.commonGet('/bot/exchange/accessExchange')
   postData.value = postResp.data
 }
 

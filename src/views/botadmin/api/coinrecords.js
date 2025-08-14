@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/CoinRecords/index',
+      url: '/bot/coinBotTrade/index',
       method: 'get',
       params
     })

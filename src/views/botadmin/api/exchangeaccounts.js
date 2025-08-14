@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/index',
+      url: '/bot/account/index',
       method: 'get',
       params
     })
@@ -22,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/save',
+      url: '/bot/account/save',
       method: 'post',
       data: params
     })
@@ -34,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/update?id=' + id,
+      url: '/bot/account/update?id=' + id,
       method: 'put',
       data
     })
@@ -46,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/read?id=' + id,
+      url: '/bot/account/read?id=' + id,
       method: 'get'
     })
   },
@@ -57,7 +57,7 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/destroy',
+      url: '/bot/account/destroy',
       method: 'delete',
       data
     })
@@ -69,7 +69,7 @@ export default {
    */
   changeActive(data = {}) {
     return request({
-      url: '/app/botadmin/ExchangeAccounts/changeActive',
+      url: '/bot/account/changeActive',
       method: 'post',
       data
     })

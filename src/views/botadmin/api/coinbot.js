@@ -10,7 +10,7 @@ export default {
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/CoinBot/index',
+      url: '/bot/coinBot/index',
       method: 'get',
       params
     })
@@ -22,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/CoinBot/save',
+      url: '/bot/coinBot/save',
       method: 'post',
       data: params
     })
@@ -34,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/CoinBot/update?id=' + id,
+      url: '/bot/coinBot/update?id=' + id,
       method: 'put',
       data
     })
@@ -46,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/CoinBot/read?id=' + id,
+      url: '/bot/coinBot/read?id=' + id,
       method: 'get'
     })
   },
@@ -57,7 +57,7 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/CoinBot/destroy',
+      url: '/bot/coinBot/destroy',
       method: 'delete',
       data
     })
@@ -69,7 +69,7 @@ export default {
    */
   setActive(data = {}) {
     return request({
-      url: '/app/botadmin/CoinBot/setActive',
+      url: '/bot/coinBot/setActive',
       method: 'post',
       data
     })
@@ -81,7 +81,7 @@ export default {
    */
   getActive(data = {}) {
     return request({
-      url: '/app/botadmin/CoinBot/getActive',
+      url: '/bot/coinBot/getActive',
       method: 'post',
       data
     })

@@ -51,7 +51,7 @@ const open = async (record) => {
 
 // 初始化页面数据
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/CoinBot/getBotName')
+  const postResp = await commonApi.commonGet('/bot/coinBot/getBotName')
   botName.value = postResp.data
   loading.value = true
   const resp = await api.read(rowData.value?.id)

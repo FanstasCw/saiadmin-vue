@@ -4,14 +4,13 @@ import { request } from '@/utils/request.js'
  * 币本位机器人日志 API接口
  */
 export default {
-
   /**
    * 数据列表
    * @returns
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/CoinbotLogs/index',
+      url: '/bot/coinBotLog/index',
       method: 'get',
       params
     })
@@ -23,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/CoinbotLogs/save',
+      url: '/bot/coinBotLog/save',
       method: 'post',
       data: params
     })
@@ -35,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/CoinbotLogs/update?id=' + id,
+      url: '/bot/coinBotLog/update?id=' + id,
       method: 'put',
       data
     })
@@ -47,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/CoinbotLogs/read?id=' + id,
+      url: '/bot/coinBotLog/read?id=' + id,
       method: 'get'
     })
   },
@@ -58,10 +57,9 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/CoinbotLogs/destroy',
+      url: '/bot/coinBotLog/destroy',
       method: 'delete',
       data
     })
-  },
-
+  }
 }

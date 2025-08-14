@@ -4,14 +4,13 @@ import { request } from '@/utils/request.js'
  * 现货机器人日志 API接口
  */
 export default {
-
   /**
    * 数据列表
    * @returns
    */
   getPageList(params = {}) {
     return request({
-      url: '/app/botadmin/SpotbotLogs/index',
+      url: '/bot/spotBotLog/index',
       method: 'get',
       params
     })
@@ -23,7 +22,7 @@ export default {
    */
   save(params = {}) {
     return request({
-      url: '/app/botadmin/SpotbotLogs/save',
+      url: '/bot/spotBotLog/save',
       method: 'post',
       data: params
     })
@@ -35,7 +34,7 @@ export default {
    */
   update(id, data = {}) {
     return request({
-      url: '/app/botadmin/SpotbotLogs/update?id=' + id,
+      url: '/bot/spotBotLog/update?id=' + id,
       method: 'put',
       data
     })
@@ -47,7 +46,7 @@ export default {
    */
   read(id) {
     return request({
-      url: '/app/botadmin/SpotbotLogs/read?id=' + id,
+      url: '/bot/spotBotLog/read?id=' + id,
       method: 'get'
     })
   },
@@ -58,10 +57,9 @@ export default {
    */
   destroy(data) {
     return request({
-      url: '/app/botadmin/SpotbotLogs/destroy',
+      url: '/bot/spotBotLog/destroy',
       method: 'delete',
       data
     })
-  },
-
+  }
 }

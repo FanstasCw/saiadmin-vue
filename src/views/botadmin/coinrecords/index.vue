@@ -102,7 +102,7 @@ const columns = reactive([
 
 // 页面数据初始化
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/CoinBot/getBotName')
+  const postResp = await commonApi.commonGet('/bot/coinBot/getBotName')
   botName.value = postResp.data
 }
 

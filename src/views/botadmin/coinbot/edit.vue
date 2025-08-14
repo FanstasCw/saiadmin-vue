@@ -133,9 +133,9 @@ const open = async (type = 'add') => {
 
 // 初始化页面数据
 const initPage = async () => {
-  const accountResp = await commonApi.commonGet('/app/botadmin/ExchangeAccounts/accessAccount')
+  const accountResp = await commonApi.commonGet('/bot/account/accessAccount')
   accountData.value = accountResp.data
-  const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=2')
+  const symbolResp = await commonApi.commonGet('/bot/symbol/accessSymbol?type=2')
   symbolData.value = symbolResp.data
 }
 

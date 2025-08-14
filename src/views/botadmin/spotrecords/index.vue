@@ -108,7 +108,7 @@ const columns = reactive([
 
 // 页面数据初始化
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/SpotBot/getBotName')
+  const postResp = await commonApi.commonGet('/bot/spotBot/getBotName')
   botName.value = postResp.data
 }
 

@@ -103,7 +103,7 @@ const open = async (type = 'add') => {
 
 // 初始化页面数据
 const initPage = async () => {
-  const postResp = await commonApi.commonGet('/app/botadmin/Exchanges/accessExchange')
+  const postResp = await commonApi.commonGet('/bot/exchange/accessExchange')
   postData.value = postResp.data
 }
 

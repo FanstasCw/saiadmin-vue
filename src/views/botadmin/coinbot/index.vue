@@ -155,14 +155,14 @@ const options = reactive({
   showSort: false,
   add: {
     show: true,
-    auth: ['/app/botadmin/CoinBot/save'],
+    auth: ['/bot/coinBot/save'],
     func: async () => {
       editRef.value?.open()
     },
   },
   edit: {
     show: true,
-    auth: ['/app/botadmin/CoinBot/update'],
+    auth: ['/bot/coinBot/update'],
     func: async (record) => {
       editRef.value?.open('edit')
       editRef.value?.setFormData(record)
@@ -170,7 +170,7 @@ const options = reactive({
   },
   delete: {
     show: true,
-    auth: ['/app/botadmin/CoinBot/destroy'],
+    auth: ['/bot/coinBot/destroy'],
     func: async (params) => {
       const closeResp = await api.getActive(params)
       if (closeResp.code === 200) {
@@ -212,7 +212,7 @@ if (role('superAdmin')) {
 
 // 页面数据初始化
 const initPage = async () => {
-  const symbolResp = await commonApi.commonGet('/app/botadmin/ExchangeSymbol/accessSymbol?type=2')
+  const symbolResp = await commonApi.commonGet('/bot/symbol/accessSymbol?type=2')
   symbolData.value = symbolResp.data
 }
 
