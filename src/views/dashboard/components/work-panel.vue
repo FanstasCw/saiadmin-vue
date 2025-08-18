@@ -1,3 +1,12 @@
 <template>
-  <div>自行开发</div>
+  <st-welcome />
+  <trade-count />
 </template>
+
+<script setup>
+import TradeCount from './components/trade-count.vue'
+import StWelcome from './components/st-welcome.vue'
+import StLoginChart from './components/st-loginChart.vue'
+// import StSaiadmin from './components/st-saiadmin.vue'
+import StAnnounced from './components/st-announced.vue'
+</script>
