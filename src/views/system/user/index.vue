@@ -35,39 +35,38 @@
         </a-col>
       </template>
 
-        <!-- Table 自定义渲染 -->
-        <!-- 状态列 -->
-        <template #status="{ record }">
-          <sa-switch
-            v-model="record.status"
-            :disabled="record.id == 1"
-            @change="changeStatus($event, record.id)"></sa-switch>
-        </template>
-        <!-- 头像列 -->
-        <template #avatar="{ record }">
-          <a-avatar>
-            <img :src="record.avatar ? record.avatar : avatar" style="object-fit: cover" />
-          </a-avatar>
-        </template>
-        <!-- 操作列 -->
-        <template #operationCell="{ record }">
-          <div v-if="record.id == 1">
-            <a-link @click="updateCache(record.id)"><icon-refresh /> 更新缓存</a-link>
-          </div>
-        </template>
-        <!-- 操作后置扩展 -->
-        <template #operationAfterExtend="{ record }">
-          <a-dropdown trigger="hover" v-if="record.id != 1" @select="selectOperation($event, record.id)">
-            <a-link><icon-double-right /> 更多</a-link>
-            <template #content>
-              <a-doption value="updateCache" v-auth="['/core/user/clearCache']">更新缓存</a-doption>
-              <a-doption value="setHomePage" v-auth="['/core/user/setHomePage']">设置首页</a-doption>
-              <a-doption value="resetPassword" v-auth="['/core/user/initUserPassword']">重置密码</a-doption>
-            </template>
-          </a-dropdown>
-        </template>
-      </sa-table>
-    </div>
+      <!-- Table 自定义渲染 -->
+      <!-- 状态列 -->
+      <template #status="{ record }">
+        <sa-switch
+          v-model="record.status"
+          :disabled="record.id == 1"
+          @change="changeStatus($event, record.id)"></sa-switch>
+      </template>
+      <!-- 头像列 -->
+      <template #avatar="{ record }">
+        <a-avatar>
+          <img :src="record.avatar ? record.avatar : avatar" style="object-fit: cover" />
+        </a-avatar>
+      </template>
+      <!-- 操作列 -->
+      <template #operationCell="{ record }">
+        <div v-if="record.id == 1">
+          <a-link @click="updateCache(record.id)"><icon-refresh /> 更新缓存</a-link>
+        </div>
+      </template>
+      <!-- 操作后置扩展 -->
+      <template #operationAfterExtend="{ record }">
+        <a-dropdown trigger="hover" v-if="record.id != 1" @select="selectOperation($event, record.id)">
+          <a-link><icon-double-right /> 更多</a-link>
+          <template #content>
+            <a-doption value="updateCache" v-auth="['/core/user/clearCache']">更新缓存</a-doption>
+            <a-doption value="setHomePage" v-auth="['/core/user/setHomePage']">设置首页</a-doption>
+            <a-doption value="resetPassword" v-auth="['/core/user/initUserPassword']">重置密码</a-doption>
+          </template>
+        </a-dropdown>
+      </template>
+    </sa-table>
 
     <!-- 编辑表单 -->
     <edit-form ref="editRef" @success="refresh" />
