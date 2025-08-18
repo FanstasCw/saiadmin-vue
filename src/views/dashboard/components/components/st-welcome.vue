@@ -11,8 +11,7 @@
         <div class="pl-3 mt-2">
           <div class="content-block-title">{{ userStore.user.nickname || userStore.user.username }}，欢迎回来！</div>
           <div class="leading-5 mt-2">
-            <!-- <a-tag class="tag-primary">免费开源、可商用</a-tag>
-            欢迎使用SaiAdmin后台权限管理系统。喜欢的请去点个 ⭐Star，谢谢！ -->
+            <a-tag class="tag-primary" bordered>{{ $t('sys.login.slogan') }}</a-tag>
           </div>
         </div>
       </div>
@@ -34,7 +33,7 @@ const visible = ref(false)
 
 const time = ref(null)
 const day = ref(null)
-
+const tag_color = ref('#2EBD85')
 onMounted(() => {
   showTime()
   setInterval(() => showTime(), 1000)
