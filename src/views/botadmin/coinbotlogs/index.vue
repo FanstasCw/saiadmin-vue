@@ -4,12 +4,12 @@
       <!-- 搜索区 tableSearch -->
       <template #tableSearch>
         <a-col :sm="8" :xs="24">
-          <a-form-item label="机器人ID" field="bot_id">
-            <a-select v-model="searchForm.bot_id" :options="botName" placeholder="请选择机器人ID" allow-clear />
+          <a-form-item :label="t('bot.botName')" field="bot_id">
+            <a-select v-model="searchForm.bot_id" :options="botName" :placeholder="t('bot.selectBot')" allow-clear />
           </a-form-item>
         </a-col>
         <a-col :sm="8" :xs="24">
-          <a-form-item label="创建时间" field="create_time">
+          <a-form-item :label="t('bot.createTime')" field="create_time">
             <a-range-picker v-model="searchForm.create_time" :show-time="true" mode="date" />
           </a-form-item>
         </a-col>
@@ -32,12 +32,15 @@ import { Message } from '@arco-design/web-vue'
 import ViewForm from './view.vue'
 import api from '../api/coinbotlogs'
 import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
 const botName = ref([])
+
+const { t } = useI18n()
 
 // 搜索表单
 const searchForm = ref({
@@ -51,8 +54,12 @@ const searchForm = ref({
 const options = reactive({
   api: api.getPageList,
   rowSelection: undefined,
+  operationColumnText: t('bot.operations'),
+  searchText: t('bot.search'),
+  resetText: t('bot.reset'),
   view: {
     show: true,
+    text: t('bot.view'),
     auth: ['/bot/coinBotLog/read'],
     func: async (record) => {
       viewRef.value?.open(record)
@@ -62,10 +69,10 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人', dataIndex: 'bot_id', width: 120 },
-  { title: '日志级别', dataIndex: 'log_level', width: 120 },
-  { title: '日志内容', dataIndex: 'log_content', width: 400 },
-  { title: '创建时间', dataIndex: 'create_time', width: 100 },
+  { title: t('bot.botName'), dataIndex: 'bot_id', width: 120 },
+  { title: t('bot.logLevel'), dataIndex: 'log_level', width: 120 },
+  { title: t('bot.logContent'), dataIndex: 'log_content', width: 400 },
+  { title: t('bot.createTime'), dataIndex: 'create_time', width: 100 },
 ])
 
 // 页面数据初始化

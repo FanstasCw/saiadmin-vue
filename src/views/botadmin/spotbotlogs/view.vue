@@ -3,21 +3,21 @@
     is="a-drawer"
     v-model:visible="visible"
     :width="tool.getDevice() === 'mobile' ? '100%' : '60%'"
-    title="查看详情"
+    :title="t('bot.view')"
     :footer="false">
     <!-- 详情 start -->
     <a-spin :loading="loading" class="w-full">
       <a-descriptions :column="1" bordered>
-        <a-descriptions-item label="机器人">
+        <a-descriptions-item :label="t('bot.botName')">
           {{ botName.find((option) => option.value == formData?.bot_id)?.label || formData?.bot_id }}
         </a-descriptions-item>
-        <a-descriptions-item label="日志级别">
+        <a-descriptions-item :label="t('bot.logLevel')">
           <span v-text="formData?.log_level"></span>
         </a-descriptions-item>
-        <a-descriptions-item label="日志内容">
+        <a-descriptions-item :label="t('bot.logContent')">
           <span v-text="formData?.log_content"></span>
         </a-descriptions-item>
-        <a-descriptions-item label="创建时间">
+        <a-descriptions-item :label="t('bot.createTime')">
           <span v-text="formData?.create_time"></span>
         </a-descriptions-item>
       </a-descriptions>
@@ -31,9 +31,10 @@ import { ref, reactive } from 'vue'
 import tool from '@/utils/tool'
 import api from '../api/spotbotlogs'
 import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['success'])
-
+const { t } = useI18n()
 // 引用定义
 const rowData = ref()
 const formData = ref()
