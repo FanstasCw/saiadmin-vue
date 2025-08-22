@@ -8,7 +8,7 @@
         }}
       </template>
       <template v-else>
-        {{ tool.getLabel(value, props.options.length > 0 ? props.options : dictList[props.dict]) }}
+        {{ getI18nLabel(value, props.options.length > 0 ? props.options : dictList[props.dict]) }}
       </template>
     </span>
     <!-- 渲染 tag -->
@@ -21,7 +21,7 @@
           :color="
             tool.getColor(v, props.options.length > 0 ? props.options : dictList[props.dict], props.colors || [])
           ">
-          {{ tool.getLabel(v, props.options.length > 0 ? props.options : dictList[props.dict]) }}
+          {{ getI18nLabel(v, props.options.length > 0 ? props.options : dictList[props.dict]) }}
         </a-tag>
       </template>
       <a-tag
@@ -29,7 +29,7 @@
         :color="
           tool.getColor(value, props.options.length > 0 ? props.options : dictList[props.dict], props.colors || [])
         ">
-        {{ tool.getLabel(value, props.options.length > 0 ? props.options : dictList[props.dict]) }}
+        {{ getI18nLabel(value, props.options.length > 0 ? props.options : dictList[props.dict]) }}
       </a-tag>
       <span v-else></span>
     </template>
@@ -40,9 +40,12 @@
 import { ref, watch } from 'vue'
 import tool from '@/utils/tool.js'
 import { useDictStore } from '@/store'
+import { useI18n } from 'vue-i18n'
 
 const dictList = useDictStore().data
 const value = ref()
+
+const { t } = useI18n()
 
 const props = defineProps({
   value: { type: [String, Number, Array] },
@@ -59,4 +62,10 @@ watch(
   },
   { immediate: true }
 )
+
+// 新增一个方法用于国际化 label
+function getI18nLabel(val, options) {
+  const label = tool.getLabel(val, options)
+  return t(label) // 使用 i18n 翻译
+}
 </script>
