@@ -5,7 +5,7 @@ let defaultSetting = {
   menuWidth: 230,
   layout: 'classic',
   skin: 'mine',
-  i18n: false,
+  i18n: true,
   language: 'zh_CN',
   animation: 'ma-slide-down',
   color: '#7166F0',
