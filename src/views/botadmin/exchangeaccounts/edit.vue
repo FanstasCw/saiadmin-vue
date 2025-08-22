@@ -10,29 +10,33 @@
     @before-ok="submit">
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
-      <a-form-item label="账户名称" field="name">
-        <a-input v-model="formData.name" placeholder="请输入账户名称" />
+      <a-form-item :label="t('bot.name')" field="name">
+        <a-input v-model="formData.name" :placeholder="t('bot.inputName')" />
       </a-form-item>
-      <a-form-item label="交易所" field="exchange_id">
-        <a-select v-model="formData.exchange_id" :options="postData" placeholder="请选择交易所" allow-clear />
+      <a-form-item :label="t('bot.exchange')" field="exchange_id">
+        <a-select
+          v-model="formData.exchange_id"
+          :options="postData"
+          :placeholder="t('bot.selectExchange')"
+          allow-clear />
       </a-form-item>
-      <a-form-item label="公钥" field="api_key">
-        <a-input v-model="formData.api_key" placeholder="请输入公钥" />
+      <a-form-item :label="t('bot.apiKey')" field="api_key">
+        <a-input v-model="formData.api_key" :placeholder="t('bot.inputApiKey')" />
       </a-form-item>
-      <a-form-item label="密钥" field="secret_key">
-        <a-input v-model="formData.secret_key" placeholder="请输入密钥" />
+      <a-form-item :label="t('bot.secretKey')" field="secret_key">
+        <a-input v-model="formData.secret_key" :placeholder="t('bot.inputSecretKey')" />
       </a-form-item>
       <!-- 添加条件渲染的密码短语输入框 -->
-      <a-form-item v-if="isOkxExchange" label="密码短语" field="pass_phrase">
-        <a-input v-model="formData.pass_phrase" placeholder="请输入密码短语" />
+      <a-form-item v-if="isOkxExchange" :label="t('bot.passPhrase')" field="pass_phrase">
+        <a-input v-model="formData.pass_phrase" :placeholder="t('bot.inputPhrase')" />
       </a-form-item>
-      <a-form-item label="是否启用" field="is_active">
+      <a-form-item :label="t('bot.enables')" field="is_active">
         <sa-switch
           v-model="formData.is_active"
           checked-value="2"
           unchecked-value="3"
-          checked-text="启用"
-          unchecked-text="停用" />
+          :checked-text="t('bot.enable')"
+          :unchecked-text="t('bot.disable')" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
@@ -45,6 +49,7 @@ import tool from '@/utils/tool'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '../api/exchangeaccounts'
 import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -53,9 +58,10 @@ const loading = ref(false)
 const formRef = ref()
 const mode = ref('')
 const postData = ref([])
+const { t } = useI18n()
 
 let title = computed(() => {
-  return '交易所账户管理' + (mode.value == 'add' ? '-新增' : '-编辑')
+  return t('menus.account') + (mode.value == 'add' ? ' - ' + t('bot.add') : ' - ' + t('bot.edit'))
 })
 
 // 表单初始值

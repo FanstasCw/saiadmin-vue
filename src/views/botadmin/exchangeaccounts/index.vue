@@ -1,20 +1,6 @@
 <template>
   <div class="ma-content-block">
     <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
-      <!-- 搜索区 tableSearch -->
-      <template #tableSearch>
-        <!-- <a-col :sm="8" :xs="24">
-          <a-form-item label="账户名称" field="name">
-            <a-input v-model="searchForm.name" placeholder="请输入账户名称" allow-clear />
-          </a-form-item>
-        </a-col> -->
-        <!-- <a-col :sm="8" :xs="24">
-          <a-form-item label="交易所" field="exchange_id">
-            <a-select v-model="searchForm.exchange_id" :options="postData" placeholder="请选择交易所" allow-clear />
-          </a-form-item>
-        </a-col> -->
-      </template>
-
       <!-- Table 自定义渲染 -->
       <!-- 交易所列 -->
       <template #exchange_id="{ record }">
@@ -27,8 +13,8 @@
           @change="changeActive($event, record.id)"
           checked-value="2"
           unchecked-value="3"
-          checked-text="启用"
-          unchecked-text="停用">
+          :checked-text="t('bot.enable')"
+          :unchecked-text="t('bot.disable')">
         </sa-switch>
       </template>
     </sa-table>
@@ -45,13 +31,13 @@ import EditForm from './edit.vue'
 import api from '../api/exchangeaccounts'
 import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
-
+import { useI18n } from 'vue-i18n'
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
 const viewRef = ref()
 const postData = ref([])
-
+const { t } = useI18n()
 // 搜索表单
 const searchForm = ref({
   name: '',
@@ -72,8 +58,11 @@ const options = reactive({
   api: api.getPageList,
   rowSelection: undefined,
   showSearch: false,
+  showSort: false,
+  operationColumnText: t('bot.operations'),
   add: {
     show: true,
+    text: t('bot.add'),
     auth: ['/bot/account/save'],
     func: async () => {
       editRef.value?.open()
@@ -81,6 +70,7 @@ const options = reactive({
   },
   edit: {
     show: true,
+    text: t('bot.edit'),
     auth: ['/bot/account/update'],
     func: async (record) => {
       editRef.value?.open('edit')
@@ -89,11 +79,13 @@ const options = reactive({
   },
   delete: {
     show: true,
+    text: t('bot.delete'),
     auth: ['/bot/account/destroy'],
+    confirmText: t('bot.deleteConfirm'),
     func: async (params) => {
       const resp = await api.destroy(params)
       if (resp.code === 200) {
-        Message.success(`删除成功！`)
+        Message.success(t('bot.deleteSuccess'))
         crudRef.value?.refresh()
       }
     },
@@ -102,14 +94,14 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '账户名称', dataIndex: 'name', width: 180 },
-  { title: '交易所', dataIndex: 'exchange_id', width: 180 },
-  { title: '公钥', dataIndex: 'api_key', width: 180 },
-  { title: '密钥', dataIndex: 'secret_key', width: 180 },
-  { title: '启用/停用', dataIndex: 'is_active', width: 180 },
-  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'exchange_account_status', width: 80 },
-  { title: '创建时间', dataIndex: 'create_time', width: 180 },
-  { title: '更新时间', dataIndex: 'update_time', width: 180 },
+  { title: t('bot.name'), dataIndex: 'name', width: 180 },
+  { title: t('bot.exchange'), dataIndex: 'exchange_id', width: 180 },
+  { title: t('bot.apiKey'), dataIndex: 'api_key', width: 180 },
+  { title: t('bot.secretKey'), dataIndex: 'secret_key', width: 180 },
+  { title: t('bot.enables'), dataIndex: 'is_active', width: 180 },
+  { title: t('bot.status'), dataIndex: 'status', type: 'dict', dict: 'exchange_account_status', width: 80 },
+  { title: t('bot.create_time'), dataIndex: 'create_time', width: 180 },
+  { title: t('bot.update_time'), dataIndex: 'update_time', width: 180 },
 ])
 
 // 页面数据初始化
