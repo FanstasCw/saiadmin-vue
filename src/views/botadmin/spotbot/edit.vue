@@ -10,8 +10,8 @@
     @before-ok="submit">
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
-      <a-form-item label="机器人名称" field="name">
-        <a-input v-model="formData.name" placeholder="请输入机器人名称" />
+      <a-form-item :label="t('bot.botName')" field="name">
+        <a-input v-model="formData.name" :placeholder="t('bot.spotBot.inputBotName')" />
       </a-form-item>
       <a-form-item label="交易所账号" field="exchange_account_id" v-role="['superAdmin']">
         <a-select
@@ -21,19 +21,23 @@
           allow-clear
           :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="交易对" field="symbol">
+      <a-form-item :label="t('bot.symbol')" field="symbol">
         <a-select
           v-model="formData.symbol"
           :options="symbolData"
-          placeholder="请选择交易对"
+          :placeholder="t('bot.selectSymbol')"
           allow-clear
           allow-search
           :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="本金" field="principal" tooltip="投资本金">
-        <a-input v-model="formData.principal" placeholder="请输入本金" :disabled="isEditDisabled" append="U" />
+      <a-form-item :label="t('bot.principal')" field="principal" tooltip="投资本金">
+        <a-input
+          v-model="formData.principal"
+          :placeholder="t('bot.spotBot.inputPrincipal')"
+          :disabled="isEditDisabled"
+          append="U" />
       </a-form-item>
-      <a-form-item label="买入跌幅" field="buy_threshold">
+      <a-form-item :label="t('bot.spotBot.buyThreshold')" field="buy_threshold">
         <a-select v-model="formData.buy_threshold" placeholder="请选择买入跌幅" :disabled="isEditDisabled">
           <a-option :value="0.01">1%</a-option>
           <a-option :value="0.02">2%</a-option>
@@ -47,7 +51,7 @@
           <a-option :value="0.1">10%</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="卖出涨幅" field="sell_threshold">
+      <a-form-item :label="t('bot.spotBot.sellThreshold')" field="sell_threshold">
         <a-select v-model="formData.sell_threshold" placeholder="请选择卖出涨幅" :disabled="isEditDisabled">
           <a-option :value="0.01">1%</a-option>
           <a-option :value="0.02">2%</a-option>
@@ -61,18 +65,18 @@
           <a-option :value="0.1">10%</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="投资比例" field="invest_ratio" tooltip="现货购买比例">
+      <a-form-item :label="t('bot.spotBot.investRatio')" field="invest_ratio" tooltip="现货购买比例">
         <a-select v-model="formData.invest_ratio" disabled>
           <a-option :value="0.5">50%</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="启用/暂停" field="active">
+      <a-form-item :label="t('bot.enables')" field="active">
         <sa-switch
           v-model="formData.active"
           checked-value="2"
           unchecked-value="3"
-          checked-text="启用"
-          unchecked-text="暂停" />
+          :checked-text="t('bot.enable')"
+          :unchecked-text="t('bot.disable')" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
@@ -85,6 +89,7 @@ import tool from '@/utils/tool'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '../api/spotbot'
 import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -96,8 +101,9 @@ const accountData = ref([])
 const symbolData = ref([])
 
 let title = computed(() => {
-  return '现货网格机器人' + (mode.value == 'add' ? '-新增' : '-编辑')
+  return t('bot.spotBot.spotBot') + (mode.value == 'add' ? ' - ' + t('bot.add') : ' - ' + t('bot.edit'))
 })
+const { t } = useI18n()
 
 // 表单初始值
 const initialFormData = {
