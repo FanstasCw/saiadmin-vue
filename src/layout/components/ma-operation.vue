@@ -1,30 +1,6 @@
 <template>
   <div class="mr-2 flex justify-end lg:justify-between w-full lg:w-auto">
     <a-space class="mr-0 lg:mr-5" size="medium">
-      <!-- <a-tooltip :content="$t('sys.store')" v-if="isDev">
-        <a-button :shape="'circle'" class="hidden lg:inline" @click="handleAppStore">
-          <template #icon>
-            <icon-apps :size="16" :rotate="45" />
-          </template>
-        </a-button>
-      </a-tooltip> -->
-
-      <!-- <a-tooltip :content="$t('sys.search')">
-        <a-button :shape="'circle'" @click="() => (appStore.searchOpen = true)" class="hidden lg:inline">
-          <template #icon>
-            <icon-search />
-          </template>
-        </a-button>
-      </a-tooltip> -->
-
-      <!--      <a-tooltip content="锁屏">-->
-      <!--        <a-button :shape="'circle'" class="hidden lg:inline">-->
-      <!--          <template #icon>-->
-      <!--            <icon-lock />-->
-      <!--          </template>-->
-      <!--        </a-button>-->
-      <!--      </a-tooltip>-->
-
       <a-tooltip :content="isFullScreen ? $t('sys.closeFullScreen') : $t('sys.fullScreen')">
         <a-button :shape="'circle'" class="hidden lg:inline" @click="screen">
           <template #icon>
@@ -33,25 +9,24 @@
           </template>
         </a-button>
       </a-tooltip>
-
-      <a-trigger trigger="click">
-        <a-button :shape="'circle'">
+      <a-tooltip :content="$t('sys.language')">
+        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
           <template #icon>
-            <a-badge
-              :count="5"
-              dot
-              :dotStyle="{ width: '5px', height: '5px' }"
-              v-if="messageStore.messageList.length > 0">
-              <icon-notification />
-            </a-badge>
-            <icon-notification v-else />
+            <icon-language />
           </template>
         </a-button>
-
+      </a-tooltip>
+      <a-dropdown trigger="click" @select="handleLanguage">
+        <div ref="triggerBtn" class="trigger-btn"></div>
         <template #content>
-          <message-notification />
+          <!-- <a-doption v-for="item in locales" :key="item.value" :value="item.value">
+            {{ item.label }}
+          </a-doption> -->
+          <a-doption value="zh_CN">{{ $t('sys.chinese') }}</a-doption>
+          <a-doption value="zh_Hant">{{ $t('sys.hant') }}</a-doption>
+          <a-doption value="en">{{ $t('sys.english') }}</a-doption>
         </template>
-      </a-trigger>
+      </a-dropdown>
 
       <!-- <a-tooltip :content="$t('sys.pageSetting')">
         <a-button :shape="'circle'" @click="() => (appStore.settingOpen = true)" class="hidden lg:inline">
@@ -85,17 +60,15 @@
 import { ref } from 'vue'
 import { useAppStore, useUserStore, useMessageStore } from '@/store'
 import tool from '@/utils/tool'
-import MessageNotification from './components/message-notification.vue'
+// import MessageNotification from './components/message-notification.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Message } from '@arco-design/web-vue'
 import { Push } from '@/utils/push-vue'
 import { info } from '@/utils/common'
 import commonApi from '@/api/common'
+import avatar from '@/assets/avatar.svg'
 
-import avatar from '@/assets/avatar.jpg'
-
-const { t } = useI18n()
 const messageStore = useMessageStore()
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -104,6 +77,7 @@ const router = useRouter()
 const isFullScreen = ref(false)
 const showLogoutModal = ref(false)
 const isDev = ref(import.meta.env.DEV)
+const triggerBtn = ref()
 const handleSelect = async (name) => {
   if (name === 'userCenter') {
     router.push({ name: 'userCenter' })
@@ -119,10 +93,16 @@ const handleSelect = async (name) => {
   }
 }
 
-// const handleAppStore = async () => {
-//   window.open('https://saas.saithink.top/#/appStore')
-// }
+const setDropDownVisible = () => {
+  const event = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+  })
+  triggerBtn.value.dispatchEvent(event)
+}
 
+const handleLanguage = (val) => appStore.changeLanguage(val)
 const handleLogout = async () => {
   await userStore.logout()
   document.querySelector('#app').style.filter = 'grayscale(0)'
@@ -138,26 +118,26 @@ const screen = () => {
   isFullScreen.value = !isFullScreen.value
 }
 
-if (appStore.ws) {
-  const env = import.meta.env
-  const baseURL = env.VITE_APP_OPEN_PROXY === 'true' ? env.VITE_APP_PROXY_PREFIX : env.VITE_APP_BASE_URL
-  const wsURL = env.VITE_APP_WS_URL ? env.VITE_APP_WS_URL : ''
-  const appKey = env.VITE_APP_WS_APPKEY ? env.VITE_APP_WS_APPKEY : ''
-  // 建立连接
-  var connection = new Push({
-    url: wsURL, // websocket地址
-    app_key: appKey, // appkey
-    auth: baseURL + '/plugin/webman/push/auth',
-  })
-  // 创建监听频道
-  var user_channel = connection.subscribe('saiadmin')
-  // 当saiadmin频道有message事件的消息时
-  user_channel.on('message', function (message) {
-    // message是消息内容
-    info('新消息提示', '您有新的消息，请注意查收！')
-    messageStore.messageList = message.data
-  })
-}
+// if (appStore.ws) {
+//   const env = import.meta.env
+//   const baseURL = env.VITE_APP_OPEN_PROXY === 'true' ? env.VITE_APP_PROXY_PREFIX : env.VITE_APP_BASE_URL
+//   const wsURL = env.VITE_APP_WS_URL ? env.VITE_APP_WS_URL : ''
+//   const appKey = env.VITE_APP_WS_APPKEY ? env.VITE_APP_WS_APPKEY : ''
+//   // 建立连接
+//   var connection = new Push({
+//     url: wsURL, // websocket地址
+//     app_key: appKey, // appkey
+//     auth: baseURL + '/plugin/webman/push/auth',
+//   })
+//   // 创建监听频道
+//   var user_channel = connection.subscribe('saiadmin')
+//   // 当saiadmin频道有message事件的消息时
+//   user_channel.on('message', function (message) {
+//     // message是消息内容
+//     info('新消息提示', '您有新的消息，请注意查收！')
+//     messageStore.messageList = message.data
+//   })
+// }
 </script>
 <style scoped>
 :deep(.arco-avatar-text) {
