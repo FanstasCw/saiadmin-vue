@@ -24,7 +24,7 @@
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store'
 import dayjs from 'dayjs'
-import avatar from '@/assets/avatar.jpg'
+import avatar from '@/assets/avatar.svg'
 
 const userStore = useUserStore()
 const visible = ref(false)

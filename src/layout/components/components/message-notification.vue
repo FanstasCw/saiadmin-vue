@@ -62,7 +62,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useMessageStore } from '@/store'
-import avatar from '@/assets/avatar.jpg'
+import avatar from '@/assets/avatar.svg'
 
 const messageStore = useMessageStore()
 

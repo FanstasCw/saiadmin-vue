@@ -87,7 +87,7 @@ import api from '@/api/system/user'
 import commonApi from '@/api/common'
 import { Message, Modal } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
-import avatar from '@/assets/avatar.jpg'
+import avatar from '@/assets/avatar.svg'
 
 const depts = ref([{ label: '所有部门', value: 0 }])
 const crudRef = ref()
