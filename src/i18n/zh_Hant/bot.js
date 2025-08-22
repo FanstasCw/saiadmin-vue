@@ -32,7 +32,7 @@ export default {
   inputSecretKey: '請輸入密鑰',
   inputPhrase: '請輸入密碼短語',
   selectExchange: '請選擇交易所',
-  SelectSymbol: '請選擇交易對',
+  selectSymbol: '請選擇交易對',
   botName: '機器人名稱',
   symbol: '交易對',
   principal: '本金',
