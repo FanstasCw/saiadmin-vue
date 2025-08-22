@@ -48,9 +48,11 @@ import { reactive, ref } from 'vue'
 import api from '@/views/botadmin/api/statistics'
 import { useDictStore } from '@/store'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 /* ——— 原来的逻辑不变 ——— */
 const colorData = useDictStore().data.price_change_color
 const data = ref({ spot_data: [], coin_data: [] })
+const { t } = useI18n()
 const getTextColors = (val) => {
   if (val > 0) return colorData.find((i) => i.label === 'up').value
   if (val < 0) return colorData.find((i) => i.label === 'down').value
@@ -65,7 +67,7 @@ const summarySpot = ({ data }) => {
   const total = data.reduce((sum, r) => sum + Number(r.unrealized_pnl || 0), 0)
   return [
     {
-      name: '浮动盈亏合计',
+      name: t('bot.unrealizedPnl'),
       symbol: '',
       buy: '',
       sell: '',
@@ -78,7 +80,7 @@ const summaryCoin = ({ data }) => {
   const total = data.reduce((sum, r) => sum + Number(r.unrealized_pnl || 0), 0)
   return [
     {
-      name: '浮动盈亏合计',
+      name: t('bot.unrealizedPnl'),
       symbol: '',
       closeShort: '',
       openShort: '',
@@ -93,28 +95,28 @@ const scroll = { x: 600 } // 横向滚动阈值（px）
 
 /* ——— 列配置照搬 ——— */
 const spot_columns = reactive([
-  { title: '机器人名称', dataIndex: 'name', width: 120 },
-  { title: '交易对', dataIndex: 'symbol', width: 100 },
+  { title: t('bot.botName'), dataIndex: 'name', width: 120 },
+  { title: t('bot.symbol'), dataIndex: 'symbol', width: 100 },
   {
-    title: '当前限价单',
+    title: t('bot.orderType.limit'),
     children: [
-      { title: '买入限价单', dataIndex: 'buy', width: 100 },
-      { title: '卖出限价单', dataIndex: 'sell', width: 100 },
+      { title: t('bot.buyLimit'), dataIndex: 'buy', width: 100 },
+      { title: t('bot.sellLimit'), dataIndex: 'sell', width: 100 },
     ],
   },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
+  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
 ])
 const coin_columns = reactive([
-  { title: '机器人名称', dataIndex: 'name', width: 120 },
-  { title: '交易对', dataIndex: 'symbol', width: 100 },
+  { title: t('bot.botName'), dataIndex: 'name', width: 120 },
+  { title: t('bot.symbol'), dataIndex: 'symbol', width: 100 },
   {
-    title: '当前限价单',
+    title: t('bot.orderType.limit'),
     children: [
-      { title: '平空限价单', dataIndex: 'closeShort', width: 100 },
-      { title: '开空限价单', dataIndex: 'openShort', width: 100 },
+      { title: t('bot.closeShortLimit'), dataIndex: 'closeShort', width: 100 },
+      { title: t('bot.openShortLimit'), dataIndex: 'openShort', width: 100 },
     ],
   },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
+  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
 ])
 </script>
 

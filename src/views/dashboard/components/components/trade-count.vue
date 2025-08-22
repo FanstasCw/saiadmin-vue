@@ -7,12 +7,14 @@
             <img alt="avatar" src="@/assets/image/bot.svg" />
           </a-avatar>
           <a-statistic
-            title="现货机器人统计"
+            :title="t('bot.spotBot.spotBot')"
             :value="data.spot_bot_count"
             :value-from="0"
             animation
             show-group-separator>
-            <template #suffix><span class="unit">个</span> </template>
+            <template #suffix
+              ><span class="unit">{{ t('bot.qty') }}</span>
+            </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
@@ -22,12 +24,14 @@
             <img alt="avatar" src="@/assets/image/bot.svg" />
           </a-avatar>
           <a-statistic
-            title="币本位机器人统计"
+            :title="t('bot.coinBot.coinBot')"
             :value="data.coin_bot_count"
             :value-from="0"
             animation
             show-group-separator>
-            <template #suffix><span class="unit">个</span> </template>
+            <template #suffix
+              ><span class="unit">{{ t('bot.qty') }}</span>
+            </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
@@ -37,12 +41,14 @@
             <img alt="avatar" src="@/assets/image/trade.svg" />
           </a-avatar>
           <a-statistic
-            title="今日交易次数"
+            :title="t('bot.todayTradeCount')"
             :value="data.today_trade_count"
             :value-from="0"
             animation
             show-group-separator>
-            <template #suffix><span class="unit">次</span> </template>
+            <template #suffix
+              ><span class="unit">{{ t('bot.cnt') }}</span>
+            </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
@@ -52,12 +58,14 @@
             <img alt="avatar" src="@/assets/image/trade.svg" />
           </a-avatar>
           <a-statistic
-            title="7日内交易次数"
+            :title="t('bot.day7TradeCount')"
             :value="data.day7_trade_count"
             :value-from="0"
             animation
             show-group-separator>
-            <template #suffix><span class="unit">次</span> </template>
+            <template #suffix
+              ><span class="unit">{{ t('bot.cnt') }}</span>
+            </template>
           </a-statistic>
         </a-space>
       </a-grid-item>
@@ -68,13 +76,14 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/views/botadmin/api/statistics'
-
+import { useI18n } from 'vue-i18n'
 const data = ref({
   spot_bot_count: 0,
   coin_bot_count: 0,
   today_trade_count: 0,
   day7_trade_count: 0,
 })
+const { t } = useI18n()
 
 const getData = async () => {
   const res = await api.getBotCount()
