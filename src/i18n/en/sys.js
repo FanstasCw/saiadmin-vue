@@ -1,6 +1,8 @@
 export default {
+  title: 'MARS QUANT',
   pageSetting: 'Page Setting',
   chinese: '简体中文',
+  hant: '繁体中文',
   english: 'English',
   search: 'Search',
   store: 'App Store',
@@ -32,7 +34,7 @@ export default {
     classic: 'Classic',
     columns: 'Columns',
     banner: 'Banner',
-    mixed: 'Mixed',
+    mixed: 'Mixed'
   },
   userCenter: 'User Center',
   clearCache: 'Clear Cache',
@@ -42,13 +44,13 @@ export default {
   operationMessage: {
     message: 'Message',
     notification: 'Notification',
-    todo: 'Todo',
+    todo: 'Todo'
   },
   goHome: 'Go Home',
   notFoundPage: 'Exit tip Ah oh, the page visited was hijacked by the Martians...',
   login: {
-    slogan: 'High-quality middle and back office management system out of the box',
-    title: 'Login System',
+    slogan: 'Auto Trading, Smart Winning',
+    title: 'Login',
     username: 'Username',
     usernameNotice: 'Please enter the username',
     password: 'Passoword',
@@ -74,9 +76,9 @@ export default {
   animate: {
     fade: 'The page fades out',
     sliderLeft: 'The page fades to the left',
-    sliderRight:'The page fades to the right',
-    sliderDown:'The page fades to the down',
-    sliderUp:'The page fades to the up',
+    sliderRight: 'The page fades to the right',
+    sliderDown: 'The page fades to the down',
+    sliderUp: 'The page fades to the up'
   },
   tags: {
     refresh: 'Refresh',
@@ -84,9 +86,9 @@ export default {
     closeRightTag: 'Close right tag',
     closeLeftTag: 'Close left tag',
     closeTag: 'Close current tag',
-    closeOtherTag: 'Close other tag',
+    closeOtherTag: 'Close other tag'
   },
   noticeTitle: 'System Prompted',
   save: 'Save',
-  cancel: 'Cancel',
+  cancel: 'Cancel'
 }

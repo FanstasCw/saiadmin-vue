@@ -1,6 +1,8 @@
 export default {
+  title: '智动盈交易机器人',
   pageSetting: '页面设置',
   chinese: '简体中文',
+  hant: '繁体中文',
   english: 'English',
   search: '搜索',
   store: '应用市场',
@@ -32,7 +34,7 @@ export default {
     classic: '经典',
     columns: '分栏',
     banner: '通栏',
-    mixed: '混合',
+    mixed: '混合'
   },
   userCenter: '个人中心',
   clearCache: '清除缓存',
@@ -42,12 +44,12 @@ export default {
   operationMessage: {
     message: '消息',
     notification: '通知',
-    todo: '待办',
+    todo: '待办'
   },
   goHome: '回到首页',
   notFoundPage: '啊哦，访问的页面被火星人劫走了...',
   login: {
-    slogan: '智驭市场，自动赢利',
+    slogan: '智能驱动，自动盈利',
     title: '登录',
     username: '账户',
     usernameNotice: '请输入账户',
@@ -74,9 +76,9 @@ export default {
   animate: {
     fade: '页面渐隐渐出',
     sliderLeft: '页面向左渐出',
-    sliderRight:'页面向右渐出',
-    sliderDown:'页面向下渐出',
-    sliderUp:'页面向上渐出',
+    sliderRight: '页面向右渐出',
+    sliderDown: '页面向下渐出',
+    sliderUp: '页面向上渐出'
   },
   tags: {
     refresh: '刷新',
@@ -84,9 +86,9 @@ export default {
     closeRightTag: '关闭右侧标签',
     closeLeftTag: '关闭左侧标签',
     closeTag: '关闭当前标签',
-    closeOtherTag: '关闭其他标签',
+    closeOtherTag: '关闭其他标签'
   },
   noticeTitle: '系统提示',
   save: '保存',
-  cancel: '取消',
+  cancel: '取消'
 }

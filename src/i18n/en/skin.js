@@ -1,4 +1,5 @@
 export default {
+  title: 'IntelliMove',
   mine: 'Mine',
   classics: 'classics',
   businessGray: 'Business gray',

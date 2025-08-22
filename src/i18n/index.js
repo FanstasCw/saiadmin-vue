@@ -6,9 +6,11 @@ const setting = tool.local.get('setting')
 const getLanguage = () => {
   const loadFile = () => {
     if (setting.language === 'zh_CN') {
-      return import.meta.glob('./zh_CN/**/*.js', { eager:true })
+      return import.meta.glob('./zh_CN/**/*.js', { eager: true })
     } else if (setting.language === 'en') {
-      return import.meta.glob('./en/**/*.js', { eager:true })
+      return import.meta.glob('./en/**/*.js', { eager: true })
+    } else if (setting.language === 'zh_Hant') {
+      return import.meta.glob('./zh_Hant/**/*.js', { eager: true })
     }
   }
 
@@ -19,7 +21,7 @@ const getLanguage = () => {
         generateLanguages[fileName] = {}
       }
       generateLanguages[fileName] = generateLanguage(fileNames, fileContent, generateLanguages[fileName])
-    }else{
+    } else {
       generateLanguages[fileName] = fileContent
     }
     return generateLanguages
