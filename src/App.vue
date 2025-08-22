@@ -1,11 +1,11 @@
 <script setup>
-  import cn from '@arco-design/web-vue/es/locale/lang/zh-cn'
-  import en from '@arco-design/web-vue/es/locale/lang/en-us'
-  import { ref } from 'vue'
-  import { useAppStore } from './store'
-  const appStore = useAppStore()
-  const lang = ref(appStore.language === 'zh_CN' ? cn : en)
-
+import cn from '@arco-design/web-vue/es/locale/lang/zh-cn'
+import en from '@arco-design/web-vue/es/locale/lang/en-us'
+import tw from '@arco-design/web-vue/es/locale/lang/zh-tw'
+import { ref } from 'vue'
+import { useAppStore } from './store'
+const appStore = useAppStore()
+const lang = ref(appStore.language === 'zh_CN' ? cn : appStore.language === 'zh_Hant' ? tw : en)
 </script>
 
 <template>
