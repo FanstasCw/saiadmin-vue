@@ -4,16 +4,16 @@
       <!-- 搜索区 tableSearch -->
       <template #tableSearch>
         <a-col :sm="8" :xs="24">
-          <a-form-item label="机器人名称" field="name">
-            <a-input v-model="searchForm.name" placeholder="请输入机器人名称" allow-clear />
+          <a-form-item :label="t('bot.botName')" field="name">
+            <a-input v-model="searchForm.name" :placeholder="t('bot.coinBot.inputBotName')" allow-clear />
           </a-form-item>
         </a-col>
         <a-col :sm="8" :xs="24">
-          <a-form-item label="交易对" field="symbol">
+          <a-form-item :label="t('bot.symbol')" field="symbol">
             <a-select
               v-model="searchForm.symbol"
               :options="symbolData"
-              placeholder="请选择交易对"
+              :placeholder="t('bot.selectSymbol')"
               allow-clear
               allow-search />
           </a-form-item>
@@ -31,8 +31,8 @@
           @change="setActive($event, record.id)"
           checked-value="2"
           unchecked-value="3"
-          checked-text="启用"
-          unchecked-text="暂停">
+          :checked-text="t('bot.enable')"
+          :unchecked-text="t('bot.disable')">
         </sa-switch>
       </template>
       <template #open_position_cont="{ record }">
@@ -51,20 +51,20 @@
       <template #operationCell="{ record }">
         <!-- 默认编辑按钮 -->
         <a-link v-if="options.edit.show" v-auth="options.edit.auth || []" type="primary" @click="handleEdit(record)">
-          <icon-edit /> {{ options.edit.text || '编辑' }}
+          <icon-edit /> {{ options.edit.text || t('bot.edit') }}
         </a-link>
         <!-- 自定义关闭按钮 -->
-        <a-popconfirm content="确定要关闭机器人吗?" position="bottom" @ok="closeRobot(record)">
-          <a-link type="primary"> <icon-close /> 关闭 </a-link>
+        <a-popconfirm :content="t('bot.closeConfirm')" position="bottom" @ok="closeRobot(record)">
+          <a-link type="primary"> <icon-close /> {{ t('bot.close') }} </a-link>
         </a-popconfirm>
         <!-- 默认删除按钮 -->
         <a-popconfirm
           v-if="options.delete.show"
-          content="确定要删除该数据吗?"
+          :content="t('bot.deleteConfirm')"
           position="bottom"
           @ok="handleDelete(record)">
           <a-link type="primary" v-auth="options.delete.auth || []">
-            <icon-delete /> {{ options.delete.text || '删除' }}
+            <icon-delete /> {{ options.delete.text || t('bot.delete') }}
           </a-link>
         </a-popconfirm>
       </template>
@@ -83,6 +83,7 @@ import api from '../api/coinbot'
 import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
 import { useDictStore } from '@/store'
+import { useI18n } from 'vue-i18n'
 
 // 引用定义
 const crudRef = ref()
@@ -95,7 +96,7 @@ const searchForm = ref({
   name: '',
   symbol: '',
 })
-
+const { t } = useI18n()
 // 修改状态
 const setActive = async (active, id) => {
   const response = await api.setActive({ ids: id, active })
@@ -124,21 +125,21 @@ const closeRobot = async (record) => {
   const activeResp = await api.getActive(params)
   if (activeResp.code === 200) {
     if (activeResp.data.active == 2 || activeResp.data.active == 1) {
-      Message.error('请先暂停机器人才能关闭！')
+      Message.error(t('bot.botActiveTips.1'))
       return
     } else if (activeResp.data.active == 5) {
-      Message.warning('机器人已关闭！')
+      Message.warning(t('bot.botActiveTips.2'))
       crudRef.value?.refresh()
       return
     } else if (activeResp.data.active == 6) {
-      Message.warning('机器人已平仓！')
+      Message.warning(t('bot.botActiveTips.3'))
       crudRef.value?.refresh()
       return
     }
   }
   const closeResp = await api.setActive(params)
   if (closeResp.code === 200) {
-    Message.success(`机器人关闭成功！`)
+    Message.success(t('bot.botActiveTips.4'))
     crudRef.value?.refresh()
   }
 }
@@ -153,8 +154,12 @@ const options = reactive({
   api: api.getPageList,
   rowSelection: undefined,
   showSort: false,
+  operationColumnText: t('bot.operations'),
+  searchText: t('bot.search'),
+  resetText: t('bot.reset'),
   add: {
     show: true,
+    text: t('bot.add'),
     auth: ['/bot/coinBot/save'],
     func: async () => {
       editRef.value?.open()
@@ -175,11 +180,11 @@ const options = reactive({
       const closeResp = await api.getActive(params)
       if (closeResp.code === 200) {
         if (closeResp.data.status != 5) {
-          Message.error('请先关闭机器人,才能删除！')
+          Message.error(t('bot.botActiveTips.5'))
           return
         }
         if (closeResp.data.active != 6) {
-          Message.error('机器人关闭中，请稍后删除！')
+          Message.error(t('bot.botActiveTips.6'))
           return
         }
       }
@@ -194,15 +199,15 @@ const options = reactive({
 
 // SaTable 列配置
 const columns = reactive([
-  { title: '机器人名称', dataIndex: 'name', width: 160 },
-  { title: '交易对', dataIndex: 'symbol', width: 120 },
-  { title: '状态', dataIndex: 'status', type: 'dict', dict: 'bot_status', width: 120 },
-  { title: '启用/暂停', dataIndex: 'active', width: 120 },
-  { title: '开仓合约张数', dataIndex: 'open_position_cont', width: 140 },
-  { title: '持仓合约张数', dataIndex: 'position_cont', width: 140 },
-  { title: '可用合约张数', dataIndex: 'available_cont', width: 140 },
-  { title: '浮动盈亏', dataIndex: 'unrealized_pnl', width: 140 },
-  { title: '创建时间', dataIndex: 'create_time', width: 160 },
+  { title: t('bot.botName'), dataIndex: 'name', width: 160 },
+  { title: t('bot.symbol'), dataIndex: 'symbol', width: 120 },
+  { title: t('bot.status'), dataIndex: 'status', type: 'dict', dict: 'bot_status', width: 120 },
+  { title: t('bot.enables'), dataIndex: 'active', width: 120 },
+  { title: t('bot.coinBot.openPositionCont'), dataIndex: 'open_position_cont', width: 140 },
+  { title: t('bot.coinBot.positionCont'), dataIndex: 'position_cont', width: 140 },
+  { title: t('bot.coinBot.availableCont'), dataIndex: 'available_cont', width: 140 },
+  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', width: 140 },
+  { title: t('bot.createTime'), dataIndex: 'create_time', width: 160 },
 ])
 if (role('superAdmin')) {
   const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 140 }

@@ -10,8 +10,8 @@
     @before-ok="submit">
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
-      <a-form-item label="机器人名称" field="name">
-        <a-input v-model="formData.name" placeholder="请输入机器人名称" />
+      <a-form-item :label="t('bot.botName')" field="name">
+        <a-input v-model="formData.name" :placeholder="t('bot.coinBot.inputBotName')" />
       </a-form-item>
       <a-form-item label="交易所账户" field="exchange_account_id" v-role="['superAdmin']">
         <a-select
@@ -21,23 +21,33 @@
           allow-clear
           :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="交易对" field="symbol">
+      <a-form-item :label="t('bot.symbol')" field="symbol">
         <a-select
           v-model="formData.symbol"
           :options="symbolData"
-          placeholder="请选择交易对"
+          :placeholder="t('bot.selectSymbol')"
           allow-clear
           allow-search
           :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="本金" field="principal">
-        <a-input v-model="formData.principal" placeholder="请输入本金" :disabled="isEditDisabled" append="U" />
+      <a-form-item :label="t('bot.principal')" field="principal">
+        <a-input
+          v-model="formData.principal"
+          :placeholder="t('bot.coinBot.inputPrincipal')"
+          :disabled="isEditDisabled"
+          append="U" />
       </a-form-item>
-      <a-form-item label="最近最高价格" field="recent_high_price">
-        <a-input v-model="formData.recent_high_price" placeholder="请输入最近最高价格" :disabled="isEditDisabled" />
+      <a-form-item :label="t('bot.coinBot.recentHighPrice')" field="recent_high_price">
+        <a-input
+          v-model="formData.recent_high_price"
+          :placeholder="t('bot.coinBot.inputRecentHighPrice')"
+          :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="回调比例" field="drawdown_ratio">
-        <a-select v-model="formData.drawdown_ratio" placeholder="请选择回调比例" :disabled="isEditDisabled">
+      <a-form-item :label="t('bot.coinBot.drawdownRatio')" field="drawdown_ratio">
+        <a-select
+          v-model="formData.drawdown_ratio"
+          :placeholder="t('bot.coinBot.selectDrawdownRatio')"
+          :disabled="isEditDisabled">
           <a-option :value="0.05">5%</a-option>
           <a-option :value="0.1">10%</a-option>
           <a-option :value="0.15">15%</a-option>
@@ -46,22 +56,28 @@
           <a-option :value="0.3">30%</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="平空价格间隔" field="close_short_interval">
-        <a-input v-model="formData.close_short_interval" placeholder="请输入平空价格间隔" :disabled="isEditDisabled" />
+      <a-form-item :label="t('bot.coinBot.closeShortInterval')" field="close_short_interval">
+        <a-input
+          v-model="formData.close_short_interval"
+          :placeholder="t('bot.coinBot.inputCloseShortInterval')"
+          :disabled="isEditDisabled" />
       </a-form-item>
-      <a-form-item label="平空比例" field="close_short_ratio">
-        <a-select v-model="formData.close_short_ratio" placeholder="请选择平仓比例" :disabled="isEditDisabled">
+      <a-form-item :label="t('bot.coinBot.closeShortRatio')" field="close_short_ratio">
+        <a-select
+          v-model="formData.close_short_ratio"
+          :placeholder="t('bot.coinBot.selectCloseShortRatio')"
+          :disabled="isEditDisabled">
           <a-option :value="0.1">10%</a-option>
           <a-option :value="0.2">20%</a-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="启用/暂停" field="active">
+      <a-form-item :label="t('bot.enables')" field="active">
         <sa-switch
           v-model="formData.active"
           checked-value="2"
           unchecked-value="3"
-          checked-text="启用"
-          unchecked-text="暂停" />
+          :checked-text="t('bot.enable')"
+          :unchecked-text="t('bot.disable')" />
       </a-form-item>
     </a-form>
     <!-- 表单信息 end -->
@@ -74,6 +90,7 @@ import tool from '@/utils/tool'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '../api/coinbot'
 import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['success'])
 // 引用定义
@@ -85,9 +102,9 @@ const accountData = ref([])
 const symbolData = ref([])
 
 let title = computed(() => {
-  return '币本位套利机器人' + (mode.value == 'add' ? '-新增' : '-编辑')
+  return t('bot.coinBot.coinBot') + (mode.value == 'add' ? ' - ' + t('bot.add') : ' - ' + t('bot.edit'))
 })
-
+const { t } = useI18n()
 // 表单初始值
 const initialFormData = {
   id: null,
