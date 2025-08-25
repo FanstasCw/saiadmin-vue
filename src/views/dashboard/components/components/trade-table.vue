@@ -44,10 +44,10 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onUnmounted } from 'vue'
 import api from '@/views/botadmin/api/statistics'
 import { useDictStore } from '@/store'
-import { computed } from 'vue'
+// import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 /* ——— 原来的逻辑不变 ——— */
 const colorData = useDictStore().data.price_change_color
@@ -62,6 +62,15 @@ const getData = async () => {
   data.value = (await api.getBotData()).data
 }
 getData()
+
+// 添加定时刷新功能
+const intervalId = setInterval(() => {
+  getData()
+}, 10000)
+
+onUnmounted(() => {
+  clearInterval(intervalId)
+})
 
 const summarySpot = ({ data }) => {
   const total = data.reduce((sum, r) => sum + Number(r.unrealized_pnl || 0), 0)

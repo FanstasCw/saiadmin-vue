@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import api from '@/views/botadmin/api/statistics'
 import { useI18n } from 'vue-i18n'
 const data = ref({
@@ -91,6 +91,15 @@ const getData = async () => {
 }
 
 getData()
+
+// 添加定时刷新功能
+const intervalId = setInterval(() => {
+  getData()
+}, 10000)
+
+onUnmounted(() => {
+  clearInterval(intervalId)
+})
 </script>
 
 <style scoped lang="less">
