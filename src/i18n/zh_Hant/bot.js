@@ -109,8 +109,9 @@ export default {
   day7TradeCount: '7日內交易次數',
   qty: '個',
   cnt: '次',
-  buyLimit: '買入限價單',
-  sellLimit: '賣出限價單',
-  closeShortLimit: '平空限價單',
-  openShortLimit: '開空限價單'
+  buyLimit: '買入',
+  sellLimit: '賣出',
+  closeShortLimit: '平空',
+  openShortLimit: '開空',
+  totalUnrealizedPnl: '浮動盈虧總計:'
 }

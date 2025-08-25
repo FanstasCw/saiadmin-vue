@@ -110,8 +110,9 @@ export default {
   day7TradeCount: '7-Day Trade Count',
   qty: 'Qty​​',
   cnt: 'Cnt​​',
-  buyLimit: 'Buy Limit',
-  sellLimit: 'Sell Limit',
-  closeShortLimit: 'Close Short Limit',
-  openShortLimit: 'Open Short Limit'
+  buyLimit: 'Buy',
+  sellLimit: 'Sell',
+  closeShortLimit: 'Close Short',
+  openShortLimit: 'Open Short',
+  totalUnrealizedPnl: 'Total Unrealized PnL'
 }
