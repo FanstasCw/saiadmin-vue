@@ -76,7 +76,7 @@ const summarySpot = ({ data }) => {
   const total = data.reduce((sum, r) => sum + Number(r.unrealized_pnl || 0), 0)
   return [
     {
-      name: t('bot.unrealizedPnl'),
+      name: t('bot.totalUnrealizedPnl'),
       symbol: '',
       buy: '',
       sell: '',
@@ -89,7 +89,7 @@ const summaryCoin = ({ data }) => {
   const total = data.reduce((sum, r) => sum + Number(r.unrealized_pnl || 0), 0)
   return [
     {
-      name: t('bot.unrealizedPnl'),
+      name: t('bot.totalUnrealizedPnl'),
       symbol: '',
       closeShort: '',
       openShort: '',
@@ -104,28 +104,40 @@ const scroll = { x: 600 } // 横向滚动阈值（px）
 
 /* ——— 列配置照搬 ——— */
 const spot_columns = reactive([
-  { title: t('bot.botName'), dataIndex: 'name', width: 120 },
-  { title: t('bot.symbol'), dataIndex: 'symbol', width: 100 },
+  { title: t('bot.botName'), dataIndex: 'name', align: 'center', width: 120 },
+  { title: t('bot.symbol'), dataIndex: 'symbol', align: 'center', width: 100 },
   {
     title: t('bot.orderType.limit'),
     children: [
-      { title: t('bot.buyLimit'), dataIndex: 'buy', width: 100 },
-      { title: t('bot.sellLimit'), dataIndex: 'sell', width: 100 },
+      { title: t('bot.buyLimit'), dataIndex: 'buy', align: 'center', width: 100 },
+      { title: t('bot.sellLimit'), dataIndex: 'sell', align: 'center', width: 100 },
     ],
   },
-  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
+  {
+    title: t('bot.unrealizedPnl'),
+    dataIndex: 'unrealized_pnl',
+    align: 'center',
+    slotName: 'unrealized_pnl',
+    width: 100,
+  },
 ])
 const coin_columns = reactive([
-  { title: t('bot.botName'), dataIndex: 'name', width: 120 },
-  { title: t('bot.symbol'), dataIndex: 'symbol', width: 100 },
+  { title: t('bot.botName'), dataIndex: 'name', align: 'center', width: 120 },
+  { title: t('bot.symbol'), dataIndex: 'symbol', align: 'center', width: 100 },
   {
     title: t('bot.orderType.limit'),
     children: [
-      { title: t('bot.closeShortLimit'), dataIndex: 'closeShort', width: 100 },
-      { title: t('bot.openShortLimit'), dataIndex: 'openShort', width: 100 },
+      { title: t('bot.closeShortLimit'), dataIndex: 'closeShort', align: 'center', width: 100 },
+      { title: t('bot.openShortLimit'), dataIndex: 'openShort', align: 'center', width: 100 },
     ],
   },
-  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', slotName: 'unrealized_pnl', width: 100 },
+  {
+    title: t('bot.unrealizedPnl'),
+    dataIndex: 'unrealized_pnl',
+    align: 'center',
+    slotName: 'unrealized_pnl',
+    width: 100,
+  },
 ])
 </script>
 
