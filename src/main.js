@@ -31,7 +31,7 @@ app.use(ArcoVue, {}).use(ArcoVueIcon).use(router).use(store).use(i18n).use(direc
 
 app.config.globalProperties.$tool = tool
 app.config.globalProperties.$common = common
-app.config.globalProperties.$title = import.meta.env.VITE_APP_TITLE
+app.config.globalProperties.$title = app.config.globalProperties.$t('sys.title')
 app.config.globalProperties.$url = import.meta.env.VITE_APP_BASE
 
 app.mount('#app')
