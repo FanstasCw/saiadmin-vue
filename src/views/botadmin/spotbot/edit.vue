@@ -122,13 +122,62 @@ const initialFormData = {
 const formData = reactive({ ...initialFormData })
 
 // 验证规则
-const rules = {
-  name: [{ required: true, message: '机器人名称必需填写' }],
-  symbol: [{ required: true, message: '交易对必需填写' }],
-  principal: [{ required: true, message: '本金必需填写' }],
-  buy_threshold: [{ required: true, message: '买入阈值必需选择' }],
-  sell_threshold: [{ required: true, message: '卖出阈值必需选择' }],
-}
+const rules = computed(() => ({
+  name: [{ required: true, message: t('bot.spotBot.nameRequired') }],
+  symbol: [{ required: true, message: t('bot.spotBot.symbolRequired') }],
+  principal: [
+    { required: true, message: t('bot.spotBot.principalRequired') },
+    {
+      validator: (value, cb) => {
+        if (mode.value !== 'add') return cb()
+        const principal = parseFloat(value)
+        const buyThreshold = parseFloat(formData.buy_threshold)
+        const sellThreshold = parseFloat(formData.sell_threshold)
+
+        if (isNaN(principal)) return cb(t('bot.spotBot.invalidPrincipal'))
+        if (!isNaN(buyThreshold) && principal * buyThreshold < 10) {
+          return cb(t('bot.spotBot.principalBuyThresholdError'))
+        }
+        if (!isNaN(sellThreshold) && principal * sellThreshold < 10) {
+          return cb(t('bot.spotBot.principalSellThresholdError'))
+        }
+        cb()
+      },
+    },
+  ],
+  buy_threshold: [
+    { required: true, message: t('bot.spotBot.buyThresholdRequired') },
+    {
+      validator: (value, cb) => {
+        if (mode.value !== 'add') return cb()
+        const buyThreshold = parseFloat(value)
+        const principal = parseFloat(formData.principal)
+
+        if (isNaN(buyThreshold)) return cb(t('bot.spotBot.invalidBuyThreshold'))
+        if (!isNaN(principal) && principal * buyThreshold < 10) {
+          return cb(t('bot.spotBot.principalBuyThresholdError'))
+        }
+        cb()
+      },
+    },
+  ],
+  sell_threshold: [
+    { required: true, message: t('bot.spotBot.sellThresholdRequired') },
+    {
+      validator: (value, cb) => {
+        if (mode.value !== 'add') return cb()
+        const sellThreshold = parseFloat(value)
+        const principal = parseFloat(formData.principal)
+
+        if (isNaN(sellThreshold)) return cb(t('bot.spotBot.invalidSellThreshold'))
+        if (!isNaN(principal) && principal * sellThreshold < 10) {
+          return cb(t('bot.spotBot.principalSellThresholdError'))
+        }
+        cb()
+      },
+    },
+  ],
+}))
 
 // 判断是否为编辑模式且需要禁用部分输入框
 const isEditDisabled = computed(() => {
