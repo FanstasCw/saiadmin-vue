@@ -36,13 +36,13 @@
       <a-form-item label="配置说明" field="remark">
         <a-textarea v-model="formData.remark" placeholder="请输入备注" />
       </a-form-item>
-      <a-form-item
+      <!-- <a-form-item
         v-if="['select', 'radio'].includes(formData.input_type)"
         label="配置数据"
         field="config_select_data"
         extra='用于配置下拉、单选、复选的数据，格式例子：[{"label":"数据一", "value":"shuju1"},...]'>
         <ma-codeEditor v-model="formData.config_select_data" :height="200" placeholder="请输入配置数据" />
-      </a-form-item>
+      </a-form-item> -->
     </a-form>
     <!-- 表单信息 end -->
   </component>
@@ -53,7 +53,7 @@ import { ref, reactive, nextTick } from 'vue'
 import { Message, Modal } from '@arco-design/web-vue'
 import api from '@/api/system/config'
 import { inputComponent } from './js/inputType.js'
-import MaCodeEditor from '@/components/ma-codeEditor/index.vue'
+// import MaCodeEditor from '@/components/ma-codeEditor/index.vue'
 
 const emit = defineEmits(['success'])
 
