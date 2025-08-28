@@ -23,5 +23,12 @@ export default {
       url: '/bot/statistics/botData',
       method: 'get'
     })
+  },
+
+  getProfit(id) {
+    return request({
+      url: '/bot/statistics/profit?id=' + id,
+      method: 'get'
+    })
   }
 }
