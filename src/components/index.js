@@ -1,19 +1,15 @@
 import { use } from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart } from 'echarts/charts'
 import {
-  BarChart,
-  LineChart,
-  PieChart,
-  RadarChart,
-  GaugeChart
-} from 'echarts/charts'
-import {
-  GridComponent,
   TooltipComponent,
-  LegendComponent,
+  ToolboxComponent,
+  GridComponent,
   DataZoomComponent,
-  GraphicComponent
+  VisualMapComponent,
+  MarkLineComponent,
+  MarkPointComponent
 } from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
 
 import MaWangEditor from './ma-wangEditor/index.vue'
 import MaColorPicker from './ma-colorPicker/index.vue'
@@ -36,17 +32,15 @@ import SaIcon from './sa-icon/index.vue'
 import SaIconPicker from './sa-icon-picker/index.vue'
 
 use([
-  CanvasRenderer,
-  BarChart,
-  LineChart,
-  PieChart,
-  RadarChart,
-  GaugeChart,
-  GridComponent,
   TooltipComponent,
-  LegendComponent,
+  ToolboxComponent,
+  GridComponent,
   DataZoomComponent,
-  GraphicComponent
+  VisualMapComponent,
+  MarkLineComponent,
+  MarkPointComponent,
+  LineChart,
+  CanvasRenderer
 ])
 
 export default {
