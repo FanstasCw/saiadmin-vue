@@ -60,7 +60,17 @@ export default {
     sellThreshold: 'Sell Threshold',
     investRatio: 'Invest Ratio',
     inputBotName: 'Please input bot name',
-    inputPrincipal: 'Please input principal'
+    inputPrincipal: 'Please input principal',
+    nameRequired: 'Bot name is required',
+    symbolRequired: 'Trading pair is required',
+    principalRequired: 'Principal is required',
+    buyThresholdRequired: 'Buy threshold is required',
+    sellThresholdRequired: 'Sell threshold is required',
+    invalidPrincipal: 'Please enter a valid principal',
+    invalidBuyThreshold: 'Please select a valid buy threshold',
+    invalidSellThreshold: 'Please select a valid sell threshold',
+    principalBuyThresholdError: 'Principal × Buy threshold must be ≥ 10',
+    principalSellThresholdError: 'Principal × Sell threshold must be ≥ 10'
   },
   coinBot: {
     coinBot: 'Coin Bot',
@@ -114,5 +124,7 @@ export default {
   sellLimit: 'Sell',
   closeShortLimit: 'Close Short',
   openShortLimit: 'Open Short',
-  totalUnrealizedPnl: 'Total Unrealized PnL'
+  totalUnrealizedPnl: 'Total Unrealized PnL',
+  netValueStatistics: 'Net Value Statistics:',
+  netValue: 'Net Value'
 }

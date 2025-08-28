@@ -60,7 +60,17 @@ export default {
     sellThreshold: '賣出閾值',
     investRatio: '投資比例',
     inputBotName: '請輸入機器人名稱',
-    inputPrincipal: '請輸入本金'
+    inputPrincipal: '請輸入本金',
+    nameRequired: '機器人名稱必需填寫',
+    symbolRequired: '交易對必需填寫',
+    principalRequired: '本金必需填寫',
+    buyThresholdRequired: '買入閾值必需選擇',
+    sellThresholdRequired: '賣出閾值必需選擇',
+    invalidPrincipal: '請輸入有效的本金',
+    invalidBuyThreshold: '請選擇有效的買入閾值',
+    invalidSellThreshold: '請選擇有效的賣出閾值',
+    principalBuyThresholdError: '本金 × 買入閾值必須 ≥ 10',
+    principalSellThresholdError: '本金 × 賣出閾值必須 ≥ 10'
   },
   coinBot: {
     coinBot: '幣本位套利機器人',
@@ -113,5 +123,7 @@ export default {
   sellLimit: '賣出',
   closeShortLimit: '平空',
   openShortLimit: '開空',
-  totalUnrealizedPnl: '浮動盈虧總計:'
+  totalUnrealizedPnl: '浮動盈虧總計:',
+  netValueStatistics: '淨值統計​:',
+  netValue: '淨值'
 }

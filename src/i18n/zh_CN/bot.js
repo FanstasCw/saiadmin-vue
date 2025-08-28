@@ -60,7 +60,17 @@ export default {
     sellThreshold: '卖出阈值',
     investRatio: '投资比例',
     inputBotName: '请输入机器人名称',
-    inputPrincipal: '请输入本金'
+    inputPrincipal: '请输入本金',
+    nameRequired: '机器人名称必需填写',
+    symbolRequired: '交易对必需填写',
+    principalRequired: '本金必需填写',
+    buyThresholdRequired: '买入阈值必需选择',
+    sellThresholdRequired: '卖出阈值必需选择',
+    invalidPrincipal: '请输入有效的本金',
+    invalidBuyThreshold: '请选择有效的买入阈值',
+    invalidSellThreshold: '请选择有效的卖出阈值',
+    principalBuyThresholdError: '本金 × 买入阈值必须 ≥ 10',
+    principalSellThresholdError: '本金 × 卖出阈值必须 ≥ 10'
   },
   coinBot: {
     coinBot: '币本位套利机器人',
@@ -113,5 +123,7 @@ export default {
   sellLimit: '卖出',
   closeShortLimit: '平空',
   openShortLimit: '开空',
-  totalUnrealizedPnl: '浮动盈亏总计:'
+  totalUnrealizedPnl: '浮动盈亏总计:',
+  netValueStatistics: '净值统计:',
+  netValue: '净值'
 }
