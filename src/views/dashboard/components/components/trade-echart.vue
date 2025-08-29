@@ -38,11 +38,46 @@ const selectedBotId = ref() // 添加选中值的响应式变量
 const getData = async (botId) => {
   try {
     const res = await api.getProfit(botId)
-    net_value_series.value = res.data.net_value_series
-    principal.value = Number(res.data.principal) //必须将字符串转换为数字，不然visualMap.pieces中的lt不能正常使用
+    if (!res.data) {
+      net_value_series.value = []
+      principal.value = 0
+    } else {
+      net_value_series.value = res.data.net_value_series || []
+      principal.value = Number(res.data.principal) || 0 //必须将字符串转换为数字，不然visualMap.pieces中的lt不能正常使用
+    }
 
     const startPercent = 0 // 从80%开始
     const endPercent = 100 // 到100%结束
+    // 1. 无数据
+    if (!net_value_series.value.length) {
+      net_value_series.value = []
+
+      options.value = {
+        grid: { left: '2.6%', right: '2%' },
+        title: {
+          text: t('bot.noData'),
+          left: 'center',
+          top: 'middle',
+          textStyle: { fontSize: 16, color: '#999' },
+        },
+        xAxis: {
+          type: 'time',
+          min: +new Date(), // 今天
+          max: +new Date() + 24 * 3600 * 1000, // 明天
+          axisLabel: { formatter: '{yyyy}-{MM}-{dd}' },
+        },
+        yAxis: {
+          type: 'value',
+          name: t('bot.netValue'),
+          min: principal.value ? principal.value - 100 : 0,
+          max: principal.value ? principal.value + 100 : 1000,
+        },
+        series: [],
+        dataZoom: [], // 关掉缩放
+      }
+      return
+    }
+
     options.value = {
       grid: {
         left: '2.6%',
