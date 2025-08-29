@@ -36,8 +36,6 @@ const { t } = useI18n()
 const selectedBotId = ref() // 添加选中值的响应式变量
 
 const getData = async (botId) => {
-  if (!botId) return // 如果没有选择bot，直接返回
-
   try {
     const res = await api.getProfit(botId)
     net_value_series.value = res.data.net_value_series
@@ -180,6 +178,8 @@ const initPage = async () => {
   // 设置默认值
   if (botName.value && botName.value.length > 0) {
     selectedBotId.value = botName.value[0].value
+  } else {
+    selectedBotId.value = ''
   }
 }
 
