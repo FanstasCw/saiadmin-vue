@@ -107,9 +107,16 @@ const getData = async (botId) => {
         },
       },
       xAxis: {
-        type: 'time',
+        type: 'category',
+        scale: true,
+        boundaryGap: true,
         axisLabel: {
-          formatter: '{yyyy}-{MM}-{dd}', // 格式化日期显示
+          interval: 1, // 每 1 个标签显示一个（索引方式）
+        },
+        axisTick: {
+          show: true,
+          alignWithLabel: true,
+          interval: 0,
         },
       },
       yAxis: {
