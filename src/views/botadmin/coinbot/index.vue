@@ -84,7 +84,7 @@ import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
 import { useDictStore } from '@/store'
 import { useI18n } from 'vue-i18n'
-
+import tool from '@/utils/tool'
 // 引用定义
 const crudRef = ref()
 const editRef = ref()
@@ -97,6 +97,12 @@ const searchForm = ref({
   symbol: '',
 })
 const { t } = useI18n()
+// 获取字典数组
+const dictList = useDictStore().data
+
+// 获取字典price_change_color中值为up的color
+const up_color = tool.getColor('up', dictList['price_change_color'])
+const down_color = tool.getColor('down', dictList['price_change_color'])
 // 修改状态
 const setActive = async (active, id) => {
   const response = await api.setActive({ ids: id, active })
@@ -108,9 +114,9 @@ const setActive = async (active, id) => {
 
 const getTextColors = (value) => {
   if (value > 0) {
-    return colorData.find((item) => item.label === 'up').value
+    return up_color
   } else if (value < 0) {
-    return colorData.find((item) => item.label === 'down').value
+    return down_color
   } else {
     return 'black'
   }

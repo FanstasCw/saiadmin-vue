@@ -49,13 +49,23 @@ import api from '@/views/botadmin/api/statistics'
 import { useDictStore } from '@/store'
 // import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import tool from '@/utils/tool'
+
 /* ——— 原来的逻辑不变 ——— */
 const colorData = useDictStore().data.price_change_color
 const data = ref({ spot_data: [], coin_data: [] })
 const { t } = useI18n()
+
+// 获取字典数组
+const dictList = useDictStore().data
+
+// 获取字典price_change_color中值为up的color
+const up_color = tool.getColor('up', dictList['price_change_color'])
+const down_color = tool.getColor('down', dictList['price_change_color'])
+
 const getTextColors = (val) => {
-  if (val > 0) return colorData.find((i) => i.label === 'up').value
-  if (val < 0) return colorData.find((i) => i.label === 'down').value
+  if (val > 0) return up_color
+  if (val < 0) return down_color
   return 'black'
 }
 const getData = async () => {

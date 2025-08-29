@@ -27,6 +27,8 @@ import { onMounted, ref, watch, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import commonApi from '@/api/common'
 import api from '@/views/botadmin/api/statistics'
+import tool from '@/utils/tool'
+import { useDictStore } from '@/store'
 
 const net_value_series = ref([])
 const principal = ref([])
@@ -34,7 +36,12 @@ const options = ref({})
 const botName = ref([])
 const { t } = useI18n()
 const selectedBotId = ref() // 添加选中值的响应式变量
+// 获取字典数组
+const dictList = useDictStore().data
 
+// 获取字典price_change_color中值为up的color
+const up_color = tool.getColor('up', dictList['price_change_color'])
+const down_color = tool.getColor('down', dictList['price_change_color'])
 const getData = async (botId) => {
   try {
     const res = await api.getProfit(botId)
@@ -154,11 +161,11 @@ const getData = async (botId) => {
           {
             gte: 0,
             lt: principal.value,
-            color: '#F6465D',
+            color: down_color,
           },
           {
             gte: principal.value,
-            color: '#2EBD85',
+            color: up_color,
           },
         ],
       },
