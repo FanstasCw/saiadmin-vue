@@ -103,7 +103,7 @@ const getData = async (botId) => {
           const param = params[0]
           const dateStr = param.data[0]
           const value = param.data[1]
-          return `${dateStr}<br/> ${value}`
+          return `${dateStr}<br/> ${value}` + ' U'
         },
       },
       toolbox: {
@@ -127,7 +127,7 @@ const getData = async (botId) => {
       },
       yAxis: {
         type: 'value',
-        name: t('bot.netValue'),
+        name: t('bot.netValue') + '(USDT)',
         // scale: true,
         min: Math.floor(yMin - padding),
         max: Math.ceil(yMax + padding),
@@ -200,7 +200,7 @@ const getData = async (botId) => {
             label: {
               show: true,
               position: 'top',
-              formatter: '{c}', // 显示数值
+              formatter: '{c}' + ' U', // 显示数值
             },
           },
           markLine: {
@@ -209,7 +209,7 @@ const getData = async (botId) => {
             animation: true,
             label: {
               position: 'insideMiddleBottom',
-              formatter: t('bot.principal') + ': ' + principal.value,
+              formatter: t('bot.principal') + ': ' + principal.value + ' U',
             },
           },
         },
