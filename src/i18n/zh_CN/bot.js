@@ -125,5 +125,6 @@ export default {
   openShortLimit: '开空',
   totalUnrealizedPnl: '浮动盈亏总计:',
   netValueStatistics: '净值统计:',
-  netValue: '净值'
+  netValue: '净值',
+  noData: '暂无历史数据'
 }

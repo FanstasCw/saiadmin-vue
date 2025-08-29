@@ -126,5 +126,6 @@ export default {
   openShortLimit: 'Open Short',
   totalUnrealizedPnl: 'Total Unrealized PnL',
   netValueStatistics: 'Net Value Statistics:',
-  netValue: 'Net Value'
+  netValue: 'Net Value',
+  noData: 'No History Data'
 }
