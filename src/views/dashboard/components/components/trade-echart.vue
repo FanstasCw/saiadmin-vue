@@ -11,7 +11,7 @@
         <a-select
           v-model="selectedBotId"
           :style="{ width: '180px' }"
-          :options="botName"
+          :options="bot_name"
           :placeholder="t('bot.selectBot')"
           allow-clear />
       </template>
@@ -33,7 +33,8 @@ import { useDictStore } from '@/store'
 const net_value_series = ref([])
 const principal = ref([])
 const options = ref({})
-const botName = ref([])
+const bot_name = ref([])
+const title_name = ref([])
 const { t } = useI18n()
 const selectedBotId = ref() // 添加选中值的响应式变量
 // 获取字典数组
@@ -51,6 +52,7 @@ const getData = async (botId) => {
     } else {
       net_value_series.value = res.data.net_value_series || []
       principal.value = Number(res.data.principal) || 0 //必须将字符串转换为数字，不然visualMap.pieces中的lt不能正常使用
+      title_name.value = res.data.bot_name
     }
 
     const startPercent = 0 // 从0开始
@@ -80,7 +82,7 @@ const getData = async (botId) => {
         },
         yAxis: {
           type: 'value',
-          name: t('bot.netValue'),
+          name: t('bot.netValue') + '(USDT)',
           min: principal.value ? principal.value - 100 : 0,
           max: principal.value ? principal.value + 100 : 1000,
         },
@@ -96,6 +98,11 @@ const getData = async (botId) => {
         right: '2%',
         // top: '10',
         // bottom: '30',
+      },
+      title: {
+        text: title_name.value,
+        left: 'center',
+        // top: '10',
       },
       tooltip: {
         trigger: 'axis',
@@ -229,10 +236,10 @@ watch(selectedBotId, (newVal, oldVal) => {
 // 页面数据初始化
 const initPage = async () => {
   const postResp = await commonApi.commonGet('/bot/spotBot/getBotName')
-  botName.value = postResp.data
+  bot_name.value = postResp.data
   // 设置默认值
-  if (botName.value && botName.value.length > 0) {
-    selectedBotId.value = botName.value[0].value
+  if (bot_name.value && bot_name.value.length > 0) {
+    selectedBotId.value = bot_name.value[0].value
   } else {
     selectedBotId.value = ''
   }
