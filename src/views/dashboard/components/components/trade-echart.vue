@@ -46,7 +46,7 @@ const getData = async (botId) => {
       principal.value = Number(res.data.principal) || 0 //必须将字符串转换为数字，不然visualMap.pieces中的lt不能正常使用
     }
 
-    const startPercent = 0 // 从80%开始
+    const startPercent = 0 // 从0开始
     const endPercent = 100 // 到100%结束
     const yData = net_value_series.value.map((d) => d[1])
     const yMin = Math.min(...yData, principal.value)
@@ -94,8 +94,7 @@ const getData = async (botId) => {
         trigger: 'axis',
         formatter: function (params) {
           const param = params[0]
-          // 从数据中获取日期和值
-          const dateStr = param.data[0] // '2025-08-01' 格式
+          const dateStr = param.data[0]
           const value = param.data[1]
           return `${dateStr}<br/> ${value}`
         },
