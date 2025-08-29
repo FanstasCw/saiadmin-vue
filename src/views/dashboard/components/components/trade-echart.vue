@@ -13,8 +13,7 @@
           :style="{ width: '180px' }"
           :options="botName"
           :placeholder="t('bot.selectBot')"
-          allow-clear
-          @change="handleSelectChange" />
+          allow-clear />
       </template>
 
       <!-- 图表区域 -->
