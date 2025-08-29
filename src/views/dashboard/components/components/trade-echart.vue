@@ -48,6 +48,11 @@ const getData = async (botId) => {
 
     const startPercent = 0 // 从80%开始
     const endPercent = 100 // 到100%结束
+    const yData = net_value_series.value.map((d) => d[1])
+    const yMin = Math.min(...yData, principal.value)
+    const yMax = Math.max(...yData, principal.value)
+    const padding = (yMax - yMin) * 0.1 || 1 // 至少留 1 的缓冲，防止单点数据
+
     // 1. 无数据
     if (!net_value_series.value.length) {
       net_value_series.value = []
@@ -110,7 +115,9 @@ const getData = async (botId) => {
       yAxis: {
         type: 'value',
         name: t('bot.netValue'),
-        scale: true,
+        // scale: true,
+        min: Math.floor(yMin - padding),
+        max: Math.ceil(yMax + padding),
         axisLabel: {
           formatter: function (value) {
             return value.toFixed(0)
