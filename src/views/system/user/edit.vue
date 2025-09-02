@@ -10,13 +10,13 @@
     @before-ok="submit">
     <!-- 表单信息 start -->
     <a-form ref="formRef" :model="formData" :rules="rules" :auto-label-width="true">
-      <a-row :gutter="16">
+      <!-- <a-row :gutter="16">
         <a-col :span="24">
           <a-form-item label="头像" field="avatar">
             <sa-upload-image v-model="formData.avatar" :rounded="true" />
           </a-form-item>
         </a-col>
-      </a-row>
+      </a-row> -->
       <a-row :gutter="16">
         <a-col :span="12">
           <a-form-item field="username" label="账户">
