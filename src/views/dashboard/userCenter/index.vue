@@ -1,9 +1,9 @@
 <template>
   <div class="block">
     <div class="user-header rounded-sm text-center">
-      <div class="pt-3 mx-auto avatar-box">
+      <!-- <div class="pt-3 mx-auto avatar-box">
         <sa-upload-image v-model="userInfo.avatar" rounded />
-      </div>
+      </div> -->
       <div>
         <a-tag size="large" class="mt-3 rounded-full tag-primary">
           {{ (userStore.user && userStore.user.nickname) || (userStore.user && userStore.user.username) }}
@@ -26,7 +26,10 @@
         <a-tabs type="rounded">
           <a-tab-pane key="login-log" title="登录日志">
             <a-timeline class="pl-5 mt-3" v-if="loginLogList && loginLogList.length">
-              <a-timeline-item :label="`地理位置；${item.ip_location}，操作系统：${item.os}`" v-for="(item, idx) in loginLogList" :key="idx">
+              <a-timeline-item
+                :label="`地理位置；${item.ip_location}，操作系统：${item.os}`"
+                v-for="(item, idx) in loginLogList"
+                :key="idx">
                 您于 {{ item.login_time }} 登录系统，{{ item.message }}
               </a-timeline-item>
             </a-timeline>
@@ -76,9 +79,11 @@ onMounted(() => {
     loginLogList.value = res.data.data
   })
 
-  commonApi.getOperationLogList(Object.assign(requestParams, { orderBy: 'create_time', orderType: 'desc' })).then((res) => {
-    operationLogList.value = res.data.data
-  })
+  commonApi
+    .getOperationLogList(Object.assign(requestParams, { orderBy: 'create_time', orderType: 'desc' }))
+    .then((res) => {
+      operationLogList.value = res.data.data
+    })
 })
 
 userInfo.avatar = userStore?.user?.avatar ?? undefined
