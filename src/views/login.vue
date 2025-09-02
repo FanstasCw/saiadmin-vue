@@ -5,7 +5,7 @@ import { useUserStore } from '@/store'
 import { useRouter, useRoute } from 'vue-router'
 import packageJson from '../../package.json'
 import { useAppStore } from '@/store'
-
+import Footer from '../layout/components/ma-footer.vue'
 const appStore = useAppStore()
 const router = useRouter()
 const route = useRoute()
@@ -129,6 +129,7 @@ const handleSubmit = async ({ values, errors }) => {
       <div class="fly bg-fly-circle3"></div>
       <div class="fly bg-fly-circle4"></div>
     </div>
+    <Footer style="position: absolute; bottom: 0; width: 100%" />
   </div>
 </template>
 
