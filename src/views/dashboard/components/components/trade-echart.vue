@@ -55,7 +55,7 @@ const getData = async (botId) => {
       title_name.value = res.data.bot_name
     }
 
-    const startPercent = 0 // 从0开始
+    const startPercent = 60 // 从0开始
     const endPercent = 100 // 到100%结束
     const yData = net_value_series.value.map((d) => d[1])
     const yMin = Math.min(...yData, principal.value)
@@ -124,12 +124,14 @@ const getData = async (botId) => {
         scale: true,
         boundaryGap: true,
         axisLabel: {
-          interval: 1, // 每 1 个标签显示一个（索引方式）
-        },
-        axisTick: {
-          show: true,
-          alignWithLabel: true,
-          interval: 0,
+          interval: window.innerWidth < 768 ? 4 : 1,
+          formatter: function (value) {
+            if (window.innerWidth < 768) {
+              return value.slice(5, 10)
+            } else {
+              return value
+            }
+          },
         },
       },
       yAxis: {
