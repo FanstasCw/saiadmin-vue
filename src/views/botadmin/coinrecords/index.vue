@@ -31,16 +31,16 @@
             <sa-select v-model="searchForm.side" dict="coin_side" :placeholder="t('bot.selectSide')" allow-clear />
           </a-form-item>
         </a-col>
-        <a-col :sm="8" :xs="24">
+        <!-- <a-col :sm="8" :xs="24">
           <a-form-item :label="t('bot.type')" field="type">
             <sa-select v-model="searchForm.type" dict="order_type" :placeholder="t('bot.selectType')" allow-clear />
           </a-form-item>
-        </a-col>
-        <a-col :sm="8" :xs="24">
+        </a-col> -->
+        <!-- <a-col :sm="8" :xs="24">
           <a-form-item :label="t('bot.createTime')" field="create_time">
             <a-range-picker v-model="searchForm.create_time" :show-time="true" mode="date" />
           </a-form-item>
-        </a-col>
+        </a-col> -->
       </template>
 
       <!-- Table 自定义渲染 -->
@@ -109,7 +109,7 @@ const columns = reactive([
   { title: t('bot.type'), dataIndex: 'type', type: 'dict', dict: 'order_type' },
   { title: t('bot.amount'), dataIndex: 'amount' },
   { title: t('bot.price'), dataIndex: 'price' },
-  { title: t('bot.fee'), dataIndex: 'fee' },
+  // { title: t('bot.fee'), dataIndex: 'fee' },
   { title: t('bot.createTime'), dataIndex: 'create_time', sortable: { sortDirections: ['ascend', 'descend'] } },
 ])
 
