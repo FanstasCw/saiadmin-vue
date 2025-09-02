@@ -13,11 +13,13 @@
       <iframe-view />
     </div>
   </a-layout-content>
+  <Footer />
 </template>
 
 <script setup>
 import { useAppStore, useKeepAliveStore } from '@/store'
 import IframeView from './components/iframe-view.vue'
+import Footer from './ma-footer.vue'
 const appStore = useAppStore()
 const keepStore = useKeepAliveStore()
 </script>
