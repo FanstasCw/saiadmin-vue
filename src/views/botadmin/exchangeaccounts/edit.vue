@@ -30,6 +30,14 @@
       <a-form-item v-if="isOkxExchange" :label="t('bot.passPhrase')" field="pass_phrase">
         <a-input v-model="formData.pass_phrase" :placeholder="t('bot.inputPhrase')" />
       </a-form-item>
+      <a-form-item label="测试环境" field="sandbox" v-role="['superAdmin']">
+        <sa-switch
+          v-model="formData.sandbox"
+          checked-value="0"
+          unchecked-value="1"
+          :checked-text="启用"
+          :unchecked-text="禁用" />
+      </a-form-item>
       <a-form-item :label="t('bot.enables')" field="is_active">
         <sa-switch
           v-model="formData.is_active"
@@ -72,6 +80,7 @@ const initialFormData = {
   api_key: '',
   secret_key: '',
   pass_phrase: '',
+  sandbox: 1,
   is_active: 1,
 }
 
