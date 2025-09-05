@@ -100,8 +100,8 @@ const columns = reactive([
   { title: t('bot.secretKey'), dataIndex: 'secret_key', width: 180 },
   { title: t('bot.enables'), dataIndex: 'is_active', width: 180 },
   { title: t('bot.status'), dataIndex: 'status', type: 'dict', dict: 'exchange_account_status', width: 80 },
-  { title: t('bot.create_time'), dataIndex: 'create_time', width: 180 },
-  { title: t('bot.update_time'), dataIndex: 'update_time', width: 180 },
+  { title: t('bot.createTime'), dataIndex: 'create_time', width: 180 },
+  { title: t('bot.updateTime'), dataIndex: 'update_time', width: 180 },
 ])
 
 // 页面数据初始化
