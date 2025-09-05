@@ -43,6 +43,7 @@ export default {
   'system:operLog': '操作日誌',
   'system:apiLog': '接口日誌',
 
+  config: '配置',
   // 工具
   devTools: '工具',
   'setting:module': '模塊管理',

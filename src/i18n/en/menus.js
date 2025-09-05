@@ -42,6 +42,7 @@ export default {
   'system:operLog': 'Operation Logs',
   'system:apiLog': 'Apis Logs',
 
+  config: 'Config',
   // 工具
   devTools: 'Tools',
   'setting:module': 'Module Manage',
