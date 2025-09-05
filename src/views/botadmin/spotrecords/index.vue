@@ -63,8 +63,8 @@
       </template>
     </sa-table>
 
-    <!-- 编辑表单 -->
-    <edit-form ref="editRef" @success="refresh" />
+    <!-- 编辑表单
+    <edit-form ref="editRef" @success="refresh" /> -->
   </div>
 </template>
 
