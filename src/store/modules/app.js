@@ -12,8 +12,8 @@ let defaultSetting = {
   settingOpen: false,
   searchOpen: false,
   roundOpen: true,
-  waterMark: true,
-  waterContent: 'saiadmin',
+  waterMark: false,
+  waterContent: '',
   ws: false,
   registerWangEditorButtonFlag: false
 }
