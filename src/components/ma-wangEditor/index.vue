@@ -1,5 +1,4 @@
-<template>
-  <!-- 组件外部的 form-item -->
+<!-- <template>
   <div style="z-index: 100; border: 1px solid #ccc; width: 100%">
     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
     <Editor
@@ -9,7 +8,13 @@
       :mode="props.mode"
       @onCreated="handleCreated" />
 
-    <a-modal style="z-index: 1000" v-model:visible="resourceVisible" :render-to-body="false" :width="1080" :footer="false" draggable>
+    <a-modal
+      style="z-index: 1000"
+      v-model:visible="resourceVisible"
+      :render-to-body="false"
+      :width="1080"
+      :footer="false"
+      draggable>
       <template #title>资源选择器</template>
       <sa-resource v-model="list" multiple ref="resource" returnType="url" />
     </a-modal>
@@ -191,4 +196,4 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped></style> -->

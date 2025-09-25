@@ -14,8 +14,8 @@ let defaultSetting = {
   roundOpen: true,
   waterMark: false,
   waterContent: '',
-  ws: false,
-  registerWangEditorButtonFlag: false
+  ws: false
+  // registerWangEditorButtonFlag: false
 }
 
 import { defineStore } from 'pinia'
@@ -149,11 +149,11 @@ const useAppStore = defineStore('app', {
       defaultSetting.skin = this.skin
       document.body.setAttribute('mine-skin', this.skin)
       tool.local.set('setting', defaultSetting)
-    },
-
-    setRegisterWangEditorButtonFlag(value) {
-      this.registerWangEditorButtonFlag = value
     }
+
+    // setRegisterWangEditorButtonFlag(value) {
+    //   this.registerWangEditorButtonFlag = value
+    // }
   }
 })
 

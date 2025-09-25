@@ -11,7 +11,7 @@ import {
 } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
-import MaWangEditor from './ma-wangEditor/index.vue'
+// import MaWangEditor from './ma-wangEditor/index.vue'
 import MaColorPicker from './ma-colorPicker/index.vue'
 import MaCityLinkage from './ma-cityLinkage/index.vue'
 
@@ -47,7 +47,7 @@ use([
 
 export default {
   install(Vue) {
-    Vue.component('MaWangEditor', MaWangEditor)
+    // Vue.component('MaWangEditor', MaWangEditor)
     Vue.component('MaColorPicker', MaColorPicker)
     Vue.component('MaCityLinkage', MaCityLinkage)
 

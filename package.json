@@ -14,8 +14,6 @@
     "@arco-design/color": "^0.4.0",
     "@arco-design/web-vue": "^2.57.0",
     "@arco-themes/vue-gi-demo": "^0.0.51",
-    "@wangeditor/editor": "^5.1.23",
-    "@wangeditor/editor-for-vue": "^5.1.12",
     "autoprefixer": "^10.4.17",
     "axios": "^0.27.2",
     "crypto-js": "^4.2.0",

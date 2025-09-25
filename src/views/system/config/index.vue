@@ -68,9 +68,9 @@
                 <template v-if="item.input_type === 'uploadFile'">
                   <sa-upload-file v-model="item.value" />
                 </template>
-                <template v-if="item.input_type === 'wangEditor'">
+                <!-- <template v-if="item.input_type === 'wangEditor'">
                   <ma-wangEditor v-model="item.value" />
-                </template>
+                </template> -->
               </a-form-item>
             </template>
             <a-form-item v-if="formArray.length > 0">

@@ -4,6 +4,6 @@ export const inputComponent = [
   { label: '下拉选择框', value: 'select' },
   { label: '单选框', value: 'radio' },
   { label: '图片上传', value: 'uploadImage' },
-  { label: '文件上传', value: 'uploadFile' },
-  { label: '富文本编辑器', value: 'wangEditor' }
+  { label: '文件上传', value: 'uploadFile' }
+  // { label: '富文本编辑器', value: 'wangEditor' }
 ]

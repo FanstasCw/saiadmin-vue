@@ -16,9 +16,9 @@
       <a-form-item label="公告类型" field="type">
         <sa-select v-model="formData.type" dict="backend_notice_type" placeholder="请选择公告类型" />
       </a-form-item>
-      <a-form-item label="公告内容" field="content">
+      <!-- <a-form-item label="公告内容" field="content">
         <ma-wangEditor v-model="formData.content" placeholder="请输入公告内容" />
-      </a-form-item>
+      </a-form-item> -->
       <a-form-item label="备注" field="remark">
         <a-textarea v-model="formData.remark" placeholder="请输入备注" />
       </a-form-item>
