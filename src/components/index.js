@@ -30,6 +30,8 @@ import SaUploadImage from './sa-upload-image/index.vue'
 import SaUploadFile from './sa-upload-file/index.vue'
 import SaIcon from './sa-icon/index.vue'
 import SaIconPicker from './sa-icon-picker/index.vue'
+import SbotCard from './sbot-card/index.vue'
+import CbotCard from './cbot-card/index.vue'
 
 use([
   TooltipComponent,
@@ -64,5 +66,7 @@ export default {
     Vue.component('SaUploadFile', SaUploadFile)
     Vue.component('SaIcon', SaIcon)
     Vue.component('SaIconPicker', SaIconPicker)
+    Vue.component('SbotCard', SbotCard)
+    Vue.component('CbotCard', CbotCard)
   }
 }
