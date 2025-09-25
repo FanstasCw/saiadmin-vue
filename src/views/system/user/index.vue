@@ -89,7 +89,6 @@ import { Message, Modal } from '@arco-design/web-vue'
 import EditForm from './edit.vue'
 import avatar from '@/assets/avatar.svg'
 
-const depts = ref([{ label: '所有部门', value: 0 }])
 const crudRef = ref()
 const editRef = ref()
 
@@ -222,12 +221,7 @@ const columns = reactive([
 ])
 
 // 页面数据初始化
-const initPage = async () => {
-  const resp = await commonApi.commonGet('/core/dept/accessDept')
-  resp.data.map((item) => {
-    depts.value.push(item)
-  })
-}
+const initPage = async () => {}
 
 // SaTable 数据刷新
 const refresh = async () => {
