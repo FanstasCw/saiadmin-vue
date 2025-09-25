@@ -1,139 +1,173 @@
 <template>
-  <div class="ma-content-block">
-    <sa-table ref="crudRef" :options="options" :columns="columns" :searchForm="searchForm">
-      <!-- 搜索区 tableSearch -->
-      <template #tableSearch>
-        <a-col :sm="8" :xs="24">
-          <a-form-item :label="t('bot.botName')" field="name">
-            <a-input v-model="searchForm.name" :placeholder="t('bot.spotBot.inputBotName')" allow-clear />
-          </a-form-item>
-        </a-col>
-        <a-col :sm="8" :xs="24">
-          <a-form-item :label="t('bot.symbol')" field="symbol">
-            <a-select
-              v-model="searchForm.symbol"
-              :options="symbolData"
-              :placeholder="t('bot.selectSymbol')"
-              allow-clear
-              allow-search />
-          </a-form-item>
-        </a-col>
-      </template>
+  <div class="robot-card-list">
+    <!-- 搜索区域 -->
+    <a-card :bordered="false" class="search-card">
+      <a-form :model="searchForm" layout="inline">
+        <a-form-item :label="t('bot.botName')" field="name">
+          <a-input v-model="searchForm.name" :placeholder="t('bot.coinBot.inputBotName')" allow-clear />
+        </a-form-item>
+        <a-form-item :label="t('bot.symbol')" field="symbol">
+          <a-select
+            v-model="searchForm.symbol"
+            :options="symbolData"
+            :placeholder="t('bot.selectSymbol')"
+            allow-clear
+            allow-search />
+        </a-form-item>
+        <a-form-item>
+          <a-space>
+            <a-button type="primary" @click="handleSearch">
+              <template #icon><icon-search /></template>
+              {{ t('bot.search') }}
+            </a-button>
+            <a-button @click="handleReset">
+              <template #icon><icon-refresh /></template>
+              {{ t('bot.reset') }}
+            </a-button>
+          </a-space>
+        </a-form-item>
+      </a-form>
+    </a-card>
 
-      <!-- Table 自定义渲染 -->
-      <!-- 交易所列 -->
-      <template #exchange_account_id="{ record }">
-        {{ record.exchangeaccount.name }}
-      </template>
-      <template #active="{ record }">
-        <sa-switch
-          v-model="record.active"
-          @change="setActive($event, record.id)"
-          checked-value="2"
-          unchecked-value="3"
-          :checked-text="t('bot.enable')"
-          :unchecked-text="t('bot.disable')">
-        </sa-switch>
-      </template>
-      <template #principal="{ record }">
-        {{ record.principal }}
-      </template>
-      <template #position_amount="{ record }">
-        {{ parseFloat(record.position_amount) }}
-      </template>
-      <template #cash_balance="{ record }">
-        {{ record.cash_balance }}
-      </template>
-      <template #position_value="{ record }">
-        {{ record.position_value }}
-      </template>
-      <template #account_net_value="{ record }">
-        {{ record.account_net_value }}
-      </template>
-      <template #unrealized_pnl="{ record }">
-        <span :style="{ color: getTextColors(record.unrealized_pnl) }">{{ record.unrealized_pnl }}</span>
-      </template>
-      <!-- 操作 -->
-      <template #operationCell="{ record }">
-        <!-- 默认编辑按钮 -->
-        <a-link v-if="options.edit.show" v-auth="options.edit.auth || []" type="primary" @click="handleEdit(record)">
-          <icon-edit /> {{ options.edit.text || t('bot.edit') }}
-        </a-link>
-        <!-- 自定义关闭按钮 -->
-        <a-popconfirm :content="t('bot.closeConfirm')" position="bottom" @ok="closeRobot(record)">
-          <a-link type="primary"> <icon-close /> {{ t('bot.close') }} </a-link>
-        </a-popconfirm>
-        <!-- 默认删除按钮 -->
-        <a-popconfirm
-          v-if="options.delete.show"
-          :content="t('bot.deleteConfirm')"
-          position="bottom"
-          @ok="handleDelete(record)">
-          <a-link type="primary" v-auth="options.delete.auth || []">
-            <icon-delete /> {{ options.delete.text || t('bot.delete') }}
-          </a-link>
-        </a-popconfirm>
-      </template>
-    </sa-table>
+    <!-- 操作按钮区域 -->
+    <a-card :bordered="false" class="action-card">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div>
+          <a-space size="medium">
+            <a-button type="primary" @click="handleAdd">
+              <template #icon><icon-plus /></template>
+              {{ t('bot.add') }}
+            </a-button>
+          </a-space>
+        </div>
+        <div>
+          <a-tooltip :content="t('bot.refresh')">
+            <a-button shape="circle" @click="fetchRobots"><icon-refresh /></a-button>
+          </a-tooltip>
+        </div>
+      </div>
+    </a-card>
+
+    <a-spin :loading="loading" style="width: 100%">
+      <!-- 机器人卡片列表 -->
+      <div class="robot-grid">
+        <sbot-card
+          v-for="robot in robotList"
+          :key="robot.id"
+          :robot="robot"
+          @edit="handleEdit"
+          @close="handleClose"
+          @delete="handleDelete"
+          @toggle-active="handleToggleActive" />
+      </div>
+    </a-spin>
+    <!-- 分页 -->
+    <a-card :bordered="false" class="pagination-card">
+      <a-pagination
+        :total="total"
+        show-total
+        show-jumper
+        show-page-size
+        :page-size-options="[10, 20, 50]"
+        :page-size="pageSize"
+        :current="currentPage"
+        @page-size-change="handlePageSizeChange"
+        @change="handlePageChange" />
+    </a-card>
 
     <!-- 编辑表单 -->
-    <edit-form ref="editRef" @success="refresh" />
+    <edit-form ref="editRef" @success="fetchRobots" />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { Message } from '@arco-design/web-vue'
+import { useI18n } from 'vue-i18n'
 import EditForm from './edit.vue'
 import api from '../api/spotbot'
-import { role } from '@/utils/common.js'
 import commonApi from '@/api/common'
-import { useDictStore } from '@/store'
-import { useI18n } from 'vue-i18n'
-import tool from '@/utils/tool'
-// 引用定义
-const crudRef = ref()
+
+const { t } = useI18n()
 const editRef = ref()
-const viewRef = ref()
-const symbolData = ref([])
-const colorData = useDictStore().data.price_change_color
+const loading = ref(false)
+
 // 搜索表单
-const searchForm = ref({
+const searchForm = reactive({
   name: '',
   symbol: '',
 })
-const { t } = useI18n()
-// 获取字典数组
-const dictList = useDictStore().data
 
-// 获取字典price_change_color中值为up的color
-const up_color = tool.getColor('up', dictList['price_change_color'])
-const down_color = tool.getColor('down', dictList['price_change_color'])
-// 修改状态
-const setActive = async (active, id) => {
-  const response = await api.setActive({ ids: id, active })
-  if (response.code === 200) {
-    Message.success(response.message)
-    crudRef.value.refresh()
+// 分页数据
+const total = ref(0)
+const pageSize = ref(10)
+const currentPage = ref(1)
+const robotList = ref([])
+const symbolData = ref([])
+
+// 获取机器人列表
+const fetchRobots = async () => {
+  try {
+    loading.value = true
+    const params = {
+      ...searchForm,
+      page: currentPage.value,
+      limit: pageSize.value,
+    }
+
+    const response = await api.getPageList(params)
+    if (response.code === 200) {
+      robotList.value = response.data.data || response.data
+      total.value = response.data.total
+    }
+  } catch (error) {
+    console.error('获取机器人列表失败:', error)
+    Message.error(t('bot.fetchListFailed'))
+  } finally {
+    loading.value = false
   }
 }
 
-const getTextColors = (value) => {
-  if (value > 0) {
-    return up_color
-  } else if (value < 0) {
-    return down_color
-  } else {
-    return 'black'
-  }
+// 搜索
+const handleSearch = () => {
+  currentPage.value = 1
+  fetchRobots()
 }
 
-const handleEdit = (record) => {
-  options.edit.func?.(record) // 直接调用你传进来的回调
+// 重置搜索
+const handleReset = () => {
+  searchForm.name = ''
+  searchForm.symbol = ''
+  handleSearch()
 }
 
-const closeRobot = async (record) => {
-  const params = { ids: record.id, active: 5 }
+// 分页变化
+const handlePageChange = (page) => {
+  currentPage.value = page
+  fetchRobots()
+}
+
+// 每页数量变化
+const handlePageSizeChange = (size) => {
+  pageSize.value = size
+  currentPage.value = 1
+  fetchRobots()
+}
+
+// 添加机器人
+const handleAdd = () => {
+  editRef.value?.open()
+}
+
+// 编辑机器人
+const handleEdit = (robot) => {
+  editRef.value?.open('edit')
+  editRef.value?.setFormData(robot)
+}
+
+// 关闭机器人
+const handleClose = async (robot) => {
+  const params = { ids: robot.id, active: 5 }
   const activeResp = await api.getActive(params)
   if (activeResp.code === 200) {
     if (activeResp.data.active == 2 || activeResp.data.active == 1) {
@@ -141,108 +175,84 @@ const closeRobot = async (record) => {
       return
     } else if (activeResp.data.active == 5) {
       Message.warning(t('bot.botActiveTips.2'))
-      crudRef.value?.refresh()
+      fetchRobots()
       return
     } else if (activeResp.data.active == 6) {
       Message.warning(t('bot.botActiveTips.3'))
-      crudRef.value?.refresh()
+      fetchRobots()
       return
     }
   }
   const closeResp = await api.setActive(params)
   if (closeResp.code === 200) {
     Message.success(t('bot.botActiveTips.4'))
-    crudRef.value?.refresh()
+    fetchRobots()
   }
 }
 
-const handleDelete = (record) => {
-  const params = { ids: record.id }
-  options.delete.func?.(params)
+// 删除机器人
+const handleDelete = async (robot) => {
+  const params = { ids: robot.id }
+  const closeResp = await api.getActive(params)
+  if (closeResp.code === 200) {
+    if (closeResp.data.status != 5) {
+      Message.error(t('bot.botActiveTips.5'))
+      return
+    }
+    if (closeResp.data.active != 6) {
+      Message.error(t('bot.botActiveTips.6'))
+      return
+    }
+  }
+  const resp = await api.destroy(params)
+  if (resp.code === 200) {
+    Message.success(t('bot.deleteSuccess'))
+    fetchRobots()
+  }
 }
 
-// SaTable 基础配置
-const options = reactive({
-  api: api.getPageList,
-  rowSelection: undefined,
-  showSort: false,
-  operationColumnText: t('bot.operations'),
-  searchText: t('bot.search'),
-  resetText: t('bot.reset'),
-  add: {
-    show: true,
-    text: t('bot.add'),
-    auth: ['/bot/spotBot/save'],
-    func: async () => {
-      editRef.value?.open()
-    },
-  },
-  edit: {
-    show: true,
-    auth: ['/bot/spotBot/update'],
-    func: async (record) => {
-      editRef.value?.open('edit')
-      editRef.value?.setFormData(record)
-    },
-  },
-  delete: {
-    show: true,
-    auth: ['/bot/spotBot/destroy'],
-    func: async (params) => {
-      const closeResp = await api.getActive(params)
-      if (closeResp.code === 200) {
-        if (closeResp.data.status != 5) {
-          Message.error(t('bot.botActiveTips.5'))
-          return
-        }
-        if (closeResp.data.active != 6) {
-          Message.error(t('bot.botActiveTips.6'))
-          return
-        }
-      }
-      const resp = await api.destroy(params)
-      if (resp.code === 200) {
-        Message.success(t('bot.deleteSuccess'))
-        crudRef.value?.refresh()
-      }
-    },
-  },
-})
-
-// SaTable 列配置
-const columns = reactive([
-  { title: t('bot.botName'), dataIndex: 'name', width: 160 },
-  { title: t('bot.symbol'), dataIndex: 'symbol', width: 120 },
-  { title: t('bot.status'), dataIndex: 'status', type: 'dict', dict: 'bot_status', width: 120 },
-  { title: t('bot.enables'), dataIndex: 'active', width: 120 },
-  { title: t('bot.principal'), dataIndex: 'principal', width: 140 },
-  { title: t('bot.cashBalance'), dataIndex: 'cash_balance', width: 140 },
-  { title: t('bot.positionAmount'), dataIndex: 'position_amount', width: 140 },
-  { title: t('bot.positionValue'), dataIndex: 'position_value', width: 140 },
-  { title: t('bot.accountNetValue'), dataIndex: 'account_net_value', width: 140 },
-  { title: t('bot.unrealizedPnl'), dataIndex: 'unrealized_pnl', width: 140 },
-  { title: t('bot.createTime'), dataIndex: 'create_time', width: 160 },
-])
-if (role('superAdmin')) {
-  const newColumn = { title: '交易所账号', dataIndex: 'exchange_account_id', width: 140 }
-  const index = columns.findIndex((col) => col.dataIndex === 'name')
-  columns.splice(index + 1, 0, newColumn)
+// 切换启用状态 - 这是处理开关组件事件的方法
+const handleToggleActive = async (active, id) => {
+  const response = await api.setActive({ ids: id, active })
+  if (response.code === 200) {
+    Message.success(response.message)
+    fetchRobots() // 刷新数据
+  }
 }
 
-// 页面数据初始化
+// 初始化页面
 const initPage = async () => {
   const symbolResp = await commonApi.commonGet('/bot/symbol/accessSymbol?type=1')
   symbolData.value = symbolResp.data
+  fetchRobots()
 }
 
-// SaTable 数据请求
-const refresh = async () => {
-  crudRef.value?.refresh()
-}
-
-// 页面加载完成执行
-onMounted(async () => {
+onMounted(() => {
   initPage()
-  refresh()
 })
 </script>
+
+<style scoped>
+.robot-card-list {
+  padding: 16px;
+}
+
+.search-card,
+.action-card,
+.pagination-card {
+  margin-bottom: 16px;
+}
+
+.robot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .robot-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
