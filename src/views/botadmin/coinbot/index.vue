@@ -48,9 +48,9 @@
       </div>
     </a-card>
 
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" style="width: 100%" class="robot-list-spin">
       <!-- 机器人卡片列表 -->
-      <div class="robot-grid">
+      <div v-if="robotList.length > 0" class="robot-grid">
         <cbot-card
           v-for="robot in robotList"
           :key="robot.id"
@@ -60,9 +60,14 @@
           @delete="handleDelete"
           @toggle-active="handleToggleActive" />
       </div>
+
+      <!-- 无数据提示 -->
+      <div v-else class="no-data">
+        <a-empty :description="t('bot.noData')" />
+      </div>
     </a-spin>
     <!-- 分页 -->
-    <a-card :bordered="false" class="pagination-card">
+    <a-card :bordered="false" class="pagination-card" v-if="robotList.length > 0">
       <a-pagination
         :total="total"
         show-total
@@ -243,11 +248,16 @@ onMounted(() => {
   margin-bottom: 16px;
 }
 
+.robot-list-spin {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .robot-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 16px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 }
 
 @media (max-width: 768px) {
