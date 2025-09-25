@@ -11,6 +11,7 @@ export default {
   createTime: '創建時間',
   updateTime: '更新時間',
   operations: '操作',
+  refresh: '刷新',
   add: '添加',
   edit: '編輯',
   close: '關閉',

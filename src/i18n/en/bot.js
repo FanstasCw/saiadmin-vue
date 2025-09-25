@@ -11,6 +11,7 @@ export default {
   createTime: 'Create Time',
   updateTime: 'Update Time',
   operations: 'Operations',
+  refresh: 'Refresh',
   add: 'Add',
   edit: 'Edit',
   close: 'Close',

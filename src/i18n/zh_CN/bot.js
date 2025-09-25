@@ -14,6 +14,7 @@ export default {
   add: '添加',
   edit: '编辑',
   close: '关闭',
+  refresh: '刷新',
   closeConfirm: '确实要关闭机器人吗?',
   delete: '删除',
   deleteConfirm: '确定要删除该数据吗?',
