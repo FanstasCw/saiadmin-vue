@@ -27,7 +27,7 @@
         <a-input v-model="formData.secret_key" :placeholder="t('bot.inputSecretKey')" />
       </a-form-item>
       <!-- 添加条件渲染的密码短语输入框 -->
-      <a-form-item v-if="isOkxExchange" :label="t('bot.passPhrase')" field="pass_phrase">
+      <a-form-item v-show="isOkxExchange" :label="t('bot.passPhrase')" field="pass_phrase">
         <a-input v-model="formData.pass_phrase" :placeholder="t('bot.inputPhrase')" />
       </a-form-item>
       <a-form-item label="测试环境" field="sandbox" v-role="['superAdmin']">
@@ -35,8 +35,8 @@
           v-model="formData.sandbox"
           checked-value="0"
           unchecked-value="1"
-          :checked-text="启用"
-          :unchecked-text="禁用" />
+          checked-text="启用"
+          unchecked-text="禁用" />
       </a-form-item>
       <a-form-item :label="t('bot.enables')" field="is_active">
         <sa-switch
