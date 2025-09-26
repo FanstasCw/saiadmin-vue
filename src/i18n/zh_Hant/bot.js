@@ -1,8 +1,8 @@
 export default {
   name: '名稱',
   exchange: '交易所',
-  apiKey: '公鑰',
-  secretKey: '私鑰',
+  apiKey: 'API密鑰',
+  secretKey: '密鑰',
   passPhrase: '密碼短語',
   enables: '啟用/停用',
   enable: '啟用',
@@ -29,7 +29,7 @@ export default {
   normal: '正常',
   abnormal: '異常',
   inputName: '請輸入名稱',
-  inputApiKey: '請輸入公鑰',
+  inputApiKey: '請輸入API密鑰',
   inputSecretKey: '請輸入密鑰',
   inputPhrase: '請輸入密碼短語',
   selectExchange: '請選擇交易所',
@@ -40,7 +40,7 @@ export default {
   cashBalance: '現金餘額',
   positionAmount: '持倉數量',
   positionValue: '持倉價值',
-  accountNetValue: '賬戶淨值',
+  accountNetValue: '當前淨值',
   unrealizedPnl: '浮動盈虧',
   botStatus: {
     run: '運行中',

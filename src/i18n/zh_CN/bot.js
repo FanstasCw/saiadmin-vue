@@ -1,8 +1,8 @@
 export default {
   name: '名称',
   exchange: '交易所',
-  apiKey: '公钥',
-  secretKey: '私钥',
+  apiKey: 'API密钥',
+  secretKey: '密钥',
   passPhrase: '密码短语',
   enables: '启用/停用',
   enable: '启用',
@@ -29,7 +29,7 @@ export default {
   normal: '正常',
   abnormal: '异常',
   inputName: '请输入名称',
-  inputApiKey: '请输入公钥',
+  inputApiKey: '请输入API密钥',
   inputSecretKey: '请输入密钥',
   inputPhrase: '请输入密码短语',
   selectExchange: '请选择交易所',
@@ -40,7 +40,7 @@ export default {
   cashBalance: '现金余额',
   positionAmount: '持仓数量',
   positionValue: '持仓价值',
-  accountNetValue: '账户净值',
+  accountNetValue: '当前净值',
   unrealizedPnl: '浮动盈亏',
   botStatus: {
     run: '运行中',
