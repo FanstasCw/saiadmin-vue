@@ -34,10 +34,8 @@
       <!-- 核心数据 -->
       <div class="mb-6">
         <p>
-          <span class="text-gray-500">{{ t('bot.unrealizedPnl') }}: </span>
-          <span class="font-medium" :style="{ color: getTextColors(robot.unrealized_pnl) }">
-            {{ robot.unrealized_pnl }}
-          </span>
+          <!-- 使用计算属性来动态显示标签 -->
+          <span class="text-gray-500">{{ pnlLabel }}: </span>
         </p>
       </div>
 
@@ -119,6 +117,16 @@ const getTextColors = (value) => {
   if (value < 0) return down_color
   return 'black'
 }
+// +++ 新增的计算属性 +++
+// 根据机器人状态决定显示“浮动盈亏”还是“已实现盈亏”
+const pnlLabel = computed(() => {
+  // 假设 status 为 '3' (已停止/已关闭) 时，显示已实现盈亏
+  // 您可以根据实际业务逻辑调整这个判断条件
+  if (props.robot.active === '6' || props.robot.active === 6) {
+    return t('bot.realizedPnl')
+  }
+  return t('bot.unrealizedPnl')
+})
 
 const handleEdit = () => {
   emit('edit', props.robot)
