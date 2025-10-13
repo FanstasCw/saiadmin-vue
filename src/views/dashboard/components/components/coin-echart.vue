@@ -1,11 +1,15 @@
 <template>
   <div class="w-full mx-auto">
     <!-- 桌面端左右分栏，移动端上下堆叠 -->
-    <a-grid :cols="{ xs: 1, sm: 1, md: 2 }" :row-gap="16" :col-gap="16" class="panel ma-content-block mt-3 p-4">
-      <!-- 使用 v-for 循环渲染图表，提高可扩展性 -->
-      <a-grid-item v-for="chart in chartList" :key="chart.id">
-        <div class="table-wrapper">
-          <sa-chart height="400px" :options="chart.options" />
+    <a-grid :cols="{ xs: 1, sm: 1, md: 2 }" :row-gap="16" :col-gap="16" class="mt-3">
+      <a-grid-item>
+        <div class="table-wrapper ma-content-block chart-card">
+          <sa-chart height="400px" :options="chartList[0].options" />
+        </div>
+      </a-grid-item>
+      <a-grid-item>
+        <div class="table-wrapper ma-content-block chart-card">
+          <sa-chart height="400px" :options="chartList[1].options" />
         </div>
       </a-grid-item>
     </a-grid>
@@ -29,7 +33,7 @@ const { t } = useI18n()
 
 // --- 常量定义 ---
 const REFRESH_INTERVAL = 10000 // 10秒
-const CURRENCY_UNIT = 'U'
+const CURRENCY_UNIT = t('bot.coinBot.cont')
 
 // --- 状态管理 ---
 // 使用一个数组来管理所有图表的状态，更清晰、更具扩展性
@@ -65,10 +69,10 @@ function createChartOptions(data, titleKey, seriesNameKey, totalPnl) {
       : {},
     dataset: { source: data },
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-    grid: { bottom: 30, left: '2%', containLabel: true }, // containLabel 防止标签溢出
+    grid: { bottom: 10, left: '2%', containLabel: true }, // containLabel 防止标签溢出
     toolbox: { feature: { restore: {}, saveAsImage: {} } },
     xAxis: { type: 'value', position: 'top', splitLine: { lineStyle: { type: 'dashed' } } },
-    yAxis: { type: 'category', show: !isEmpty },
+    yAxis: { type: 'category', show: !isEmpty, offset: 5 },
     series: [
       {
         name: t(seriesNameKey),
@@ -99,8 +103,9 @@ function createChartOptions(data, titleKey, seriesNameKey, totalPnl) {
             {
               type: 'text',
               left: 'center',
+              top: 15,
               style: {
-                text: `{label|${t(titleKey)}}{pnl|${totalPnl.toFixed(2)}}{unit| ${CURRENCY_UNIT}}`,
+                text: `{label|${t(titleKey)}}{pnl|${totalPnl}}{unit| ${CURRENCY_UNIT}}`,
                 fontSize: 20,
                 fontWeight: 'bold',
                 rich: {
@@ -131,7 +136,7 @@ const fetchDataAndUpdateCharts = async () => {
     chartList.value[0].options = createChartOptions(
       coin_data,
       'bot.coinTotalUnrealizedPnl',
-      'bot.unRealizedPnl',
+      'bot.unrealizedPnl',
       totalPnlCoin
     )
     chartList.value[1].options = createChartOptions(
@@ -159,4 +164,20 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.chart-card {
+  padding: 20px; /* 给图表内容留出一些空间，避免紧贴边缘 */
+  border: 1px solid #e5e7eb; /* 添加一个浅灰色的边框 */
+  /* 添加圆角，让卡片看起来更柔和 */
+  /* border-radius: 8px;  */
+  background-color: #fff; /* 确保背景是白色，与外层背景区分开 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* 添加一个轻微的阴影，增加立体感 */
+  transition: box-shadow 0.3s ease; /* 添加一个过渡效果，让交互更平滑 */
+}
+
+/* 鼠标悬停时可以加深阴影，提供视觉反馈 */
+.chart-card:hover {
+  border-color: var(--color-primary-light-2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+</style>
