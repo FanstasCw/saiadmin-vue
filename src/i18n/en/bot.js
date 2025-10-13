@@ -88,7 +88,8 @@ export default {
     inputRecentHighPrice: 'Please input recent high price',
     selectDrawdownRatio: 'Please select drawdown ratio',
     inputCloseShortInterval: 'Please input close short interval',
-    selectCloseShortRatio: 'Please select close short ratio'
+    selectCloseShortRatio: 'Please select close short ratio',
+    cont: 'Cont'
   },
   orderId: 'Order ID',
   side: 'Side',
@@ -139,6 +140,5 @@ export default {
   coinUnrealizedPnl: 'Coin Unrealized PnL',
   coinRealizedPnl: 'Coin Realized PnL',
   bot: 'Bot',
-  unRealizedPnl: 'Unrealized Pnl',
   realizedPnl: 'Realized Pnl'
 }

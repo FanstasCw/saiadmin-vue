@@ -87,7 +87,8 @@ export default {
     inputRecentHighPrice: '请输入最近最高价',
     selectDrawdownRatio: '请选择回调比例',
     inputCloseShortInterval: '请输入平空价格间隔',
-    selectCloseShortRatio: '请选择平空比例'
+    selectCloseShortRatio: '请选择平空比例',
+    cont: '张'
   },
   orderId: '订单号',
   side: '买卖方向',
@@ -138,6 +139,5 @@ export default {
   coinUnrealizedPnl: '币本位浮动盈亏',
   coinRealizedPnl: '币本位已实现盈亏',
   bot: '机器人',
-  unRealizedPnl: '浮动盈亏',
   realizedPnl: '已实现盈亏'
 }

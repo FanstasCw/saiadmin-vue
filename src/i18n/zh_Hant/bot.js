@@ -87,7 +87,8 @@ export default {
     inputRecentHighPrice: '請輸入最近最高價',
     selectDrawdownRatio: '請選擇回調比例',
     inputCloseShortInterval: '請輸入平空價格間隔',
-    selectCloseShortRatio: '請選擇平空比例'
+    selectCloseShortRatio: '請選擇平空比例',
+    cont: '張'
   },
   orderId: '訂單號',
   side: '買賣方向',
@@ -138,6 +139,5 @@ export default {
   coinUnrealizedPnl: '幣本位浮動盈虧',
   coinRealizedPnl: '幣本位已實現盈虧',
   bot: '機器人',
-  unRealizedPnl: '浮動盈虧',
   realizedPnl: '已實現盈虧'
 }
