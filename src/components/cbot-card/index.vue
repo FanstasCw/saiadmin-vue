@@ -36,6 +36,9 @@
         <p>
           <!-- 使用计算属性来动态显示标签 -->
           <span class="text-gray-500">{{ pnlLabel }}: </span>
+          <span class="font-medium" :style="{ color: getTextColors(robot.unrealized_pnl) }">
+            {{ robot.unrealized_pnl }}
+          </span>
         </p>
       </div>
 
