@@ -65,12 +65,15 @@ function createChartOptions(data, titleKey, seriesNameKey, totalPnl) {
           text: t(titleKey),
           left: 'center',
           top: 10,
+          textStyle: {
+            fontSize: 16,
+          },
         }
       : {},
     dataset: { source: data },
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
     grid: { bottom: 10, left: '2%', containLabel: true }, // containLabel 防止标签溢出
-    toolbox: { feature: { restore: {}, saveAsImage: {} } },
+    toolbox: { feature: { restore: {} } },
     xAxis: { type: 'value', position: 'top', splitLine: { lineStyle: { type: 'dashed' } } },
     yAxis: { type: 'category', show: !isEmpty, offset: 5 },
     series: [
@@ -106,7 +109,7 @@ function createChartOptions(data, titleKey, seriesNameKey, totalPnl) {
               top: 15,
               style: {
                 text: `{label|${t(titleKey)}}{pnl|${totalPnl}}{unit| ${CURRENCY_UNIT}}`,
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: 'bold',
                 rich: {
                   label: { fill: '#333' },
