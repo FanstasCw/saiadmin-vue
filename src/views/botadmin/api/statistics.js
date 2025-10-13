@@ -30,5 +30,19 @@ export default {
       url: '/bot/statistics/profit?id=' + id,
       method: 'get'
     })
+  },
+
+  spotPnl() {
+    return request({
+      url: '/bot/statistics/spotPnl',
+      method: 'get'
+    })
+  },
+
+  coinPnl() {
+    return request({
+      url: '/bot/statistics/coinPnl',
+      method: 'get'
+    })
   }
 }
